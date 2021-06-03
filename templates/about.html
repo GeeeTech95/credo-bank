@@ -1,0 +1,397 @@
+{% extends 'base2.html' %}
+{% load static %}
+
+
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/animate.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/flaticon.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/lightcase.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/swiper.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/nice-select.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/main.css' %}">
+
+    <link rel="shortcut icon" href="assets/images/favicon.png" type="image/x-icon">
+
+    <title>Messon - Bulk SMS Reseller Business HTML Template</title>
+
+
+
+    {% block content %}
+    <!-- =============Hero Area============= -->
+    <section class="hero-area bg_img" data-background="assets/images/page-header.jpg">
+        <div  style="padding-top:50px" class="container">
+            <h1 class="title m-0">about {{site_name}}</h1>
+        </div>
+    </section>
+    <div class="breadcrumb-section">
+        <div class="container">
+            <ul class="breadcrumb">
+                <li>
+                    <a href="{% url 'index' %}">Home</a>
+                </li>
+                <li>
+                    About
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- =============Hero Area============= -->
+
+    <!--=================Bulk Sms================= -->
+    <section class="bulk-sms padding-top padding-bottom">
+        <div class="container">
+            <div class="row flex-wrap-reverse align-items-center">
+                <div class="col-lg-6">
+                    <div class="bulk-content text-center text-sm-left">
+                        <span>wellcome to {{site_name}}</span>
+                        <h2 class="title">Modern Banking at Your Finger Tips</h2>
+                        <p>{{site_name}} is focused majorly in making banking easier an better for you</p>
+                        <a href="{% url 'register' %}" class="custom-button active">Create an Account & start</a>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="bulk-thumb">
+                        <img src="{% static 'assets/images/bulk/bulk01.png' %}" alt="bulk">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--=================Bulk Sms================= -->
+
+    <!--=================Sms Testing================= ->
+    <section class="sms-testing padding-bottom padding-top bg-ash">
+        <div class="container">
+            <div class="section-header">
+                <span class="cate">sms testing</span>
+                <h2 class="title">test your SMS delivery</h2>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="testing-item">
+                        <h4 class="title">send us your SMS text</h4>
+                        <form class="testing-form">
+                            <div class="form-group">
+                                <input type="text" placeholder="Country">
+                            </div>
+                            <div class="form-group">
+                                <input type="email" placeholder="Registration Email">
+                            </div>
+                            <div class="form-group w-100">
+                                <input type="tel" placeholder="Phone">
+                            </div>
+                            <div class="form-group w-100">
+                                <textarea placeholder="SMS text write in here"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Submit Now">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="testing-item">
+                        <h4 class="title">about our privacy</h4>
+                        <p>Menenatis malesuada at vestibulum, proin at nudit iaculis nullam ut, massa hac, arcu
+                            adipiscing in vel ac amllicitudin tempus dictum donec lorem libero. Turpis integpendisse
+                            felis, consectetuer odio, volutpat consectetuer erat tortor over hhead to do comeing </p>
+                        <ul class="bullet-list">
+                            <li>
+                                Vestibulum id rhoncus tempus
+                            </li>
+                            <li>
+                                Tellus fermentum a aenean
+                            </li>
+                            <li>
+                                Pulvinar cursus imperdiet
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--=================Sms Testing================= -->
+
+    <!--=================Our Service================= -->
+    <section class="service-section padding-bottom padding-top">
+        <div class="container">
+            <div class="section-header">
+                <span class="cate">Exellent service</span>
+                <h2 class="title">Why we are your best bet</h2>
+            </div>
+            <div class="row justify-content-center mb-30-none">
+                <div class="col-md-6 col-lg-4">
+                    <div class="service-item text-center">
+                        <div class="service-thumb">
+                            <i class="flaticon-megaphone"></i>
+                        </div>
+                        <div class="service-content">
+                            <h4 class="title">promotional SMS</h4>
+                            <p>Amet mus venenatis dictucator amet, amet amet egetsem team and group</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="service-item text-center">
+                        <div class="service-thumb">
+                            <i class="flaticon-bell"></i>
+                        </div>
+                        <div class="service-content">
+                            <h4 class="title">SMS Notification</h4>
+                            <p>Amet mus venenatis dictucator amet, amet amet egetsem team and group</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="service-item text-center">
+                        <div class="service-thumb">
+                            <i class="flaticon-clock"></i>
+                        </div>
+                        <div class="service-content">
+                            <h4 class="title">SMS alert</h4>
+                            <p>Amet mus venenatis dictucator amet, amet amet egetsem team and group</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--=================Our Service================= -->
+
+    <!--=================Our Offer================= -->
+    <section class="offer-section bg-ash padding-top padding-bottom">
+        <div class="container">
+            <div class="section-header">
+                <span class="cate">our offer</span>
+                <h2 class="title">what we offer</h2>
+            </div>
+        </div>
+        <div class="container mw-lg-100">
+            <div class="row align-items-center flex-wrap-reverse">
+                <div class="col-lg-6">
+                    <div class="left-side-offer">
+                        <h4 class="title">Great e-banking solution built to optimize your business flow</h4>
+                        <p>Keep your  clients commited to doing business with you,wow them with fast transaction</p>
+                        <ul>
+                            <li>International and local transactions at your finger tips</li>
+                            <li>Conveinient deposit options</li>
+                            <li>Keep track of all your transactions </li>
+                            <li>Get notified on the go</li>
+                            <li>Get easy access to business loans</li>
+                          
+                        </ul>
+                        <p>Put your money where it grows,enjoy opportunities that help your business grow.Dont take our word for it,See for yourself.<a href="{% url 'register' %}">Create an account</a> with us today.</p>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="right-side-offer">
+                        <img src="{% static 'assets/images/offer/offer01.png' %}" alt="offer">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--=================Our Offer================= -->
+
+    <!--=================Client Say================= ->
+    <section class="client-say padding-bottom padding-top">
+        <div class="container">
+            <div class="section-header">
+                <span class="cate">client feedback</span>
+                <h2 class="title">client what say about</h2>
+            </div>
+            <div class="client-say-slider">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="client-item">
+                            <div class="client-thumb">
+                                <a href="#0"><img src="{% static 'assets/images/client/client02.jpg' %}" alt="client"></a>
+                            </div>
+                            <div class="client-content">
+                                <h4 class="title"><a href="#0">fahad bin foyej</a></h4>
+                                <span>Business Man</span>
+                                <blockquote>
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod teodunt ut
+                                    labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risuodo
+                                    viverra maecenas accumsan lacus vel facilisis.
+                                </blockquote>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="client-item">
+                            <div class="client-thumb">
+                                <a href="#0"><img src="{% static 'assets/images/client/client03.jpg' %}" alt="client"></a>
+                            </div>
+                            <div class="client-content">
+                                <h4 class="title"><a href="#0">Abu Raihan Rafuj</a></h4>
+                                <span>Business Man</span>
+                                <blockquote>
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod teodunt ut
+                                    labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risuodo
+                                    viverra maecenas accumsan lacus vel facilisis.
+                                </blockquote>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="client-pagination"></div>
+            </div>
+        </div>
+    </section>
+    <!--=================Client Say================= -->
+
+    <!--=================Sponsor Section================= ->
+    <div class="sponsor-section padding-top padding-bottom bg-f3">
+        <div class="container">
+            <div class="sponsor-slider">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="sponsor-thumb">
+                            <img src="{% static 'assets/images/sponsor/sponsor01.png' %}" alt="sponsor">
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="sponsor-thumb">
+                            <img src="{% static 'assets/images/sponsor/sponsor02.png' %}" alt="sponsor">
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="sponsor-thumb">
+                            <img src="{% static 'assets/images/sponsor/sponsor03.png' %}" alt="sponsor">
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="sponsor-thumb">
+                            <img src="{% static 'assets/images/sponsor/sponsor04.png' %}" alt="sponsor">
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="sponsor-thumb">
+                            <img src="{% static 'assets/images/sponsor/sponsor05.png' %}" alt="sponsor">
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="sponsor-thumb">
+                            <img src="{% static 'assets/images/sponsor/sponsor06.png' %}" alt="sponsor">
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="sponsor-thumb">
+                            <img src="{% static 'assets/images/sponsor/sponsor07.png' %}" alt="sponsor">
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="sponsor-thumb">
+                            <img src="{% static 'assets/images/sponsor/sponsor08.png' %}" alt="sponsor">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--=================Sponsor Section================= -->
+
+    <!--=================Sponsor Section================= ->
+    <section class="blog-section padding-bottom padding-top">
+        <div class="container">
+            <div class="section-header">
+                <span class="cate">our blog post</span>
+                <h2 class="title">the latest post & tips</h2>
+            </div>
+            <div class="row mb-30-none justify-content-center">
+                <div class="col-md-6 col-lg-4">
+                    <div class="post-item">
+                        <div class="post-item">
+                            <div class="post-thumb">
+                                <a href="blog.html">
+                                    <img src="{% static 'assets/images/blog/blog01.jpg' %}">
+                                </a>
+                                <div class="post-date">
+                                    <span>22</span>
+                                    <span>dec</span>
+                                </div>
+                            </div>
+                            <div class="post-content">
+                                <h4 class="title">
+                                    <a href="blog.html">Business ipsum dolor cursus amet.</a>
+                                </h4>
+                                <p>pede augue peltesqvolpegesed sed. Et neque rhonctritiqultieam nunc, vitae
+                                    consectetueMauorbi aenean non maecenas</p>
+                                <a class="read-more" href="blog-details.html">read More <i
+                                        class="fas fa-caret-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="post-item">
+                        <div class="post-item">
+                            <div class="post-thumb">
+                                <a href="blog.html">
+                                    <img src="{% static 'assets/images/blog/blog02.jpg' %}">
+                                </a>
+                                <div class="post-date">
+                                    <span>28</span>
+                                    <span>dec</span>
+                                </div>
+                            </div>
+                            <div class="post-content">
+                                <h4 class="title">
+                                    <a href="blog.html">Ectus aliquet nunc est massa nunc placerat</a>
+                                </h4>
+                                <p>pede augue peltesqvolpegesed sed. Et neque rhonctritiqultieam nunc, vitae
+                                    consectetueMauorbi aenean non maecenas</p>
+                                <a class="read-more" href="blog-details.html">read More <i
+                                        class="fas fa-caret-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="post-item">
+                        <div class="post-item">
+                            <div class="post-thumb">
+                                <a href="blog.html">
+                                    <img src="{% static 'assets/images/blog/blog03.jpg' %}">
+                                </a>
+                                <div class="post-date">
+                                    <span>31</span>
+                                    <span>dec</span>
+                                </div>
+                            </div>
+                            <div class="post-content">
+                                <h4 class="title">
+                                    <a href="blog.html">Condimentum magni velit mperdiet</a>
+                                </h4>
+                                <p>pede augue peltesqvolpegesed sed. Et neque rhonctritiqultieam nunc, vitae
+                                    consectetueMauorbi aenean non maecenas</p>
+                                <a class="read-more" href="blog-details.html">read More <i
+                                        class="fas fa-caret-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--=================Sponsor Section================= -->
+
+    {% endblock %}
+   
+
+    <script src="{% static 'assets/js/jquery-3.3.1.min.js' %}""></script>
+    <script src="{% static 'assets/js/modernizr-3.6.0.min.js' %}""></script>
+    <script src="{% static 'assets/js/plugins.js' %}""></script>
+    <script src="{% static 'assets/js/bootstrap.min.js' %}""></script>
+    <script src="{% static 'assets/js/waypoint.js' %}""></script>
+    <script src="{% static 'assets/js/isotope.pkgd.min.js' %}""></script>
+    <script src="{% static 'assets/js/lightcase.js' %}""></script>
+    <script src="{% static 'assets/js/swiper.min.js' %}""></script>
+    <script src="{% static 'assets/js/wow.min.js' %}""></script>
+    <script src="{% static 'assets/js/countdown.min.js' %}""></script>
+    <script src="{% static 'assets/js/counterup.min.js' %}""></script>
+    <script src="{% static 'assets/js/nice-select.js' %}""></script>
+    <script src="{% static 'assets/js/main.js' %}""></script>

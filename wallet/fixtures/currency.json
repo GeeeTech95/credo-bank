@@ -1,0 +1,14 @@
+[
+   
+    {
+      "model": "wallet.Currency",
+      "pk": 2 ,
+      "fields": {
+        "name" : "United States Dollar",
+        "code" : "USD",
+        "symbol" : "$"
+    }
+   
+}
+
+]

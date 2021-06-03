@@ -1,0 +1,45 @@
+{% extends 'dashboard-base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+
+<div class="main-content" >
+        <section class="section">
+          <div class="section-body">
+            <div class="row">
+                <div class="col-12 col-md-12 col-lg-12">
+                   <div class="card">
+
+                        <form class="needs-validation" novalidate="" method="POST" action="">
+                            {% csrf_token %}
+                        <div class="card-header">
+                            <h4>Enter Your Transaction Pin To Proceed</h4>
+                        </div>
+                        <p style="padding-left:30px">
+                            {% if transact.country %}
+                            You are transferring <b>${{transact.amount}}</b> to <b>{{transact.account_name}}</b><br>
+                            account Number : <b>{{transact.account_number}}</b><br>
+                            bank : <b>{{transact.bank_name}}</b> <br>
+                            country : <b>{{transact.country}}</b>
+
+                            {% else %}
+                            You are transferring <b>${{transact.amount}}</b> to <b>{{transact.receiver}}</b> with account Number <b>{{transact.receiver.account_number}}</b>
+                            {% endif %}
+                        </p>
+                            <div class="card-body">
+                            {{form|crispy}}
+                        </div>
+                        <div class="card-footer text-right">
+                            <button class="btn btn-primary">Proceed</button>
+                            <a href="#" hidden="" class="btn disabled btn-primary btn-progress">Progress</a>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </section>
+</div>            
+{% endblock %}
