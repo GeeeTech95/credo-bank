@@ -3,9 +3,13 @@ from django.shortcuts import render
 from django.views.generic import CreateView,View
 from django.views.generic.base  import RedirectView
 from django.http import HttpResponseRedirect
+from django.contrib.auth import authenticate,login
 from wallet.models import Wallet
-from .models import  User
-from .forms import UserCreateForm
+from core.views import Messages
+from .models import  User,Dashboard
+from .forms import UserCreateForm,PhoneNumberForm
+
+
 
 class Register(CreateView) :
     template_name = 'register.html'
@@ -17,17 +21,37 @@ class Register(CreateView) :
         Wallet.objects.get_or_create(user = user)
         return
 
+    def auto_create_dashboard(self,user)  :
+        Dashboard.objects.get_or_create(user = user)
+        return
+
     def post(self,request,*args,**kwargs) :
         form = self.form_class(request.POST,request.FILES)
         if form.is_valid() :
             user  = form.save()
             self.auto_create_wallet(user)
-            #send thank you email and message
+            self.auto_create_dashboard(user)
+            #send thank you email 
+
+            #send thank you message
+            try :
+                sms = Messages()
+                msg="Thanks for choosing us,await while your account is been validated"
+                sms.send_sms(user.phone_number,msg)
+            except :
+                pass
+            #authenticate and login user
+            auth_user = authenticate(username=form.cleaned_data['username'],password=form.cleaned_data['password1'])
+            if user is not None and user.is_active :
+                login(request,auth_user)
             #redirect to validate email and phone number 
-            return render(request,"just_created.html",{})
+            return HttpResponseRedirect(reverse('validate-phone-number'))
+           
         else :
             return render(request,self.template_name,locals())    
         return HttpResponseRedirect(self.success_url)
+
+    
 
 
 class LoginRedirect(View)   :

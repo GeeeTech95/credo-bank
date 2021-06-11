@@ -10,6 +10,7 @@
   <title>company - Dashboard</title>
   <!-- General CSS Files -->
   <link rel="stylesheet" href="{% static 'dashboard/css/app.min.css' %}">
+  <link rel="stylesheet" href="{% static 'dashboard/bundles/prism/prism.css' %}">
   <!-- Template CSS -->
   <link rel="stylesheet" href="{% static 'dashboard/css/style.css' %}">
   <link rel="stylesheet" href="{% static 'dashboard/css/components.css' %}">
@@ -271,6 +272,8 @@
             <ul class="dropdown-menu">
               <li><a class="nav-link"href="{% url 'password_reset' %}">Change Password</a></li>
               <li><a class="nav-link" href="{% url 'change-pin' %}">Change Transaction Pin</a></li>
+              <li><a class="nav-link" href="{% url 'validate-email' %}">Email Verification</a></li>
+              <li><a class="nav-link" href="{% url 'validate-phone-number' %}">SMS Verification</a></li>
               <!--li><a class="nav-link" href="#">Set Transfer Limit</a></li-->
 
             </ul>
@@ -296,10 +299,36 @@
        {% endblock %}
       </div>
 
+      <!-- Vertically Center -->
+      <div class="modal fade" id="globalmodal" tabindex="-1" role="dialog"
+       >
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 style="color:black" class="modal-title" id="pop-up-modal-title"></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="pop-up-modal-body">
+            <center>
+           <img hidden="" style="height:33%;width:33%;padding-bottom:10px" src="{% static 'dashboard/image/transaction_success.jpg' %}">
+          </center>
+          <p style="margin:20px 10px 20px 20px;font-size:18px;font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif"></p>
+          </div>
+          <div id="modal-pop-up-footer" class="modal-footer bg-whitesmoke br">
+            <button type="button" class="btn btn-primary">Save</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
       
      
   <!-- General JS Scripts -->
   <script src="{% static 'dashboard/js/app.min.js' %}""></script>
+  <script src="{% static 'dashboard/bundles/prism/prism.js' %}"></script>
   <!-- JS Libraies -->
   <script src="{% static 'dashboard/bundles/apexcharts/apexcharts.min.js' %}""></script>
   <!-- Page Specific JS File -->

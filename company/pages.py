@@ -3,14 +3,17 @@ from django.views.generic import TemplateView,View
 from django.http import JsonResponse
 from django.core.mail import send_mail
 from .forms import ContactForm
+from core.views import Messages
 
 
 class Index(TemplateView) :
     template_name = 'home.html'
 
+    def get(self,request,*args,**kwargs) :
+        return render(request,self.template_name,locals())
+
     def get_context_data(self,*args,**kwargs) : 
         context = super(Index,self).get_context_data(*args,**kwargs) 
-       
         return context
         
 

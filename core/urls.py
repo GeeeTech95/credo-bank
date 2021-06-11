@@ -1,5 +1,5 @@
 from django.urls import path,include
-from .views import Subscribe 
+from .notification import Subscribe 
 
 
 

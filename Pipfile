@@ -33,6 +33,8 @@ wrapt = "==1.11.2"
 whitenoise = "*"
 gunicorn = "*"
 django-crispy-forms = "*"
+tweepy = "*"
+twilio = "*"
 
 [dev-packages]
 

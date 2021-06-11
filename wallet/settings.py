@@ -4,7 +4,7 @@ from django.contrib.auth import get_user_model
 from django.http import HttpResponse,HttpResponseRedirect,JsonResponse
 from django.urls import reverse
 from django.contrib.auth.mixins import UserPassesTestMixin,LoginRequiredMixin
-from core.views import Notification
+from core.notification import Notification
 from urllib.parse import urlparse,urlunparse,urljoin 
 from .forms import TransferForm,PinForm,ChangePinForm
 from .models import Wallet,Transaction as transaction_model

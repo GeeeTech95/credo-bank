@@ -1,7 +1,8 @@
 from django.db import models
 from django.contrib.auth.models   import AbstractUser
 from django.utils.text import  slugify
-from django.contrib.auth import get_user_model
+from django.utils import timezone
+from core.views import Messages
 import random
 
 
@@ -57,9 +58,10 @@ class User(AbstractUser) :
     account_type = models.CharField(default="SAVINGS",max_length=10,choices = ACCOUNT_TYPE)
     passport = models.FileField(upload_to = get_path,null = True)
     is_activated = models.BooleanField(default = False,blank = False,null = False)
+    date_activated = models.DateTimeField(null = True,blank = True)
     #admin controls account from here
     is_blocked = models.BooleanField(default = False)
-    block_reason = models.TextField()
+    block_reason = models.TextField(blank=True,null=True)
 
     def __str__(self)  :
         st = "{} {}".format(self.first_name,self.last_name) 
@@ -69,17 +71,44 @@ class User(AbstractUser) :
     def save(self,*args,**kwargs) :
         if not self.account_number :
             self.account_number = self.get_account_number()
+        
         if  self.is_blocked :
-            #notify user
+            
             #email user
-            #sms user
+            #sms 
+            sms = Messages()
+            msg = """Your account has been blocked\n
+            reason - {}\n
+            contact support test@mail.com""".format(self.block_reason)
+            sms.send_sms(self.phone_number,msg)
             pass
+
+        if self.is_activated :
+            if not self.date_activated :
+                #first time actiated 
+                self.date_activated = timezone.now()
+                sms = Messages()
+                msg = """Your account has been activated,it is now active\n"""
+                sms.send_sms(self.phone_number,msg)
+
+            else:
+                #has been activated before
+                pass    
+
 
         super(User,self).save(*args,**kwargs)
 
 
 class Dashboard(models.Model) :
-    pass
+    user = models.OneToOneField(User,on_delete = models.CASCADE,related_name = 'dashboard')
+    receive_sms = models.BooleanField(default = True)
+    receive_email = models.BooleanField(default = True)
+    otc = models.PositiveIntegerField(blank = True,null = True)
+    otc_expiry = models.DateTimeField(blank = True,null = True)
+
+    def __str__(self)  :
+        return self.user.__str__()
+
 
 
 

@@ -10,9 +10,9 @@
           <div class="section-body">
             <div class="row">
                 <div class="col-12 col-md-12 col-lg-12">
-                   <div class="card">
+                   <div class="card" id="form-div">
 
-                        <form class="needs-validation" novalidate="" method="POST" action="">
+                        <form id="enter-pin-form" class="needs-validation" novalidate="" method="POST" action="">
                             {% csrf_token %}
                         <div class="card-header">
                             <h4>Enter Your Transaction Pin To Proceed</h4>
@@ -29,11 +29,12 @@
                             {% endif %}
                         </p>
                             <div class="card-body">
+                                <p id="pin-form-error"><b></b></p>
                             {{form|crispy}}
                         </div>
                         <div class="card-footer text-right">
-                            <button class="btn btn-primary">Proceed</button>
-                            <a href="#" hidden="" class="btn disabled btn-primary btn-progress">Progress</a>
+                            <button id="submit-button" type="submit" class="btn btn-primary">Proceed</button>
+                            <a href="#" id="loading-button" hidden="" class="btn disabled btn-primary btn-progress">Processing</a>
                         </div>
                         </form>
                     </div>
@@ -42,4 +43,42 @@
           </div>
         </section>
 </div>            
+{% endblock %}
+
+{% block js %}
+<script>
+
+$("#form-div").on('submit','#enter-pin-form',function(event){
+    event.preventDefault();
+    $("#submit-button").attr('hidden','true')
+    $("#loading-button").removeAttr('hidden')
+    var form  = $(this);
+    
+    $.ajax({
+        type:"POST",
+        url : form.attr('action'),
+        data : form.serialize(),
+        dataType : 'json',
+        success : function(data){
+         if(data.success){
+            $("#pop-up-modal-title").html('<b>Successful</b>')
+            $(".pop-up-modal-body center img").removeAttr('hidden')
+            $(".pop-up-modal-body p").html(data.success)
+
+            $("#loading-button").attr('hidden','true')
+            $("#submit-button").html('Complete !')
+            $("#submit-button").removeAttr('hidden')
+
+            $("#globalmodal").modal("show");
+
+         }
+         else if(data.error){
+             $('#pin-form-error b').html(data.error)
+         }
+        }
+    });
+    return false;
+});
+
+</script>
 {% endblock %}
