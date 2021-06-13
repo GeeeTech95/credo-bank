@@ -8,7 +8,7 @@
     <!-- =============Hero Area============= -->
     <section class="hero-area bg_img" data-background="{% static 'assets/images/page-header.jpg' %}">
         <div  style="padding-top:50px" class="container">
-            <h1 class="title m-0">my account</h1>
+            <h1 class="title m-0">Contact Us</h1>
         </div>
     </section>
     <div class="breadcrumb-section">
@@ -27,36 +27,55 @@
     <!--=================Account Section================= -->
     <section class="account-section padding-top padding-bottom bg_img bg_bottom_center bg_contain"
         data-background="{% static 'assets/images/page-header.jpg' %}">
+        
         <div class="container">
+                <p style="text-align: center">We are always eager to respond to your messages,keep them coming we would never complain.</p>
             <div class="account-wrapper">
-                <div class="account-area">
+                <div class="account-area" >
                     <h3 class="account-title">send us a message</h3>
-                    <form class="contact-form" id="contact_form_submit">
-                      
+                    <form class="contact-form" id="contact-us-form" action="{% url 'contact' %}" >
+                          {% csrf_token %}
+                        
                         <div class="form-group">
-                                <input type="text" id="name" value="{{user.first_name}} {{user.last_name}}" placeholder="Full Name">
+                                <b id="name-errors"></b>
+                            {% if user.is_authenticated %}
+                                <input name="name" type="text" id="name" value="{{user}}" placeholder="Full Name">
+                            {% else %}
+                            <input name="name" type="text" id="name" value="" placeholder="Full Name">
+                            {% endif %}
                             </div>
                             <div class="form-group">
-                                <input
-                                 type="text" value="{{user.email}}"id="email" placeholder="Email">
+                                    <b id="email-errors"></b>
+                                <input name="email"  type="text" value="{{user.email}}"id="email" placeholder="Email">
                             </div>
+                            <div class="form-group">
+                                    <b id="phone_number-errors"></b>
+                                    <input name="phone_number" type="text" value="{{user.phone_number}}"id="email" placeholder="Phone number">
+                                </div>
+
+                            <div class="form-group">
+                                    <b id="title-errors"></b>
+                                    <input name="title" type="text" value=""id="title" placeholder="title">
+                                </div>
                        
                         <div class="form-group">
-                            <textarea id="message" placeholder="Message"></textarea>
+                                <b id="message-errors"></b>
+                            <textarea name="message" id="message" placeholder="Message"></textarea>
                         </div>
                         <div class="form-group radio-group">
+                                <b id="preferred_contact-errors"></b>
                             <p>Preferred of mode Communication</p>
                             <div class="radio-item">
-                                <input type="radio" checked name="mode" id="mode01">
+                                <input name="preferred_contact" type="radio" checked value="email" id="mode01">
                                 <label for="mode01">Email</label>
                             </div>
                             <div class="radio-item">
-                                <input type="radio" name="mode" id="mode02">
+                                <input name="preferred_contact" type="radio" value="phone" id="mode02">
                                 <label for="mode02">Phone</label>
                             </div>
                         </div>
                         <div class="form-group">
-                            <input type="submit" value="Send Message">
+                            <input id="contact-us-button" type="submit" value="Send Message">
                         </div>
                     </form>
                 </div>
@@ -67,6 +86,7 @@
     
     <!--=================Contact Info Section================= -->
     <section class="office-info padding-top padding-bottom">
+       
         <div class="container">
             <div class="section-header">
                 <h2 class="title">
@@ -133,9 +153,56 @@
     </section>
     <!--=================Contact Info Section================= -->
 
-    <!--=================Maps Section================= -->
+    <!--=================Maps Section================= ->
     <div class="maps"></div>
     <!--=================Maps Section================= -->
+
+    {% endblock %}
+
+    {% block js %}
+
+   
+    <script> 
+        $("#contact-us-form").on('submit',function(event){
+            event.preventDefault();
+            $("#contact-us-button").html("sending...");
+			var form  = $(this);
+			$.ajax({
+				type:"POST",
+				url : form.attr('action_url'),
+				data : form.serialize(),
+				dataType : 'json',
+				success : function(data){
+                 if(data.success){
+                    $('#pop-up-modal-title').html('Success')
+                    $('#pop-up-modal-body-content').html("Your message was sent successfully")
+                    $("#globalmodal").modal('show')
+                   $("#contact-us-button").html("sent");
+      
+					
+                 }
+				 
+				 else if(data.error){
+                    alert(data.error)
+                     //$.each(data.error,function(field,value){
+                        ///err = value[0].message
+                        //$('#'+ field + '-errors').html(err)
+                    // })
+					//$('#message-errors').html(data.error.message)
+                    $("#contact-us-button").html("send message");
+                 
+                   
+				 }
+                }
+			
+        });
+    });
+
+   
+    </script> 
+        
+       
+        
 
     {% endblock %}
 

@@ -24,6 +24,11 @@ class About(TemplateView) :
         context = super(About,self).get_context_data(*args,**kwargs) 
        
         return context
+        
+
+class LoanView(TemplateView) :
+    template_name = 'loan_and_investment.html' 
+           
 
 class Faq(TemplateView) :
     template_name = 'faq.html'
@@ -73,15 +78,15 @@ class Contact(View) :
             title = form.cleaned_data.get('title')
             message = "{} {}".format(name,form.cleaned_data.get('message'))
             email = form.cleaned_data.get('email')
-            ideal_email = "ideal.incorporation001@gmail.com"
+          
             send_mail(
                 title,
                 message,
                 email,
-                [ideal_email],
+                ['mercy@j.com'],
                 fail_silently = True
 
             )
             feedback['success'] = True
-        else : feedback['error'] = "details failed validation"
+        else : feedback['error'] = form.errors.as_json()
         return JsonResponse(feedback)    

@@ -21,7 +21,7 @@
 
     <link rel="shortcut icon" href="assets/images/favicon.png" type="image/x-icon">
      {% block css %}
-    <title>Messon - Bulk SMS Reseller Business HTML Template</title>
+    <title></title>
     {% endblock %}
 
 
@@ -82,10 +82,10 @@
                             </ul-->
                             <div class="d-none d-md-block">
                                 <select class="select-bar">
-                                    <option value="01">English</option>
-                                    <option value="02">Bangla</option>
-                                    <option value="03">Hindi</option>
-                                    <option value="04">Urdu</option>
+                                        <option value="01">English</option>
+                                        <option value="02">Francais</option>
+                                        <option value="03">German</option>
+                                        <option value="04">Spanish</option>
                                 </select>
                             </div>
                         </div>
@@ -105,19 +105,18 @@
                             
                         </li>
                         <li>
-                            <a href="#">Loans & Investment</a>
+                            <a href="{% url 'loan&investment' %}">Loans & Investment</a>
                            
                        </li>
                         <li>
                             <a href="#0">company</a>
                             <ul class="submenu">
-                                <li>
-                                    <a href="{% url 'about-us' %}">About Us</a>
-                                    <a href="{% url 'services' %}">Services</a>
-                                    <a href="{% url 'faq' %}">FAQ</a>
-                                    <a href="{% url 'tos' %}">Terms Of Service</a>
+                                
+                                <li> <a href="{% url 'about-us' %}">About Us</a> </li>
+                            <li><a href="{% url 'faq' %}">FAQ</a> <li>
+                        <li> <a href="{% url 'tos' %}">Terms Of Service</a> <li>
 
-                                </li>
+                               
                                
                                 
                             </ul>
@@ -240,6 +239,42 @@
                 <p class="m-0"> <a href="templateshub.net">Templates Hub</a></p>
             </div-->
         </div>
+
+
+ <!-- Vertically Center -->
+ <div class="modal fade" id="globalmodal" tabindex="-1" role="dialog"
+ >
+<div class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 style="color:black" class="modal-title" id="pop-up-modal-title"></h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="pop-up-modal-body">
+      <center>
+     <img  hidden style="height:33%;width:33%;padding-bottom:10px" src="{% static 'dashboard/image/transaction_success.jpg' %}">
+    </center>
+    <p style="color:black;margin:20px 20px 5px 10px" id="pop-up-modal-body-content"></p>
+    </div>
+    <div id="modal-pop-up-footer" class="modal-footer bg-whitesmoke br">
+      <button hidden type="button" class="btn btn-primary">Save</button>
+      <button style="height:5%;width:fit-content" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    </div>
+  </div>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
     </footer>
     <!--=================Footer Section================= -->
 
