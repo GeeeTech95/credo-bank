@@ -1,6 +1,7 @@
 from core.notification import Notification
 import datetime
 from django.utils import timezone
+from djmoney.money import 
 from .models import Transaction as transaction_model
 
 
@@ -10,7 +11,13 @@ class Transaction() :
 
 
     
+    def currency_convert(self,amount,_from,_to) :
 
+        """ 
+        converts from one currency to another 
+        _from and _to should be in currency object
+        amount should be in the _from currency"""
+        return amount
 
     def credit(self,amount,user=None)  :
         if not user : user = self.user
@@ -29,7 +36,8 @@ class Transaction() :
         #ensure it added
         return
 
-    def external_transfer(self,amount) : 
+    def external_transfer(self,amount,currency) : 
+        amount = self.currency_convert(amount,currency,self.user.wallet.currency)
         try :
             self.debit(amount)
             #send mail
@@ -40,7 +48,11 @@ class Transaction() :
             state =  "An Error occured"    
         return state
 
-    def internal_transfer(self,receiver,amount) : 
+    def internal_transfer(self,receiver,amount,currency) : 
+        """
+        currency is the receiving account currency"""
+        #convert to sending acc curr
+        amount = self.currency_convert(amount,currency,receiver.wallet.currency)
         try :
             self.debit(amount)
             self.credit(amount,receiver)

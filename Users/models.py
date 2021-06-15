@@ -17,16 +17,6 @@ class Country(models.Model) :
 
     
 
-class State(models.Model) :
-    name = models.CharField(max_length = 20) 
-    code = models.CharField(max_length = 5,blank = True) 
-    country = models.ForeignKey(Country,on_delete = models.CASCADE,related_name='states') 
-
-    def __str__(self) :
-        return self.name 
-
-
-
 
 class User(AbstractUser) :
     
@@ -52,7 +42,6 @@ class User(AbstractUser) :
     occupation = models.CharField(max_length=30)
     date_of_birth = models.DateField(verbose_name="D.O.B",null = True)
     country = models.ForeignKey(Country,on_delete= models.SET_NULL,null = True,blank = True,related_name='users')
-    state = models.ForeignKey(State,on_delete= models.SET_NULL,null = True,blank = True,related_name='users')
     address = models.TextField(null = True)
     account_number  = models.CharField(default=get_account_number,editable=False,null = False,max_length=14,unique=True,blank = True)
     account_type = models.CharField(default="SAVINGS",max_length=10,choices = ACCOUNT_TYPE)

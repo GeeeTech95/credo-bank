@@ -61,12 +61,12 @@
                         {% endifequal %}
 
                         {% ifequal transact.transaction_type "Credit" %}
-                        <td style="color:green">${{transact.amount}}</td>
+                        <td style="color:green">{{transact.currency.symbol}}{{transact.amount}}</td>
                         {% else %}
-                        <td style="color:red">-${{transact.amount}}</td>
+                        <td style="color:red">-{{transact.currency.symbol}}{{transact.amount}}</td>
                         {% endifequal %}
        
-                        <td>{{transact.charge}}</td>
+                        <td>${{transact.charge}}</td>
                       
                       
                         {% if transact.description %}

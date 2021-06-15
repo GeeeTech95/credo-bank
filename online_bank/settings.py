@@ -40,10 +40,10 @@ INSTALLED_APPS = [
     'Users.apps.UsersConfig',
     'wallet.apps.WalletConfig',
     'core.apps.CoreConfig',
-
-      #3rdparty
+     #3rdparty
     'whitenoise.runserver_nostatic',
     'crispy_forms', 
+    'djmoney'
     #'phonenumber_field',
 
 ]
@@ -52,13 +52,15 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.contrib.sessions.middleware.SessionMid dleware',
     'django.middleware.common.CommonMiddleware',
-    #whitenoise
-     'whitenoise.middleware.WhiteNoiseMiddleware',
+     #whitenoise
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    #language translation   
+    'django.middleware.locale.LocalMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 

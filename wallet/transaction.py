@@ -65,7 +65,7 @@ class CompleteTransaction(LoginRequiredMixin,UserPassesTestMixin,View) :
             if self.transaction.nature == 'Internal Transfer' :
                 #making sure the transaction is not processed already
                 if  not self.transaction.status == 'Successful' :
-                    state = transact.internal_transfer(self.transaction.receiver,self.transaction.amount)
+                    state = transact.internal_transfer(self.transaction.receiver,self.transaction.amount,self.transaction.currency)
                     if  state == 0 :
         
                         msg = "Your transfer of {} to {},acc ******{} was successful".format(
@@ -117,7 +117,7 @@ class CompleteTransaction(LoginRequiredMixin,UserPassesTestMixin,View) :
             else :
                 #for external transfers
                 if  not self.transaction.status == 'Successful' :
-                    state = transact.external_transfer(self.transaction.amount)
+                    state = transact.external_transfer(self.transaction.amount,self.transaction.currency)
                     if  state == 0 :
                         
                         msg = "Your transfer of {} to {},acc ******{} was successful".format(

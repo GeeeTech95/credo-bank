@@ -35,6 +35,7 @@ gunicorn = "*"
 django-crispy-forms = "*"
 tweepy = "*"
 twilio = "*"
+django-money = "*"
 
 [dev-packages]
 

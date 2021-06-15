@@ -11,7 +11,7 @@ class UserCreateForm(UserCreationForm) :
   
     class Meta(UserCreationForm.Meta) :
         model = User
-        fields = UserCreationForm.Meta.fields + ('first_name','last_name','username','email','account_type','country','state','address','phone_number','occupation','passport','date_of_birth')
+        fields = UserCreationForm.Meta.fields + ('first_name','last_name','username','email','account_type','country','address','phone_number','occupation','passport','date_of_birth')
         
         widgets = {
             'date_of_birth' : forms.TextInput(attrs={'type': 'date'})

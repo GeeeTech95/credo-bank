@@ -20,7 +20,7 @@ class Wallet(models.Model) :
     transaction_pin = models.CharField(max_length=6,null = False,default="0000")
     iban_number = models.CharField(max_length=30)
     otp = models.CharField(max_length=8,blank = True,null = True)
-    #currency = models.ForeignKey(Currency,related_name = 'wallet',on_delete = models.CASCADE,null = False)
+    currency = models.ForeignKey(Currency,related_name = 'wallets',on_delete = models.CASCADE,null = False)
     balance = models.FloatField(default = 0.0)
     available_balance = models.FloatField(default = 0.0)
     

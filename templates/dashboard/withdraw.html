@@ -10,49 +10,36 @@
         <section class="section">
             <div class="section-body">
                 <div class="row mt-sm-4">
-                    <div class="col-12 col-md-12 col-lg-5">
+                    <div class="col-12 col-md-12 col-lg-12 col-12">
+                        {% if not_eligible %}
                         <div class="card author-box">
                             <div class="card-body">
                                 <div class="author-box-center">
-                                  {% if user.passport %}
-                                    <img style="width:40%;height:40%" alt="image" src="{{user.passport.url}}">
-                                  {% else %} 
-                                  <img style="width:40%;height:40%" alt="image" src="{% static 'dashboard/img/users/user-1.png' %}">
-                                  {% endif %}
+                               
+                                  <img style="width:100px;height:100px" alt="image" src="{% static 'dashboard/image/frown.jpeg' %}">
+
                                     <div class="clearfix"></div><br>
                                         <div class="author-box-name">
-                                           {{user}}
+                                          OOps !
                                         </div>
                                         <div class="author-box-job" style="font-size:19px">
-                                          Account number : <b>{{user.account_number}}</b><br>
-                                          Account Type : <b>{{user.account_type}}</b>
+                                         You cant Withdraw What You dont have
                                         </div>
                                     </div>
-
                                 <div class="text-center">
                                     <div class="author-box-description">
                                         <p>
-                                            
+                                           <button>Deposit</button>
                                         </p>
                                     </div>
                                 </div>
-                           
                
                             </div>
                         </div>
+                        {% else %}
+                        {% endif %}
                     </div>        
-              <div class="col-12 col-md-12 col-lg-7">
-                    <div class="card">
-                            <form style="margin:15px" class="needs-validation" novalidate="" method="POST">
-                             {% csrf_token %}
-                             {{form|crispy}}
-                              <!--div class="card-footer text-right">
-                                <button class="btn btn-primary">Update</button>
-                              </div-->
-                            </form>
-                          </div>
-              </div>
-
+             
             </div>
           </div>
         </section>
