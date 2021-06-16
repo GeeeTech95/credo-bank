@@ -2,6 +2,6 @@
 
 def core(request) :
     context = {
-        'site_name' : "site name"
+        'site_name' : "CredoCapital Bank"
     }
     return context

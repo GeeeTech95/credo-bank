@@ -17,8 +17,8 @@ class Register(CreateView) :
     form_class = UserCreateForm
     success_url = reverse_lazy('login')
 
-    def auto_create_wallet(self,user) :
-        Wallet.objects.get_or_create(user = user)
+    def auto_create_wallet(self,user,currency) :
+        Wallet.objects.get_or_create(user = user,currency = currency)
         return
 
     def auto_create_dashboard(self,user)  :
@@ -29,7 +29,7 @@ class Register(CreateView) :
         form = self.form_class(request.POST,request.FILES)
         if form.is_valid() :
             user  = form.save()
-            self.auto_create_wallet(user)
+            self.auto_create_wallet(user,form.cleaned_data['currency'])
             self.auto_create_dashboard(user)
             #send thank you email 
 
