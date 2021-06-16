@@ -25,7 +25,7 @@
                             country : <b>{{transact.country}}</b>
 
                             {% else %}
-                            You are transferring <b>transact.currency.symbol{{transact.amount}}</b> to <b>{{transact.receiver}}</b> with account Number <b>{{transact.receiver.account_number}}</b>
+                            You are transferring <b>{{transact.currency.symbol}}{{transact.amount}}</b> to <b>{{transact.receiver}}</b> with account Number <b>{{transact.receiver.account_number}}</b>
                             {% endif %}
                         </p>
                             <div class="card-body">
@@ -61,6 +61,8 @@ $("#form-div").on('submit','#enter-pin-form',function(event){
         dataType : 'json',
         success : function(data){
          if(data.success){
+            $("#loading-button").attr('hidden','true')
+            $("#submit-button").removeAttr('hidden')
             $("#pop-up-modal-title").html('<b>Successful</b>')
             $(".pop-up-modal-body center img").removeAttr('hidden')
             $(".pop-up-modal-body p").html(data.success)
@@ -73,6 +75,8 @@ $("#form-div").on('submit','#enter-pin-form',function(event){
 
          }
          else if(data.error){
+            $("#loading-button").attr('hidden','true')
+            $("#submit-button").removeAttr('hidden')
              $('#pin-form-error b').html(data.error)
          }
         }

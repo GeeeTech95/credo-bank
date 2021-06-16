@@ -1,7 +1,7 @@
 from core.notification import Notification
 import datetime
 from django.utils import timezone
-from djmoney.money import 
+#from djmoney.money import 
 from .models import Transaction as transaction_model
 
 

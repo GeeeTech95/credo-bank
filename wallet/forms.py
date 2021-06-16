@@ -4,6 +4,8 @@ from django.contrib.auth import get_user_model
 
 
 class TransferForm(forms.Form) :
+
+
     TypeChoices = (('Internal Transfer','Internal Transfer'),('Domestic Transfer','Domestic Transfer'),('International Transfer','International Transfer'))
     transfer_type  = forms.ChoiceField(choices= TypeChoices)
     account_number = forms.CharField(required= True)
@@ -13,15 +15,21 @@ class TransferForm(forms.Form) :
     currency = forms.ModelChoiceField(queryset=Currency.objects.all())
     amount = forms.FloatField()
     description = forms.CharField()
+
+    def __init__(self,user  = None,*args,**kwargs) :
+        super(TransferForm,self).__init__(*args,**kwargs)
+        self.user = user 
     
 
 
     def clean_account_number(self) :
+
         acc_num = self.cleaned_data['account_number']
         if self.cleaned_data['transfer_type']  == "Internal Transfer" :
             if not get_user_model().objects.filter(account_number = acc_num).exists() :
                 raise forms.ValidationError("The entered account number does not belong to any gosen bank valid account,you are getting this error because you selected an internal transfer")
-        
+            if self.user.account_number == acc_num :
+                raise forms.ValidationError("the entered account number matches yours,this is not allowed")
         return acc_num
 
 

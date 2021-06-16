@@ -52,7 +52,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMid dleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
      #whitenoise
     'whitenoise.middleware.WhiteNoiseMiddleware',
@@ -60,7 +60,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     #language translation   
-    'django.middleware.locale.LocalMiddleware',
+    #'django.middleware.locale.LocalMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 

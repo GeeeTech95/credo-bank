@@ -18,7 +18,7 @@ class Wallet(models.Model) :
     
     user = models.OneToOneField(get_user_model(),on_delete=models.CASCADE,related_name = 'wallet')
     transaction_pin = models.CharField(max_length=6,null = False,default="0000")
-    iban_number = models.CharField(max_length=30)
+    #iban_number = models.CharField(max_length=30)
     otp = models.CharField(max_length=8,blank = True,null = True)
     currency = models.ForeignKey(Currency,related_name = 'wallets',on_delete = models.CASCADE,null = False)
     balance = models.FloatField(default = 0.0)
@@ -85,7 +85,7 @@ class Transaction(models.Model) :
     account_name  = models.CharField(max_length=20,blank = True,null = True)
     bank_name = models.CharField(max_length=20,blank = True,null = True)
     country =  models.CharField(max_length=20,blank = True,null = True)
-
+    currency = models.ForeignKey(Currency,related_name ='transactions',on_delete = models.SET_NULL,null = True)
     #for controlling transactions
     failure_reason = models.TextField(null = True,blank = True)
     

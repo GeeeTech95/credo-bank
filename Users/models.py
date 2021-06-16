@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models   import AbstractUser
 from django.utils.text import  slugify
 from django.utils import timezone
-from core.views import Messages
+from core.views import Messages,Email
 import random
 
 
@@ -66,11 +66,17 @@ class User(AbstractUser) :
             #email user
             #sms 
             sms = Messages()
+            mail = Email()
             msg = """Your account has been blocked\n
             reason - {}\n
             contact support test@mail.com""".format(self.block_reason)
-            sms.send_sms(self.phone_number,msg)
-            pass
+            try :
+                sms.send_sms(self.phone_number,msg)
+            except :    
+                pass
+            try :
+                mail.send_email([self.email],"Account Blocked",msg) 
+            except : pass    
 
         if self.is_activated :
             if not self.date_activated :

@@ -228,13 +228,13 @@ class Transfer(LoginRequiredMixin,View) :
 
     def post(self,request,*args,**kwargs) :
         
-        if not request.user.is_activated :
+        if  not request.user.is_activated :
             return render(request,"account_not_activated.html",{})
 
         if  request.user.is_blocked :
             return render(request,"account_blocked.html",{}) 
                 
-        form = self.form_class(request.POST) 
+        form = self.form_class(user=self.request.user,data=request.POST) 
         if form.is_valid() :
             details,error = None,None
             acc_num = form.cleaned_data['account_number'] 
@@ -289,6 +289,7 @@ class Transfer(LoginRequiredMixin,View) :
                 transact = transaction_model.objects.create(
                     user = request.user,
                     amount = amount,
+                    currency = form.cleaned_data['currency'],
                     transaction_type = 'Debit',
                     nature = form.cleaned_data['transfer_type'],
                     description = form.cleaned_data['description'],

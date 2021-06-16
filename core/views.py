@@ -61,8 +61,10 @@ class Email() :
         self.send_from = settings.EMAIL_HOST_USER
 
     def send_email(self,receivce_email_list,subject,message) :
-        send_mail(subject,message,self.send_from,receivce_email_list,fail_silently=False)
-
+        try : 
+            send_mail(subject,message,self.send_from,receivce_email_list,fail_silently=False)
+        except :
+            pass
     def internal_transfer_debit_email(self,transaction) :
         acc_number = "{}***..*{}{}".format(
             transaction.user.account_number[0],
@@ -143,11 +145,14 @@ class Messages() :
                 raise ValueError("Phone number must be in international format")
         except : 
             raise ValueError("message and phone number must be in string format")    
-        self.client.messages.create(
-            to = phone_number,
-            from_= settings.SMS_PHONE_NUMBER,
-            body = message
-            )
+        try :
+            self.client.messages.create(
+                to = phone_number,
+                from_= settings.SMS_PHONE_NUMBER,
+                body = message
+                )
+        except : pass
+                    
 
 
     def internal_transfer_debit_sms(self,transaction) :
