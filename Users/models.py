@@ -67,9 +67,10 @@ class User(AbstractUser) :
             #sms 
             sms = Messages()
             mail = Email()
-            msg = """Your account has been blocked\n
+            name = self.name or self.username
+            msg = """Hello {}.Your Credocapital bank account has been blocked.\n
             reason - {}\n
-            contact support test@mail.com""".format(self.block_reason)
+            contact support support@credocapitalbank.com""".format(name,self.block_reason)
             try :
                 sms.send_sms(self.phone_number,msg)
             except :    
@@ -83,14 +84,14 @@ class User(AbstractUser) :
                 #first time actiated 
                 self.date_activated = timezone.now()
                 sms = Messages()
-                msg = """Your account has been activated,it is now active\n"""
+                mail = Email()
+                msg = """Congratulations,after checking out your registration details,Your CredoCapital Bank account has been activated,Welcome to banking us.\n"""
                 sms.send_sms(self.phone_number,msg)
+                mail.send_email()
 
             else:
                 #has been activated before
                 pass    
-
-
         super(User,self).save(*args,**kwargs)
 
 
@@ -100,6 +101,8 @@ class Dashboard(models.Model) :
     receive_email = models.BooleanField(default = True)
     otc = models.PositiveIntegerField(blank = True,null = True)
     otc_expiry = models.DateTimeField(blank = True,null = True)
+    applied_for_card = models.BooleanField(default = False)
+    applied_for_loan = models.BooleanField(default = False)
 
     def __str__(self)  :
         return self.user.__str__()

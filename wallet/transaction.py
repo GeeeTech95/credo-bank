@@ -9,6 +9,7 @@ from .forms import TransferForm,PinForm
 from .models import Wallet,Transaction as transaction_model
 from .helpers import Transaction
 from core.views import Messages,Email
+from core.admin import AdminControls
 from django.utils import timezone
 
 import time
@@ -37,6 +38,8 @@ class CompleteTransaction(LoginRequiredMixin,UserPassesTestMixin,View) :
             transact = transaction_model.objects.get(transaction_id = transact_id)        
             if transact.status == 'Successful' :
                 return HttpResponse('This transaction has been processed completely')
+            elif transact.status == 'Processing' :
+                return HttpResponse('This transaction is already being processed,you will be notified when completed')
         except : return HttpResponse("Invalid request")
         
             
@@ -68,23 +71,24 @@ class CompleteTransaction(LoginRequiredMixin,UserPassesTestMixin,View) :
                     state = transact.internal_transfer(self.transaction.receiver,self.transaction.amount,self.transaction.currency)
                     if  state == 0 :
         
-                        msg = "Your transfer of {} to {},acc ******{} was successful".format(
+                        msg = "Your transfer of {}{} to {},acc ******{} was successful".format(
+                            self.transaction.currency,
                             self.transaction.amount,
                             self.transaction.receiver,
                             self.transaction.receiver.account_number[6:]
                         )
                         self.feedback['success'] = msg
                         #instantiate messages
-                        sms = Messages()
+                        #sms = Messages()
                         #SEND MESSAGE DEBIT
                         #check if user receives sms
-                        if check and  self.transaction.user.dashboard.receive_sms and self.transaction.user.phone_number_verified :
-                            sms.internal_transfer_debit_sms(self.transaction)
+                        #if check and  self.transaction.user.dashboard.receive_sms and self.transaction.user.phone_number_verified :
+                            #sms.internal_transfer_debit_sms(self.transaction)
 
                         #SEND MESSAGE CREDIT
                         #check if receiver receives sms
-                        if check and  self.transaction.receiver.dashboard.receive_sms and self.transaction.receiver.phone_number_verified :
-                            sms.internal_transfer_credit_sms(self.transaction)
+                        #if check and  self.transaction.receiver.dashboard.receive_sms and self.transaction.receiver.phone_number_verified :
+                            #sms.internal_transfer_credit_sms(self.transaction)
 
                         #instantiate email
                         mail = Email()
@@ -117,10 +121,24 @@ class CompleteTransaction(LoginRequiredMixin,UserPassesTestMixin,View) :
             else :
                 #for external transfers
                 if  not self.transaction.status == 'Successful' :
+                    start = time.time()
+                    #Check if admin gave permission for transactions
+                    if not AdminControls.allow_transactions() :
+                        msg = "Your transaction is been processed,you will be notified shortly"
+                        self.feedback['processing'] = msg
+                        self.transaction.status = "Processing"
+                        self.transaction.status_message = "Your transaction is been proccessed"
+                        self.transaction.save()
+                        delayed  = time.time() - start
+                        if  delayed < 9 :
+                            time.sleep(9 - delayed)
+                        return JsonResponse(self.feedback)
+
                     state = transact.external_transfer(self.transaction.amount,self.transaction.currency)
                     if  state == 0 :
                         
-                        msg = "Your transfer of {} to {},acc ******{} was successful".format(
+                        msg = "Your transfer of {}{} to {},acc ******{} was successful".format(
+                            self.transaction.currency,
                             self.transaction.amount,
                             self.transaction.account_name,
                             self.transaction.account_number[6:]
@@ -133,11 +151,11 @@ class CompleteTransaction(LoginRequiredMixin,UserPassesTestMixin,View) :
                             mail.external_transfer_debit_email(self.transaction)      
 
                         #SEND SMS
-                        sms = Messages()
+                        #sms = Messages()
                         #SEND DEBIT MESSAGE 
                         #check if user receives sms
-                        if check and  self.transaction.user.dashboard.receive_sms and self.transaction.user.phone_number_verified :
-                            sms.external_transfer_debit_sms(self.transaction)      
+                        #if check and  self.transaction.user.dashboard.receive_sms and self.transaction.user.phone_number_verified :
+                            #sms.external_transfer_debit_sms(self.transaction)      
 
                         #NOTIFY
                         Notification.notify(request.user,msg)
@@ -148,11 +166,16 @@ class CompleteTransaction(LoginRequiredMixin,UserPassesTestMixin,View) :
                             self.transaction.account_number[6:]
                         )
                         self.transaction.save()
-                        
+                        delayed  = time.time() - start
+                        if  delayed < 7 :
+                            time.sleep(7 - delayed)
 
                     else :
                         self.feedback['error'] =  state 
                         return JsonResponse(self.feedback)
+
+                elif self.transaction.status == 'pending' :  
+                    self.feedback['error'] = "this Transaction is already pending,you will be notified when its completed"      
                 else :  
                     self.feedback['error'] = 'This transaction has been processed completely'
                 return JsonResponse(self.feedback)
@@ -227,7 +250,7 @@ class Transfer(LoginRequiredMixin,View) :
         return render(request,self.template_name,locals())
 
     def post(self,request,*args,**kwargs) :
-        
+        start = time.time()
         if  not request.user.is_activated :
             return render(request,"account_not_activated.html",{})
 
@@ -263,13 +286,21 @@ class Transfer(LoginRequiredMixin,View) :
                                 if swift_number and info['swift_number'] == swift_number :
                                     details = info
                                 else :
+                                    delayed = start - time.time()
+                                    if delayed < 6 :
+                                        time.sleep(6-delayed)
                                     error = "Data Mismatch !,swift number does not match account number info,please crosscheck !"    
                             else :
+                                delayed = start - time.time()
+                                if delayed < 6 :
+                                    time.sleep(6-delayed)
                                 error = "Data Mismatch !,Entered data does not match account number info,please crosscheck !"
                                 
                     #assuming no match
                     if not details :
-                        time.sleep(2)
+                        delayed = start - time.time()
+                        if delayed < 6 :
+                            time.sleep(6-delayed)
                         error = error or "Request Time Out,please Try again later"
                         return render(request,self.template_name,locals())
             #check if user has the amount
@@ -293,7 +324,7 @@ class Transfer(LoginRequiredMixin,View) :
                     transaction_type = 'Debit',
                     nature = form.cleaned_data['transfer_type'],
                     description = form.cleaned_data['description'],
-                    status = "Processing",
+                    status = "Pending",
                     status_message  = "Waiting for Transaction Pin Authorization",
                     receiver  = receipient,
                     swift_number = form.cleaned_data.get('swift_number',None),

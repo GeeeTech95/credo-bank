@@ -1,5 +1,6 @@
 {% extends 'dashboard-base.html' %}
 {% load static %}
+{% load i18n %}
 {% load crispy_forms_tags %}
 {% load crispy_forms_filters %}
 
@@ -25,7 +26,7 @@
                             {{form|crispy}}
                         </div>
                         <div class="card-footer text-right">
-                            <button class="btn btn-primary">Proceed</button>
+                            <button id="proceed" class="btn btn-primary">Proceed</button>
                         </div>
                         </form>
                     </div>
@@ -34,4 +35,15 @@
           </div>
         </section>
 </div>            
+{% endblock %}
+
+{% block js %}
+<script>
+$("#proceed").click(function(){
+  $(this).html("Fetching Account Data..")
+}
+ 
+)
+</script>
+
 {% endblock %}

@@ -27,7 +27,7 @@ class TransferForm(forms.Form) :
         acc_num = self.cleaned_data['account_number']
         if self.cleaned_data['transfer_type']  == "Internal Transfer" :
             if not get_user_model().objects.filter(account_number = acc_num).exists() :
-                raise forms.ValidationError("The entered account number does not belong to any gosen bank valid account,you are getting this error because you selected an internal transfer")
+                raise forms.ValidationError("The entered account number does not belong to any credo capital bank valid account,you are getting this error because you selected an internal transfer")
             if self.user.account_number == acc_num :
                 raise forms.ValidationError("the entered account number matches yours,this is not allowed")
         return acc_num
@@ -50,7 +50,13 @@ class TransferForm(forms.Form) :
         bic = self.cleaned_data['bic']
         if self.cleaned_data['transfer_type']  != "Internal Transfer"  and  len(bic) < 1 :
             raise forms.ValidationError("BIC cannot be empty for {} ".format(self.cleaned_data['transfer_type']))
-        return bic        
+        return bic      
+
+    def clean_amount(self) :
+        amt = self.cleaned_data['amount']   
+        if int(amt) < 1 :
+            raise forms.ValidationError("Amount cannot be less than 1,please enter a valid amount")
+        return amt   
 
         
 class PinForm(forms.Form) :
@@ -65,7 +71,7 @@ class PinForm(forms.Form) :
 
 class ChangePinForm(forms.Form) :
     old_pin = forms.CharField(required = True,help_text="Enter Your Old Pin")
-    new_pin = forms.CharField(required = True,help_text="Enter Your New Pin(6 digits)")
+    new_pin = forms.CharField(required = True,help_text="Enter Your New Pin(4 digits)")
 
     def __init__(self,user  = None,*args,**kwargs) :
         super(ChangePinForm,self).__init__(*args,**kwargs)

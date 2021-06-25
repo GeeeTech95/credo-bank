@@ -27,23 +27,20 @@
                     <table class="table table-striped">
                       <tr>
                      
-                        <th>Trnsaction ID</th>
-                        <th>Transaction Type</th>
-                        <th>Rceipient</th>
-                        <th>Account Number</th>
-                        <th>Amount</th>
-                        <th>Charge</th>
-                        <th>Description</th>
-                        <th>Status</th>
-                        <th>Status Log</th>
                         <th>Date</th>
-                        <th>Action</th>
+                        <th>Description</th>
+                        <th>TID</th>
+                        <th>Withdrawals</th>
+                        <th>Deposits</th>
+                        <th>Balance</th>
+                        
                       </tr>
-                      {% if transaction_history %}
-                      {% for transact in transaction_history %}
+                      {% if statement %}
+                      {% for transact in statement %}
                       <tr>
                         
-                        <td>{{transact.transaction_id}}</td>
+                        <td>{{transact.date}}</td>
+                        <td>{{transact.description}}</td>
                         {% ifequal transact.transaction_type "Credit" %}
                         <td style="color:green">{{transact.transaction_type}}</td>
                         {% else %}

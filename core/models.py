@@ -16,3 +16,11 @@ class NewsLaterSubscriber(models.Model) :
 
     def __str__(self)  :
         return self.email
+
+
+class AdminControl(models.Model) :
+    allow_transactions = models.BooleanField(default = False) 
+
+    def save(self,*args,**kwargs)  :
+        super(AdminControl,self).save(*args,**kwargs)
+

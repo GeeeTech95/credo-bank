@@ -1,6 +1,6 @@
 from  django.urls import path,include
 from .accounts import Register,LoginRedirect
-from .dashboard import Dashboard,Profile,TransactionHistory
+from .dashboard import Dashboard,Profile,TransactionHistory,RequestCreditCard,LoanApply,AccountStatement
 from .views import ValidatePhoneNumber,VerifyEmail
 
 urlpatterns = [
@@ -10,7 +10,9 @@ urlpatterns = [
     
     #transaction
     path('transaction-history/',TransactionHistory.as_view(),name ='transaction-history'),
-
+    path('request-credit-card/',RequestCreditCard.as_view(),name='credit-card-request'),
+    path('loan/apply/',LoanApply.as_view(),name='loan-apply'),
+    path('statement/',AccountStatement.as_view(),name='account-statement'),
 
     path('login/',LoginRedirect.as_view(),name="login-redirect"),
 

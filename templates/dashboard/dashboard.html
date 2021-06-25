@@ -1,5 +1,6 @@
 {% extends 'dashboard-base.html' %}
 {% load static %}
+{% load i18n %}
 {% block content %}
  <!-- Main Content -->
  <div class="main-content">
@@ -14,7 +15,7 @@
                         <div class="card-content">
                           <h5 class="font-15">Account Balance</h5><hr>
                           <h2 class="mb-3 font-18">{{user.wallet.currency.symbol}}{{user.wallet.available_balance}}</h2>
-                          <p class="mb-0"><span class="col-green">View Statement</span> </p>
+                          <p class="mb-0"><span class="col-green"><a class="col-green" href="{% url 'account-statement' %}">View Statement</a></span> </p>
                         </div>
                       </div>
                       <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">
@@ -145,9 +146,13 @@
                           <div class="badge badge-primary">Completed</div>
                           {% else %}
                           {% ifequal transact.status 'Processing' %}
-                          <a href="{% url 'complete-transaction' transact.transaction_id %}"><div class="badge badge-primary">Complete</div></a>
+                          <div class="badge badge-warning">Processing</div>
+                          {% else %}
+                          {% ifequal transact.status 'Processing' %}
+                          <a href="{% url 'complete-transaction' transact.transaction_id %}"><div class="badge badge-primary">Pending</div></a>
                           {% else %}
                           -
+                          {% endifequal %}
                           {% endifequal %}
                           {% endifequal %}
                         </td>

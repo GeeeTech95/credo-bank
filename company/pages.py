@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView,View
 from django.http import JsonResponse
-from django.core.mail import send_mail
+from core.views import Email
+from django.template.loader import render_to_string
 from .forms import ContactForm
 from core.views import Messages
 
@@ -10,6 +11,8 @@ class Index(TemplateView) :
     template_name = 'home.html'
 
     def get(self,request,*args,**kwargs) :
+        mail = Email()
+        mail.send_html_email(['geeetech.inc@gmail.com'],'gf','transaction-email.html')
         return render(request,self.template_name,locals())
 
     def get_context_data(self,*args,**kwargs) : 

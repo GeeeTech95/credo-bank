@@ -1,5 +1,6 @@
 {% extends 'dashboard-base.html' %}
 {% load static %}
+{% load i18n %}
 {% load crispy_forms_tags %}
 {% load crispy_forms_filters %}
 
@@ -34,7 +35,8 @@
                         </div>
                         <div class="card-footer text-right">
                             <button id="submit-button" type="submit" class="btn btn-primary">Proceed</button>
-                            <a href="#" id="loading-button" hidden="" class="btn disabled btn-primary btn-progress">Processing</a>
+                            <a href="#0" id="loading-button" hidden="" class="btn disabled btn-primary btn-progress">Processing</a>
+                            <a href="#0" hidden="" id="t-button"  class="btn disabled btn-primary">.</a>
                         </div>
                         </form>
                     </div>
@@ -61,16 +63,29 @@ $("#form-div").on('submit','#enter-pin-form',function(event){
         dataType : 'json',
         success : function(data){
          if(data.success){
+            $("#t-button").removeAttr('hidden')
             $("#loading-button").attr('hidden','true')
-            $("#submit-button").removeAttr('hidden')
+            $("#t-button").html('Complete !')
+           
             $("#pop-up-modal-title").html('<b>Successful</b>')
             $(".pop-up-modal-body center img").removeAttr('hidden')
             $(".pop-up-modal-body p").html(data.success)
 
-            $("#loading-button").attr('hidden','true')
-            $("#submit-button").html('Complete !')
-            $("#submit-button").removeAttr('hidden')
 
+            $("#globalmodal").modal("show");
+
+         }
+
+         else if(data.processing){
+            $("#loading-button").attr('hidden','true')
+            $("#submit-button").attr('hidden','true')
+            $("#t-button").html('Pending!')
+            $("#t-button").removeAttr('hidden')
+            $("#pop-up-modal-title").html('<b>Processing</b>')
+            //$(".pop-up-modal-body center img").removeAttr('hidden')
+            $(".pop-up-modal-body p").html(data.processing)
+
+            
             $("#globalmodal").modal("show");
 
          }

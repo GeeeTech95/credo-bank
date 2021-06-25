@@ -1,4 +1,5 @@
 {% load static %}
+{% load i18n %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -251,26 +252,31 @@
                 <a style="color:black;padding-left:10px" href="{% url 'profile' %}" class="nav-link"><i class="fas fa-user"></i><span>Account Info</span></a>
             </li>
             <li class="nav-item">
-              <a style="padding-left:10px" class="nav-link" href="{% url 'transfer' %}"><i class="fas fa-share"></i><span>Send Money</span></a></li>
+              <a style="padding-left:10px" class="nav-link" href="{% url 'transfer' %}"><i class="fas fa-share"></i><span>Send Money</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a style="padding-left:10px" class="nav-link" href="{% url 'credit-card-request' %}"><i class="fas fa-credit-card"></i><span>Request For Credit Card</span></a>
+            </li>
             
  
             <li class="dropdown" style="padding-left:0px">
                 <a style="padding-left:10px" href="#" class="menu-toggle nav-link has-dropdown"><i class="fas fa-money-bill"></i><span>Transactions</span></a>
                 <ul class="dropdown-menu">
-                    <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-file"></i><span>Account Statement</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'account-statement' %}"><i class="fas fa-file"></i><span>Account Statement</span></a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'transaction-history' %}"><i class="fas fa-history"></i><span>Transaction History</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="#"><i style="color: red" class="fas fa-history"></i><span>Failed Transactions</span></a></li>
+                    <!--li class="nav-item"><a class="nav-link" href="#"><i style="color: red" class="fas fa-history"></i><span>Failed Transactions</span></a></li-->
           
     
                 </ul>
             </li>
-        <li  class="nav-item"> 
+        <!--li  class="nav-item"> 
             <a style="color:black;padding-left:10px" href="{% url 'deposit' %}" class="nav-link"><i class="fas fa-arrow-up"></i><span>Deposit</span></a>
         </li>
 
         <li  class="nav-item"> 
             <a style="color:black;padding-left:10px" href="{% url 'withdraw' %}" class="nav-link"><i class="fas fa-arrow-down"></i><span>Withdraw</span></a>
-        </li>
+        </li-->
 
         <li class="dropdown" style="padding-left:0px">
             <a style="padding-left:10px" href="#" class="menu-toggle nav-link has-dropdown"><i class="fas fa-cog"></i><span>Settings</span></a>
@@ -280,6 +286,13 @@
               <li><a class="nav-link" href="{% url 'validate-email' %}">Email Verification</a></li>
               <li><a class="nav-link" href="{% url 'validate-phone-number' %}">SMS Verification</a></li>
               <!--li><a class="nav-link" href="#">Set Transfer Limit</a></li-->
+
+            </ul>
+        </li>
+        <li class="dropdown" style="padding-left:0px">
+            <a style="padding-left:10px" href="#" class="menu-toggle nav-link has-dropdown"><i class="fas fa-home"></i><span>Loan</span></a>
+            <ul class="dropdown-menu">
+              <li><a class="nav-link"href="{% url 'loan-apply' %}">Apply</a></li>
 
             </ul>
         </li>
@@ -321,8 +334,8 @@
           </center>
           <p style="margin:20px 10px 20px 20px;font-size:18px;font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif"></p>
           </div>
-          <div id="modal-pop-up-footer" class="modal-footer bg-whitesmoke br">
-            <button type="button" class="btn btn-primary">Save</button>
+          <div  id="modal-pop-up-footer" class="modal-footer bg-whitesmoke br">
+            <button hidden type="button" class="btn btn-primary"></button>
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
           </div>
         </div>

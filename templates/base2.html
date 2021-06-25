@@ -1,5 +1,6 @@
 
 {% load static %}
+{% load i18n %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -97,17 +98,18 @@
             <div class="container">
                 <div class="header-area">
                     <div class="logo">
-                        <a href="#"><img src="{% static 'assets/images/logo/logo02.png' %}" alt="logo"></a>
+                       <h4 style="color:white">{{site_name_short}}</h4> 
+                        <!--a href="#"><img src="{% static 'assets/images/logo/logo02.png' %}" alt="logo"></a-->
                     </div>
                     <ul class="menu">
                         <li>
                              <a href="{% url 'index' %}">Home </a>
                             
                         </li>
-                        <li>
+                        <!--li>
                             <a href="{% url 'loan&investment' %}">Loans & Investment</a>
                            
-                       </li>
+                       </li-->
                         <li>
                             <a href="#0">company</a>
                             <ul class="submenu">

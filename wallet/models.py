@@ -1,6 +1,9 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from core.notification import Notification
+from core.views import Email
 import random
+
 
 
 class Currency(models.Model) :
@@ -29,17 +32,37 @@ class Wallet(models.Model) :
     #when user is disaaalowed from makimg transactions
     disallow_reason = models.TextField(null = False,blank = True)
     is_frozen  = models.BooleanField(default = False)
+    credit_card_blocked = models.BooleanField(default = False )
 
     def __str__(self) :
         return self.user.username
 
     def save(self,*args,**kwargs) :
-        if not self.allowed_to_transact :
-            pass
-            #email user
-            #sms user
-            #notifiy user
+
+       
+        if not self.allowed_to_transact and self.disallow_reason :
+            #notify
+            reason = self.disallow_reason or ''
+            msg = "Dear customer,your have been banned from performing any transaction./nReason :{}".format(reason)
+            Notification.notify(self.user,msg)
+
+            # send email
+            mail = Email() 
+            mail.send_email([self.user.email],"Credo Capital Bank notification",msg) 
+
+
+        if self.credit_card_blocked : 
+            #notify
+            reason = self.disallow_reason or ''
+            msg = "Dear customer,due to some activities on your account,your credit card has been blocked  ./nReason :{}".format(reason)
+            Notification.notify(self.user,msg)
+
+            # send email
+            mail = Email() 
+            mail.send_email([self.user.email],"Credo Capital Bank notification",msg) 
+
         super(Wallet,self).save(*args,**kwargs)     
+
 
 
 
@@ -60,6 +83,7 @@ class Transaction(models.Model) :
     ('International Transfer','International Transfer'))
 
     STATUS = (('Failed','Failed'),
+    ('Pending','Pending'),
     ('Processing','Processing'),
     ('Successful',"Successful"))
     
@@ -87,11 +111,21 @@ class Transaction(models.Model) :
     country =  models.CharField(max_length=20,blank = True,null = True)
     currency = models.ForeignKey(Currency,related_name ='transactions',on_delete = models.SET_NULL,null = True)
     #for controlling transactions
+    is_approved = models.BooleanField(default = False)
+    is_failed = models.BooleanField(default = False)
     failure_reason = models.TextField(null = True,blank = True)
     
     date = models.DateTimeField(auto_now_add=True)
 
+    
+
     def save(self,*args,**kwargs) :
+        if self.is_approved and self.nature == "International Transfer" :
+            #initiate email sending
+            from .helpers import Transaction as Transact
+            transact = Transact(self.user)
+            transact.handle_approved_transactions(self)
+        #if self.nature = "International Transfer" : is_approved = True
         if not self.transaction_id :
             self.transaction_id = self.get_transaction_id()
 
@@ -102,8 +136,10 @@ class Transaction(models.Model) :
             pass    
         super(Transaction,self).save(*args,**kwargs)   
 
+
     def __str__(self) :
         return self.transaction_id
+
 
     class Meta() :
         ordering = ['-date']

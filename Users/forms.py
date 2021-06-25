@@ -86,5 +86,36 @@ class EmailForm(ModelForm) :
             raise forms.ValidationError(error)
         return code        
 
-         
+
+class CreditCardForm(forms.Form)  :
+    type_choice = (('Debit Card','Debit Card'),('Credit Card','Credit Card'))
+    model_choice = (('Mastercard','Mastercard'),('Visacard','Visacard'))
+    card_type = forms.ChoiceField(choices = type_choice)
+    card_model = forms.ChoiceField(choices = model_choice)
+    name_on_card = forms.CharField(help_text = "Exactly as you want on card")
+    address = forms.CharField(required = False,help_text="This is the location where your card will be delivered,leave blank to use your registered address")
+
+
+class AccountStatementForm(forms.Form)  :
+    start = forms.DateField(widget=forms.SelectDateWidget())
+    end = forms.DateField(widget=forms.SelectDateWidget())
+
+
+class LoanForm(forms.Form) :
+    type_choices = (
+    ('Business Term Loan','Business Term Loan'),
+    ('Business Equity Installment Loan','Business Equity Installment loan'),
+    ('Investment real Estate Term Loan','Investment real Estate Term Loan'),
+    ('Auto loan','Auto Loan'),
+    ('Student loan','Student loan'),
+    ('Personal Loan','Personal Loan'),
+    ('Others(tell us about it in your description)','Others'),
+    )
+    loan_type = forms.ChoiceField(choices = type_choices,initial="Select Loan Type")
+    amount = forms.FloatField(help_text='USD')
+    loan_duration = forms.IntegerField(help_text = "in months")
+    description = forms.CharField(widget = forms.Textarea)
+
+
+
 

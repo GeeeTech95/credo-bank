@@ -1,5 +1,6 @@
 {% extends 'base2.html' %}
 {% load static %}
+{% load i18n %}
 
 {% block content %}
 
@@ -11,7 +12,7 @@
                 <div class="container">
                     <div class="banner-content">
                             <span class="category">
-                                    A New banking experience
+                                    {% trans "A New banking experience" %}
                                 </span>
                                 <h1 class="title">We consider you first in everything we do</h1>
                                 <p>Experience {{site_name}} at the peak of modern mobile banking</p>

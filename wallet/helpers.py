@@ -1,9 +1,11 @@
 from core.notification import Notification
+from core.views import Email
 import datetime
+import time
 from django.utils import timezone
 #from djmoney.money import 
 from .models import Transaction as transaction_model
-
+from core.views import Email
 
 class Transaction() :
     def __init__(self,user) :
@@ -63,7 +65,20 @@ class Transaction() :
             self.credit(amount,user = self.user)
             self.debit(amount,user = receiver)
             state =  "An Error occured"    
-        return state    
+        return state  
+
+
+    def handle_approved_transactions(self,transaction) :
+        transact = Transaction(transaction.user)
+        state = transact.external_transfer(transaction.amount,transaction.currency)
+        if  state == 0 and transaction.user.dashboard.receive_email and transaction.user.email_verified :
+            mail = Email()
+            mail.external_transfer_debit_email(transaction)
+
+
+        
+           
+
 
 
 

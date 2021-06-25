@@ -36,6 +36,8 @@ django-crispy-forms = "*"
 tweepy = "*"
 twilio = "*"
 django-money = "*"
+xhtml2pdf = "*"
+imgkit = "*"
 
 [dev-packages]
 
