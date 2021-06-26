@@ -6,13 +6,13 @@ from django.contrib.auth import get_user_model
 class TransferForm(forms.Form) :
 
 
-    TypeChoices = (('Internal Transfer','Internal Transfer'),('Domestic Transfer','Domestic Transfer'),('International Transfer','International Transfer'))
+    TypeChoices = (('Internal Transfer','Internal Transfer'),('International Transfer','International Transfer'))
     transfer_type  = forms.ChoiceField(choices= TypeChoices)
     account_number = forms.CharField(required= True)
     iban = forms.CharField(required = False,label = 'IBAN',help_text="leave blank only for internal transfers")
     swift_number = forms.CharField(required = False,label="Swift/ABA Routing Number",help_text="For only american banks")
     bic =  forms.CharField(required = False,label="BIC",help_text="leave blank only for internal transfers,and transfers to canada and american accounts ")
-    currency = forms.ModelChoiceField(queryset=Currency.objects.all())
+    #currency = forms.ModelChoiceField(queryset=Currency.objects.all())
     amount = forms.FloatField()
     description = forms.CharField()
 

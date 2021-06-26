@@ -11,6 +11,7 @@ from .helpers import Transaction
 from core.views import Messages,Email
 from core.admin import AdminControls
 from django.utils import timezone
+from django.conf import settings
 
 import time
 
@@ -25,6 +26,7 @@ class CompleteTransaction(LoginRequiredMixin,UserPassesTestMixin,View) :
     template_name = 'enter-pin.html'
     
     def get(self,request,*args,**kwargs) :
+        transact = None
         if not request.user.is_activated :
             return render(request,"account_not_activated.html",locals())
         
@@ -40,8 +42,12 @@ class CompleteTransaction(LoginRequiredMixin,UserPassesTestMixin,View) :
                 return HttpResponse('This transaction has been processed completely')
             elif transact.status == 'Processing' :
                 return HttpResponse('This transaction is already being processed,you will be notified when completed')
+             
         except : return HttpResponse("Invalid request")
-        
+        if transact and not transact.transaction_type == "Internal Transfer" :
+            charge = settings.INTERNATIONAL_TRANSFER_CHARGE
+            charge = (charge/100) * int(transact.amount)
+        else : charge = 0.00  
             
         return render(request,self.template_name,locals())
 
@@ -68,11 +74,11 @@ class CompleteTransaction(LoginRequiredMixin,UserPassesTestMixin,View) :
             if self.transaction.nature == 'Internal Transfer' :
                 #making sure the transaction is not processed already
                 if  not self.transaction.status == 'Successful' :
-                    state = transact.internal_transfer(self.transaction.receiver,self.transaction.amount,self.transaction.currency)
+                    state = transact.internal_transfer(self.transaction.receiver,self.transaction.amount)
                     if  state == 0 :
         
                         msg = "Your transfer of {}{} to {},acc ******{} was successful".format(
-                            self.transaction.currency,
+                            self.transaction.user.wallet.currency,
                             self.transaction.amount,
                             self.transaction.receiver,
                             self.transaction.receiver.account_number[6:]
@@ -134,11 +140,11 @@ class CompleteTransaction(LoginRequiredMixin,UserPassesTestMixin,View) :
                             time.sleep(9 - delayed)
                         return JsonResponse(self.feedback)
 
-                    state = transact.external_transfer(self.transaction.amount,self.transaction.currency)
+                    state = transact.external_transfer(self.transaction.amount)
                     if  state == 0 :
                         
                         msg = "Your transfer of {}{} to {},acc ******{} was successful".format(
-                            self.transaction.currency,
+                            self.transaction.user.wallet.currency,
                             self.transaction.amount,
                             self.transaction.account_name,
                             self.transaction.account_number[6:]
@@ -266,6 +272,7 @@ class Transfer(LoginRequiredMixin,View) :
             #if internal
             receipient = None
             if  transact_type == 'Internal Transfer' :
+                charge = 0.00
                 receipient = get_user_model().objects.get(account_number = acc_num)
             
 
@@ -273,6 +280,8 @@ class Transfer(LoginRequiredMixin,View) :
                 
                 """ check if details match for international transfer """
                 if transact_type != "Internal Transfer"  :
+                    charge = settings.INTERNATIONAL_TRANSFER_CHARGE
+                    charge = (charge/100) * int(amount)
                     iban = form.cleaned_data['iban']
                     bic = form.cleaned_data['bic']
                     swift_number = form.cleaned_data.get('swift_number',None)
@@ -291,20 +300,25 @@ class Transfer(LoginRequiredMixin,View) :
                                         time.sleep(6-delayed)
                                     error = "Data Mismatch !,swift number does not match account number info,please crosscheck !"    
                             else :
-                                delayed = start - time.time()
+                                delayed = time.time() - start
+                                print(delayed)
                                 if delayed < 6 :
                                     time.sleep(6-delayed)
                                 error = "Data Mismatch !,Entered data does not match account number info,please crosscheck !"
                                 
                     #assuming no match
                     if not details :
-                        delayed = start - time.time()
-                        if delayed < 6 :
-                            time.sleep(6-delayed)
+                        delayed = time.time()  - start
+                        
+                        if delayed < 5 :
+                            time.sleep(5-delayed)
                         error = error or "Request Time Out,please Try again later"
                         return render(request,self.template_name,locals())
+            
+            
+            
             #check if user has the amount
-            if not request.user.wallet.available_balance >  float(amount) :
+            if not request.user.wallet.available_balance >  float(amount + charge) :
                 error = "Insufficient Funds,Enter a lower amount"
                 return render(request,self.template_name,locals())
             else :
@@ -320,10 +334,10 @@ class Transfer(LoginRequiredMixin,View) :
                 transact = transaction_model.objects.create(
                     user = request.user,
                     amount = amount,
-                    currency = form.cleaned_data['currency'],
                     transaction_type = 'Debit',
                     nature = form.cleaned_data['transfer_type'],
                     description = form.cleaned_data['description'],
+                    charge = charge,
                     status = "Pending",
                     status_message  = "Waiting for Transaction Pin Authorization",
                     receiver  = receipient,

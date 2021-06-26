@@ -35,7 +35,7 @@ class User(AbstractUser) :
 
     ACCOUNT_TYPE = (('Savings','SAVINGS'),('Current','CURRENT'))    
            
-    
+    name = models.CharField(max_length=60,blank = True,null = False)
     email_verified = models.BooleanField(default=False,blank = True)
     phone_number = models.CharField(max_length = 30,blank = False,null = False)
     phone_number_verified = models.BooleanField(default=False,blank = True)
@@ -48,6 +48,7 @@ class User(AbstractUser) :
     passport = models.FileField(upload_to = get_path,null = True)
     is_activated = models.BooleanField(default = False,blank = False,null = False)
     date_activated = models.DateTimeField(null = True,blank = True)
+    
     #admin controls account from here
     is_blocked = models.BooleanField(default = False)
     block_reason = models.TextField(blank=True,null=True)
@@ -64,30 +65,22 @@ class User(AbstractUser) :
         if  self.is_blocked :
             
             #email user
-            #sms 
-            sms = Messages()
-            mail = Email()
+           
             name = self.name or self.username
-            msg = """Hello {}.Your Credocapital bank account has been blocked.\n
-            reason - {}\n
-            contact support support@credocapitalbank.com""".format(name,self.block_reason)
-            try :
-                sms.send_sms(self.phone_number,msg)
-            except :    
-                pass
-            try :
-                mail.send_email([self.email],"Account Blocked",msg) 
-            except : pass    
-
+            mail = Email()
+            reason = self.block_reason or ''
+            ctx={'name' : name,'reason' : reason}
+            mail.send_html_email([self.email],'Account Blocked','account-blocked-email.html',ctx=ctx)
+            
         if self.is_activated :
             if not self.date_activated :
                 #first time actiated 
                 self.date_activated = timezone.now()
-                sms = Messages()
+                name = self.name or self.username
                 mail = Email()
-                msg = """Congratulations,after checking out your registration details,Your CredoCapital Bank account has been activated,Welcome to banking us.\n"""
-                sms.send_sms(self.phone_number,msg)
-                mail.send_email()
+                reason = self.block_reason or ''
+                ctx={'name' : name,'account_number' : self.account_number}
+                mail.send_html_email([self.email],'Account Activated','account-activated-email.html',ctx=ctx)
 
             else:
                 #has been activated before

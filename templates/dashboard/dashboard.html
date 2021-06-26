@@ -1,6 +1,8 @@
 {% extends 'dashboard-base.html' %}
 {% load static %}
-{% load i18n %}
+<!--{% load i18n %}-->
+{% load mytags %}
+
 {% block content %}
  <!-- Main Content -->
  <div class="main-content">
@@ -115,12 +117,12 @@
                         {% endifequal %}
 
                         {% ifequal transact.transaction_type "Credit" %}
-                        <td style="color:green">{{user.wallet.currency.symbol}}{{transact.amount}}</td>
+                        <td style="color:green">+{{user.wallet.currency}}{{transact.amount}}</td>
                         {% else %}
-                        <td style="color:red">-{{user.wallet.currency.symbol}}{{transact.amount}}</td>
+                        <td style="color:red">-{{user.wallet.currency}}{{transact.amount}}</td>
                         {% endifequal %}
        
-                        <td>{{transact.charge}}</td>
+                        <td style="color:red">-{{user.wallet.currency}}{{transact.charge}}</td>
                       
                       
                         {% if transact.description %}
@@ -134,26 +136,24 @@
                           {% ifequal transact.status  "Processing" %}
                           <td><div class="badge badge-warning">Processing</div></td>
                           {% else %}
+                          {% ifequal transact.status  "Pending" %}
+                          <td><div class="badge badge-info">Pending</div></td>
+                          {% else %}
                           <td><div class="badge badge-success">Successful</div></td>
                           {% endifequal %}
+                        {% endifequal %}
                         {% endifequal %}
                         
                        
                         <td>{{transact.status_message}}</td>
                         <td>{{transact.date}}</td>
                         <td>
-                          {% ifequal transact.status 'Successful' %}
-                          <div class="badge badge-primary">Completed</div>
-                          {% else %}
-                          {% ifequal transact.status 'Processing' %}
-                          <div class="badge badge-warning">Processing</div>
-                          {% else %}
-                          {% ifequal transact.status 'Processing' %}
-                          <a href="{% url 'complete-transaction' transact.transaction_id %}"><div class="badge badge-primary">Pending</div></a>
+                         
+                          {% ifequal transact.status 'Pending' %}
+                          <a href="{% url 'complete-transaction' transact.transaction_id %}"><div class="badge badge-primary">Complete Transaction</div></a>
                           {% else %}
                           -
-                          {% endifequal %}
-                          {% endifequal %}
+          
                           {% endifequal %}
                         </td>
                         

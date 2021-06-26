@@ -3,23 +3,16 @@ from core.views import Email
 import datetime
 import time
 from django.utils import timezone
+from django.conf import settings
 #from djmoney.money import 
 from .models import Transaction as transaction_model
 from core.views import Email
+from core.helpers import Helper
 
 class Transaction() :
     def __init__(self,user) :
         self.user = user
 
-
-    
-    def currency_convert(self,amount,_from,_to) :
-
-        """ 
-        converts from one currency to another 
-        _from and _to should be in currency object
-        amount should be in the _from currency"""
-        return amount
 
     def credit(self,amount,user=None)  :
         if not user : user = self.user
@@ -31,39 +24,36 @@ class Transaction() :
             
 
     def debit(self,amount,user=None) :
+        
         if not user : user = self.user
         wallet = user.wallet
-        wallet.available_balance -= amount 
+        wallet.available_balance -= amount
         wallet.save()
         #ensure it added
         return
 
-    def external_transfer(self,amount,currency) : 
-        amount = self.currency_convert(amount,currency,self.user.wallet.currency)
+    def external_transfer(self,amount) : 
+        charge = settings.INTERNATIONAL_TRANSFER_CHARGE
+        charge = (charge/100) * amount
         try :
-            self.debit(amount)
-            #send mail
-            #send message
+            self.debit(amount + charge)
             state = 0
         except :
-            self.credit(amount)
             state =  "An Error occured"    
         return state
 
-    def internal_transfer(self,receiver,amount,currency) : 
+    def internal_transfer(self,receiver,amount) : 
         """
         currency is the receiving account currency"""
-        #convert to sending acc curr
-        amount = self.currency_convert(amount,currency,receiver.wallet.currency)
+        #convert to receiver currency
+        _from = self.user.wallet.currency
+        _to = receiver.wallet.currency
+        converted_amount = Helper.currency_convert(amount,_from,_to)
         try :
             self.debit(amount)
-            self.credit(amount,receiver)
-            #send mail
-            #send message
+            self.credit(converted_amount,receiver)
             state = 0
         except :
-            self.credit(amount,user = self.user)
-            self.debit(amount,user = receiver)
             state =  "An Error occured"    
         return state  
 
@@ -74,6 +64,20 @@ class Transaction() :
         if  state == 0 and transaction.user.dashboard.receive_email and transaction.user.email_verified :
             mail = Email()
             mail.external_transfer_debit_email(transaction)
+            msg = "Your transfer of {}{} to {},acc ******{} was successful".format(
+                transaction.currency,
+                transaction.amount,
+                transaction.account_name,
+                transaction.account_number[6:]
+            )
+            Notification.notify(transaction.user,msg)
+            transaction.status = 'Successful'
+            transaction.status_message = "TRF ${}  to  {},Acc ******{} ".format(
+            transaction.amount,
+            transaction.account_name,
+            transaction.account_number[6:]
+            )
+            transaction.save()
 
 
         

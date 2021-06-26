@@ -6,6 +6,7 @@ from django.core.mail import EmailMessage
 from django.template.loader import render_to_string,get_template
 from django.conf import settings
 from django.utils import timezone
+from core.helpers import Helper
 import imgkit
 from io import BytesIO
 
@@ -26,16 +27,24 @@ class ValidationCode()     :
         db.otc = int(code)
         db.otc_expiry = expiry
         db.save()
-        msg = "Your verification code is {},active till {}".format(code,expiry.time())
+        ctx = {'expiry' : expiry.time(),'code' : code}
+        email_receiver = user.email
+        #payload = self.convert_html_to_pdf(template_name,ctx)
+        name = user.name or user.username
+        
+      
         
         if send_type == 'message' :
+            msg = "credo capital bank phone number verification code is {}".format(code)
             sms = Messages()
             sms.send_sms(phone_number,msg)
 
+
         elif send_type == 'email' :
-            receipient = [email] 
-            mail = Email() 
-            mail.send_email(receipient,"email Verification",msg)  
+            subject = "Credo Capital email verification"
+            mail = Email()
+            ctx['name'] = name
+            mail.send_html_email([email_receiver],subject,"otp-email.html",ctx=ctx)
 
 
     @staticmethod
@@ -101,18 +110,19 @@ class Email() :
         msg = render_to_string(template,ctx)
         email = EmailMessage(subject,msg,self.send_from,receive_email_list)
         email.content_subtype = "html"
-        email.send()
+        try : email.send()
+        except : pass
 
 
     def send_file_email(self,file_name,_file,receive_email_list,subject,message) :
         email = EmailMessage(subject,message,self.send_from,receive_email_list)
         email.attach(file_name,_file)
-        email.send()
+        try : email.send()
+        except : pass
 
     
 
     def internal_transfer_debit_email(self,transaction) :
-        template_name = "transaction-email.html"
         
         acc_num = "{}***..*{}{}".format(
         transaction.user.account_number[0],
@@ -123,21 +133,27 @@ class Email() :
         ctx = {
             'acc_num' : acc_num,
             'acc_name' : transaction.user,
-            'amount' : "{}{}".format(transaction.currency,transaction.amount),
+            'amount' : "{}{}".format(transaction.user.wallet.currency,transaction.amount),
+    
             'balance' : "{}{}".format(transaction.user.wallet.currency,transaction.user.wallet.available_balance),
             'msg' : msg,
+            'trasnaction_id' : transaction.transaction_id,
+            'trasnaction_type' : transaction.transaction_type,
             'date' : transaction.date
-        }    
+        }   
+        subject = "Credo Capital Bank Transaction Alert" 
         email_receiver = transaction.user.email
-        payload = self.convert_html_to_pdf(template_name,ctx)
-        subject = "Credo Capital Bank Transaction Alert"
-        msg = "Hello {},there has been  a recent transaction activity on your {} account,contained in this pdf is the details of  that transaction.".format(transaction.user,transaction.user.account_type)
-        self.send_file_email('transaction_alert.pdf',payload,[email_receiver],subject,msg)
+        name = transaction.receiver.name or transaction.receiver.username
+        mail = Email()
+        ctx['name'] = name
+        mail.send_html_email([email_receiver],subject,"transaction-email.html",ctx=ctx)
         
 
     def internal_transfer_credit_email(self,transaction) :
-        template_name = "transaction-email.html"
-        
+        amt = transaction.receiver.wallet.currency,transaction.amount
+        _from = transaction.user.wallet.currency
+        _to = transaction.receiver.wallet.currency
+        converted_amount = Helper.currency_convert(amt,_from,_to)
         acc_num = "{}***..*{}{}".format(
         transaction.user.account_number[0],
         transaction.user.account_number[-2],
@@ -147,21 +163,25 @@ class Email() :
         ctx = {
             'acc_num' : acc_num,
             'acc_name' : transaction.receiver,
-            'amount' : "{}{}".format(transaction.currency,transaction.amount),
+            'amount' : "{}{}".format(_to,converted_amount),
             'balance' : "{}{}".format(transaction.receiver.wallet.currency,transaction.receiver.wallet.available_balance),
             'msg' : msg,
+            'trasnaction_id' : transaction.transaction_id,
+            'trasnaction_type' : transaction.transaction_type,
             'date' : transaction.date
         }    
         email_receiver = transaction.receiver.email
-        payload = self.convert_html_to_pdf(template_name,ctx)
+        #payload = self.convert_html_to_pdf(template_name,ctx)
         subject = "Credo Capital Bank Transaction Alert"
-        nam = transaction.receiver.name or transaction.receiver.username
-        msg = "Hello {},there has been  a recent transaction activity on your {} account,contained in this pdf are the details of  that transaction.".format(nam,transaction.receiver.account_type)
-        self.send_file_email('transaction_alert.pdf',payload,[email_receiver],subject,msg)
+        name = transaction.receiver.name or transaction.receiver.username
+        mail = Email()
+        ctx['name'] = name
+        mail.send_html_email([email_receiver],subject,"transaction-email.html",ctx=ctx)
+
+        """msg = "Hello {},there has been  a recent transaction activity on your {} account,contained in this pdf are the details of  that transaction.".format(nam,transaction.receiver.account_type)
+        self.send_file_email('transaction_alert.pdf',payload,[email_receiver],subject,msg)"""
 
     def external_transfer_debit_email(self,transaction) :
-
-        template_name = "transaction-email.html"
 
         receipient_str =  "{},A/C - {},iban - {},bank - {}".format(transaction.account_name,transaction.account_number,
         transaction.iban,
@@ -176,16 +196,20 @@ class Email() :
         ctx = {
             'acc_num' : acc_num,
             'acc_name' : transaction.user,
-            'amount' : "{}{}".format(transaction.currency,transaction.amount),
+            'amount' : "{}{}".format(transaction.user.wallet.currency,transaction.amount),
             'balance' : "{}{}".format(transaction.user.wallet.currency,transaction.user.wallet.available_balance),
             'msg' : msg,
+            'trasnaction_id' : transaction.transaction_id,
+            'trasnaction_type' : transaction.transaction_type,
             'date' : transaction.date
         }    
         email_receiver = transaction.user.email
-        payload = self.convert_html_to_pdf(template_name,ctx)
+        #payload = self.convert_html_to_pdf(template_name,ctx)
+        name = transaction.receiver.name or transaction.receiver.username
         subject = "Credo Capital Bank Transaction Alert"
-        msg = "Hello {},there has been  a recent transaction activity on your {} account,contained in this pdf is the details of  that transaction.".format(transaction.user,transaction.user.account_type)
-        self.send_file_email('transaction_alert.pdf',payload,[email_receiver],subject,msg)
+        mail = Email()
+        ctx['name'] = name
+        mail.send_html_email([email_receiver],subject,"transaction-email.html",ctx=ctx)
             
  
 class Messages() :

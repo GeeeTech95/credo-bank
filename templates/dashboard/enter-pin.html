@@ -20,13 +20,13 @@
                         </div>
                         <p style="padding-left:30px">
                             {% if transact.country %}
-                            You are transferring <b>{{transact.currency.symbol}}{{transact.amount}}</b> to <b>{{transact.account_name}}</b><br>
+                            You are transferring <b>{{user.wallet.currency}}{{transact.amount}}</b> to <b>{{transact.account_name}}</b>,with a transaction charge of <b>{{user.wallet.currency}}{{charge}}</b><br>
                             account Number : <b>{{transact.account_number}}</b><br>
                             bank : <b>{{transact.bank_name}}</b> <br>
                             country : <b>{{transact.country}}</b>
 
                             {% else %}
-                            You are transferring <b>{{transact.currency.symbol}}{{transact.amount}}</b> to <b>{{transact.receiver}}</b> with account Number <b>{{transact.receiver.account_number}}</b>
+                            You are transferring <b>{{user.wallet.currency}}{{transact.amount}}</b> to <b>{{transact.receiver}}</b> with account Number <b>{{transact.receiver.account_number}}</b>,with a transaction charge of  <b>{{user.wallet.currency}}0.00</b>
                             {% endif %}
                         </p>
                             <div class="card-body">

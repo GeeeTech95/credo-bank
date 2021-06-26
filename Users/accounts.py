@@ -5,7 +5,7 @@ from django.views.generic.base  import RedirectView
 from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate,login
 from wallet.models import Wallet
-from core.views import Messages
+from core.views import Email
 from .models import  User,Dashboard
 from .forms import UserCreateForm,PhoneNumberForm
 
@@ -28,18 +28,24 @@ class Register(CreateView) :
     def post(self,request,*args,**kwargs) :
         form = self.form_class(request.POST,request.FILES)
         if form.is_valid() :
-            user  = form.save()
+            try : name = "{} {}".format(form.cleaned_data['first_name'],form.cleaned_data['last_name'])
+            except : pass
+            form.save(commit = False)
+            form.instance.name = name
+            user = form.save()
+            
+            #send thank you email 
+            name = name or user.username
+            
             self.auto_create_wallet(user,form.cleaned_data['currency'])
             self.auto_create_dashboard(user)
-            #send thank you email 
-
-            #send thank you message
-            try :
-                sms = Messages()
-                msg="Thanks for choosing us,await while your account is been validated"
-                sms.send_sms(user.phone_number,msg)
-            except :
-                pass
+            
+            
+            mail = Email()
+            
+            ctx={'name' : name,'account_type' : user.account_type}
+            mail.send_html_email([user.email],'Successful Signup','welcome-email.html',ctx=ctx)
+            
             #authenticate and login user
             auth_user = authenticate(username=form.cleaned_data['username'],password=form.cleaned_data['password1'])
             if user is not None and user.is_active :

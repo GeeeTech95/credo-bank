@@ -11,8 +11,6 @@ class Index(TemplateView) :
     template_name = 'home.html'
 
     def get(self,request,*args,**kwargs) :
-        mail = Email()
-        mail.send_html_email(['geeetech.inc@gmail.com'],'gf','transaction-email.html')
         return render(request,self.template_name,locals())
 
     def get_context_data(self,*args,**kwargs) : 

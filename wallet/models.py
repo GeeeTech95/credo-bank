@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth import get_user_model
 from core.notification import Notification
 from core.views import Email
+from django.conf import settings
 import random
 
 
@@ -33,6 +34,7 @@ class Wallet(models.Model) :
     disallow_reason = models.TextField(null = False,blank = True)
     is_frozen  = models.BooleanField(default = False)
     credit_card_blocked = models.BooleanField(default = False )
+    credit_card_blocked_reason = models.TextField(null = True,blank = True)
 
     def __str__(self) :
         return self.user.username
@@ -40,7 +42,7 @@ class Wallet(models.Model) :
     def save(self,*args,**kwargs) :
 
        
-        if not self.allowed_to_transact and self.disallow_reason :
+        """if not self.allowed_to_transact and self.disallow_reason :
             #notify
             reason = self.disallow_reason or ''
             msg = "Dear customer,your have been banned from performing any transaction./nReason :{}".format(reason)
@@ -48,18 +50,20 @@ class Wallet(models.Model) :
 
             # send email
             mail = Email() 
-            mail.send_email([self.user.email],"Credo Capital Bank notification",msg) 
+            mail.send_email([self.user.email],"Credo Capital Bank notification",msg) """
 
 
         if self.credit_card_blocked : 
             #notify
-            reason = self.disallow_reason or ''
+            reason = self.credit_card_blocked_reason or ''
             msg = "Dear customer,due to some activities on your account,your credit card has been blocked  ./nReason :{}".format(reason)
             Notification.notify(self.user,msg)
 
             # send email
-            mail = Email() 
-            mail.send_email([self.user.email],"Credo Capital Bank notification",msg) 
+            mail = Email()
+            name = self.user.name or self.user.username
+            ctx={'name' : name,'reason' : reason}
+            mail.send_html_email([self.user.email],'Account Blocked','credit-card-blocked-email.html',ctx=ctx)
 
         super(Wallet,self).save(*args,**kwargs)     
 
@@ -67,6 +71,12 @@ class Wallet(models.Model) :
 
 
 class Transaction(models.Model) :
+    try : 
+        international_charge = settings.INTERNATIONAL_TRANSFER_CHARGE
+        internal_charge = settings.INTERNAL_TRANSFER_CHARGE
+    except : 
+        international_charge  = 2
+        internal_charge = 0.5
     def get_transaction_id(self) :
         PREFIX = "TD"
         number = random.randrange(10000000,999999999)
@@ -109,7 +119,7 @@ class Transaction(models.Model) :
     account_name  = models.CharField(max_length=20,blank = True,null = True)
     bank_name = models.CharField(max_length=20,blank = True,null = True)
     country =  models.CharField(max_length=20,blank = True,null = True)
-    currency = models.ForeignKey(Currency,related_name ='transactions',on_delete = models.SET_NULL,null = True)
+    #currency = models.ForeignKey(Currency,related_name ='transactions',on_delete = models.SET_NULL,null = True)
     #for controlling transactions
     is_approved = models.BooleanField(default = False)
     is_failed = models.BooleanField(default = False)

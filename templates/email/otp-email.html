@@ -1,4 +1,4 @@
-{% load i18n %}
+
 <!doctype html>
 <html>
   <head>
@@ -335,7 +335,7 @@
     </style>
   </head>
   <body class="">
-    <span class="preheader">Transaction notification details </span>
+    <span class="preheader">Your email verification code is {{code}}</span>
     <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="body">
       <tr>
         <td>&nbsp;</td>
@@ -344,69 +344,36 @@
 
             <!-- START CENTERED WHITE CONTAINER -->
             <table role="presentation" class="main">
-            
 
               <!-- START MAIN CONTENT AREA -->
               <tr>
                 <td class="wrapper">
                   <table role="presentation" border="0" cellpadding="0" cellspacing="0">
-                      <tr ><span style="font-size:22px;color:rgb(7, 7, 138);font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif">Credo<br>&nbsp;Capital Bank</span></tr>
-                    <br><br>
-                      <tr>
+                        <tr ><span style="font-size:22px;color:rgb(7, 7, 138);font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif">Credo<br>&nbsp;Capital Bank</span></tr>
+                        <br><br>
+                    <tr>
                       <td>
-                        <p>Hello {{name}}</p>
-                        <p>This is to inform you that a <b>{{transaction_type}}</b> transaction just occured on your account.if you did not authorize such transaction,please contact <a href="mailto:support@credocapitalbank.com" >support</a><br>See the details below</p>
-                        <table style="background-color: rgb(202, 187, 187);margin-bottom:30px;padding:10px">
-                          <tbody>
-                            <tr style="padding-bottom:0px;margin-bottom:0px">
-                              <td>Account Name</td><td>{{acc_name}}</td>
-                            </tr>
-                            <tr style="padding-bottom:0px;margin-bottom:0px">
-                                <td>Account Number</td><td>{{acc_num}}</td>
-                              </tr>
-                              
-                                <tr style="padding-bottom:0px;margin-bottom:0px">
-                                    <td>Trsnsaction Ref.</td><td>{{trsnsaction_id}}</td>
-                                  </tr>
-                                  <tr style="padding-bottom:0px;margin-bottom:0px">
-                                      <td>Transaction Type</td><td>{{transaction_type}}</td>
-                                    </tr>
-
-                                    <tr style="padding-bottom:0px;margin-bottom:0px">
-                                        <td>Amount</td><td>{{amount}}</td>
-                                      </tr>
-                                <tr style="padding-bottom:0px;margin-bottom:0px">
-                                    <td>Details</td><td>{{msg}}</td>
-                                  </tr>
-                                  <tr style="padding-bottom:0px;margin-bottom:0px">
-                                      <td>Balance</td><td>{{balance}}</td>
-                                    </tr>
-                                    <tr style="padding-bottom:0px;margin-bottom:0px">
-                                        <td>Date</td><td>{{date}}</td>
-                                      </tr>
-                          </tbody>
-
-                        </table>
+                        <p>Hello  {{name}}</p>
+                        
+                       
+                        <p>Your email verification code is  <b style="font-size: 17px">{{code}}   ,active till {{expiry}}</b>Please for your own security do not share this code with anyone.<br>If you do not understand or know the reason for this email,please negelect it.</p>
+                        <p>Do know that Credocapital bank or its staff will never ask for your personal details.Always keep it confidential.</p>
                         <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
                           <tbody>
                             <tr>
                               <td align="left">
                                 <table role="presentation" border="0" cellpadding="0" cellspacing="0">
-                                  <tbody>
-                                      
-                                    <tr   bbb>
-                                      <td style="color:white;background-color:rgb(38, 123, 235);color:white"> <a href="https://www.credocapitalbank.com{% url 'transaction-history' %}" target="_blank">View transaction history</a> </td>
-                                    </tr>
-                                  </tbody>
+                                 
                                 </table>
                               </td>
                             </tr>
                           </tbody>
                         </table>
-                        <br><br>
-                        <b>Disclaimer </b><br>
+                        <div style="padding:10px;background-color: rgb(202, 187, 187)">
+                        <b >Disclaimer </b><br>
                         <p>The information contained in this message is highly confidential and solely intended for the individual or entity to whom it is addresed to.if your not the intended receipient,please do not read.you are hereby notified that any disclosure of this communication in reliance of the contents of this information is strictly prohibited and may be unlawful.thank you for your kind gesture.</p>
-                      </td>
+                    </div>
+                    </td>
                     </tr>
                   </table>
                 </td>
