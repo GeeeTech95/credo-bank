@@ -64,18 +64,19 @@ class Transaction() :
         if  state == 0 and transaction.user.dashboard.receive_email and transaction.user.email_verified :
             mail = Email()
             mail.external_transfer_debit_email(transaction)
-            msg = "Your transfer of {}{} to {},acc ******{} was successful".format(
+            msg = "Your transfer of {}{} to {},iban ******{} was successful".format(
                 transaction.user.wallet.currency,
                 transaction.amount,
                 transaction.account_name,
-                transaction.account_number[6:]
+                transaction.iban[6:]
             )
             Notification.notify(transaction.user,msg)
             transaction.status = 'Successful'
-            transaction.status_message = "TRF ${}  to  {},Acc ******{} ".format(
+            transaction.status_message = "TRF {}{}  to  {},iban ******{} ".format(
+            transaction.user.wallet.currency,
             transaction.amount,
             transaction.account_name,
-            transaction.account_number[6:]
+            transaction.iban[6:]
             )
             transaction.save()
 

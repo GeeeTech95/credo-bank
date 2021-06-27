@@ -21,7 +21,9 @@
                         <p style="padding-left:30px">
                             {% if transact.country %}
                             You are transferring <b>{{user.wallet.currency}}{{transact.amount}}</b> to <b>{{transact.account_name}}</b>,with a transaction charge of <b>{{user.wallet.currency}}{{charge}}</b><br>
+                            {% if transact.account_number %}
                             account Number : <b>{{transact.account_number}}</b><br>
+                            {% endif %}
                             bank : <b>{{transact.bank_name}}</b> <br>
                             country : <b>{{transact.country}}</b>
 

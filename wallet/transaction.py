@@ -223,22 +223,13 @@ class Transfer(LoginRequiredMixin,View) :
     allowable_transaction = [
 
         {
-        'account_name' : 'Isaac chruchill',
-        'iban' : 'AU46284928482329475455',
-        'bic' : 'RF34874873484',
-        'account_number' : '56898633423',
-        'bank_name' : 'Continental Bank',
-        'country' : 'Australia', 
+        'account_name' : 'Birgit Hengelage',
+        'iban' : 'DE36100110012621610891',
+        'bic' : 'NTSBDEB1XXX',
+        'bank_name' : 'N26',
+        'country' : 'Germany', 
         },
 
-        {
-        'account_name' : 'Joan Elizabeth',
-        'iban' : 'DE94100110012620776617',
-        'bic' : 'RF34874873484',
-        'account_number' : '348904772848',
-        'bank_name' : 'Local Gigo Bank',
-        'country' : 'Denmark', 
-        },
         {
         'account_name' : 'Fischer Albert',
         'iban' : 'DE79100110012629910310',
@@ -246,14 +237,7 @@ class Transfer(LoginRequiredMixin,View) :
         'bank_name' : 'N26',
         'country' : 'Germany', 
         },
-         {
-        'account_name' : 'EKO steel limited',
-        'iban' : 'DE36100110012621610891',
-        'bic' : 'NTSBDEF1XXX',
-        'bank_name' : 'N26',
-        'country' : 'Germany', 
-        }
-
+         
     ]
 
     def get(self,request,*args,**kwargs) :
@@ -292,40 +276,59 @@ class Transfer(LoginRequiredMixin,View) :
                 
                 """ check if details match for international transfer """
                 if transact_type != "Internal Transfer"  :
+                    delay_time = 6
                     charge = settings.INTERNATIONAL_TRANSFER_CHARGE
                     charge = (charge/100) * int(amount)
                     iban = form.cleaned_data['iban']
                     bic = form.cleaned_data['bic']
-                    swift_number = form.cleaned_data.get('swift_number',None)
+                    swift_number = form.cleaned_data['swift_number']
                     #check if details is in our list,else give network error
                     details,error = None,None
                     for info in self.allowable_transaction :
                         
-                        if info.get('account_number','') ==  acc_num or info.get('iban','') == iban  :
+                        if info.get('account_number','$#^') ==  acc_num or info.get('iban','') == iban  :
                             #checking if other details match
                             if  info.get('iban','') == iban and info.get('bic','') == bic :
+                                if info.get('swift_number',None) : 
+        
+                                    #swift can be empty
+                                    if  info.get('swift_number','') == swift_number :
+                                        details = info
+
+                                    else :
+                                        delayed = time.time() - start
+                                        if delayed < delay_time :
+                                            time.sleep(delay_time-delayed)
+                                            error = "Data Mismatch !,Entered data does not match iban info,please crosscheck !"
+
                                 
-                                #swift can be empty
-                                if swift_number and info.get('swift_number','') == swift_number :
-                                    details = info
+
                                 else :
-                                    delayed = start - time.time()
-                                    if delayed < 6 :
-                                        time.sleep(6-delayed)
-                                    error = "The account matching  the entered iban is not associated with a swift number(this is not a united states account),please crosscheck!"    
+                                    if swift_number :
+                                        error = "The account matching  the entered iban is not associated with a swift number(this is not a united states account),please crosscheck!"    
+                                        delayed = start - time.time()
+                                        if delayed < delay_time :
+                                            time.sleep(delay_time-delayed)
+
+                                    else :
+                                        details = info 
+                                        delayed = start - time.time()
+                                        if delayed < delay_time :
+                                            time.sleep(delay_time-delayed)   
+                                         
                             else :
                                 delayed = time.time() - start
                               
-                                if delayed < 6 :
-                                    time.sleep(6-delayed)
+                                if delayed < delay_time :
+                                    time.sleep(delay_time-delayed)
                                 error = "Data Mismatch !,Entered data does not match iban info,please crosscheck !"
                                 
                     #assuming no match
                     if not details :
                         delayed = time.time()  - start
                         
-                        if delayed < 5 :
-                            time.sleep(5-delayed)
+                        if delayed < delay_time :
+                            time.sleep(delay_time-delayed)
                         error = error or "Request Time Out,please Try again later"
                         return render(request,self.template_name,locals())
             

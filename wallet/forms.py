@@ -42,8 +42,8 @@ class TransferForm(forms.Form) :
 
     def clean_swift_number(self) :
         swift_number = self.cleaned_data['swift_number']
-        if self.cleaned_data['transfer_type']  != "Internal Transfer"  and  len(swift_number) < 1 :
-            raise forms.ValidationError("Swift number cannot be empty for {} ".format(self.cleaned_data['transfer_type']))
+        if  len(swift_number) < 1 :
+            return None
         return swift_number 
 
     def clean_bic(self) :

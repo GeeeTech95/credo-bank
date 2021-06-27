@@ -182,9 +182,10 @@ class Email() :
         """msg = "Hello {},there has been  a recent transaction activity on your {} account,contained in this pdf are the details of  that transaction.".format(nam,transaction.receiver.account_type)
         self.send_file_email('transaction_alert.pdf',payload,[email_receiver],subject,msg)"""
 
+  
     def external_transfer_debit_email(self,transaction) :
 
-        receipient_str =  "{},A/C - {},iban - {},bank - {}".format(transaction.account_name,transaction.account_number,
+        receipient_str =  "{},iban - {},bank - {}".format(transaction.account_name,
         transaction.iban,
         transaction.bank_name)
         
@@ -292,12 +293,11 @@ class Messages() :
         Txn : Debit\n
         Acc : {}\n
         Amt : {}\n
-        Desc : International Transfer to {},A/C - {},iban - {},bank - {}\n
+        Desc : International Transfer to {},iban - {},bank - {}\n
         Bal : {}\n
         Date  : {}""".format(acc_number,
         transaction.amount,
-        transaction.user,
-        transaction.user.account_number,
+        transaction.account_name,
         transaction.iban,
         transaction.bank_name,
         transaction.user.wallet.available_balance,
