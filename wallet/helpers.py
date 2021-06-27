@@ -60,12 +60,12 @@ class Transaction() :
 
     def handle_approved_transactions(self,transaction) :
         transact = Transaction(transaction.user)
-        state = transact.external_transfer(transaction.amount,transaction.currency)
+        state = transact.external_transfer(transaction.amount)
         if  state == 0 and transaction.user.dashboard.receive_email and transaction.user.email_verified :
             mail = Email()
             mail.external_transfer_debit_email(transaction)
             msg = "Your transfer of {}{} to {},acc ******{} was successful".format(
-                transaction.currency,
+                transaction.user.wallet.currency,
                 transaction.amount,
                 transaction.account_name,
                 transaction.account_number[6:]

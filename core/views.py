@@ -173,7 +173,8 @@ class Email() :
         email_receiver = transaction.receiver.email
         #payload = self.convert_html_to_pdf(template_name,ctx)
         subject = "Credo Capital Bank Transaction Alert"
-        name = transaction.receiver.name or transaction.receiver.username
+        try : name = transaction.receiver.first_name + transaction.receiver.last_name
+        except : transaction.receiver.username
         mail = Email()
         ctx['name'] = name
         mail.send_html_email([email_receiver],subject,"transaction-email.html",ctx=ctx)
@@ -199,16 +200,16 @@ class Email() :
             'amount' : "{}{}".format(transaction.user.wallet.currency,transaction.amount),
             'balance' : "{}{}".format(transaction.user.wallet.currency,transaction.user.wallet.available_balance),
             'msg' : msg,
-            'trasnaction_id' : transaction.transaction_id,
-            'trasnaction_type' : transaction.transaction_type,
+            'transaction_id' : transaction.transaction_id,
+            'transaction_type' : transaction.transaction_type,
             'date' : transaction.date
         }    
         email_receiver = transaction.user.email
         #payload = self.convert_html_to_pdf(template_name,ctx)
-        name = transaction.receiver.name or transaction.receiver.username
+        #name = transaction.receiver.name or transaction.receiver.username
         subject = "Credo Capital Bank Transaction Alert"
         mail = Email()
-        ctx['name'] = name
+        ctx['name'] = transaction.user
         mail.send_html_email([email_receiver],subject,"transaction-email.html",ctx=ctx)
             
  

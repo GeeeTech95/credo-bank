@@ -225,7 +225,6 @@ class Transfer(LoginRequiredMixin,View) :
         {
         'account_name' : 'Isaac chruchill',
         'iban' : 'AU46284928482329475455',
-        'swift_number' : 'CBAMAUSD',
         'bic' : 'RF34874873484',
         'account_number' : '348904772848',
         'bank_name' : 'Continental Bank',
@@ -236,10 +235,25 @@ class Transfer(LoginRequiredMixin,View) :
         'account_name' : 'Joan Elizabeth',
         'iban' : 'DE94100110012620776617',
         'bic' : 'RF34874873484',
-        'swift_number' : 'NTSBDEBC',
         'account_number' : '348904772848',
         'bank_name' : 'Local Gigo Bank',
         'country' : 'Denmark', 
+        },
+        {
+        'account_name' : 'Fischer Albert',
+        'iban' : 'DE79100110012629910310',
+        'bic' : 'NTSBDEB1XXX',
+        'account_number' : '0535678323',
+        'bank_name' : 'N26',
+        'country' : 'Germany', 
+        },
+         {
+        'account_name' : 'EKO steel limited',
+        'iban' : 'DE36100110012621610891',
+        'bic' : 'NTSBDEF1XXX',
+        'account_number' : '0567385973',
+        'bank_name' : 'N26',
+        'country' : 'Germany', 
         }
 
     ]

@@ -3,6 +3,7 @@ from django.contrib.auth import get_user_model
 from core.notification import Notification
 from core.views import Email
 from django.conf import settings
+from django.utils import timezone
 import random
 
 
@@ -99,17 +100,19 @@ class Transaction(models.Model) :
     
     user = models.ForeignKey(get_user_model(),on_delete=models.CASCADE,
     related_name = 'transaction')
-    transaction_id = models.CharField(editable=False,null = False,max_length = 20)
+    transaction_id = models.CharField(editable=False,unique=True,null = False,max_length = 20)
     amount = models.FloatField()
     transaction_type = models.CharField(choices = TRANSACTION_TYPE,max_length= 10)
     nature = models.CharField(choices = TRANSACTION_NATURE,max_length= 32,null = False,blank = False)
     status = models.CharField(choices = STATUS,max_length= 10)
     description = models.TextField(null = True,blank = False)
-    
+   
+
     #if transfer,can be blank for international transfer
     receiver = models.ForeignKey(get_user_model(),related_name = 'transfer_receiver',on_delete = models.CASCADE,null = True,blank = True)
     status_message = models.TextField()
     charge = models.FloatField(blank = True,default=0.0,null = False)
+
 
     #for international transfer
     iban = models.CharField(max_length=40,blank = True,null = True)
@@ -122,15 +125,16 @@ class Transaction(models.Model) :
     #currency = models.ForeignKey(Currency,related_name ='transactions',on_delete = models.SET_NULL,null = True)
     #for controlling transactions
     is_approved = models.BooleanField(default = False)
+    date_approved = models.DateTimeField(null = True,blank = True)
     is_failed = models.BooleanField(default = False)
     failure_reason = models.TextField(null = True,blank = True)
-    
     date = models.DateTimeField(auto_now_add=True)
 
     
 
     def save(self,*args,**kwargs) :
-        if self.is_approved and self.nature == "International Transfer" :
+        if self.is_approved and not self.status=="Successful" and self.nature and not self.date_approved == "International Transfer" :
+            self.date_approved = timezone.now()
             #initiate email sending
             from .helpers import Transaction as Transact
             transact = Transact(self.user)
