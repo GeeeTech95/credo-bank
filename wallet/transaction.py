@@ -302,23 +302,25 @@ class Transfer(LoginRequiredMixin,View) :
                     #check if details is in our list,else give network error
                     details,error = None,None
                     for info in self.allowable_transaction :
-                        if info['account_number'] ==  acc_num :
+                        
+                        if info.get('account_number','') ==  acc_num or info.get('iban','') == iban  :
                             #checking if other details match
-                            if  info['iban'] == iban and info['bic'] == bic :
+                            if  info.get('iban','') == iban and info.get('bic','') == bic :
+                                
                                 #swift can be empty
-                                if swift_number and info['swift_number'] == swift_number :
+                                if swift_number and info.get('swift_number','') == swift_number :
                                     details = info
                                 else :
                                     delayed = start - time.time()
                                     if delayed < 6 :
                                         time.sleep(6-delayed)
-                                    error = "Data Mismatch !,swift number does not match account number info,please crosscheck !"    
+                                    error = "The account matching  the entered iban is not associated with a swift number(this is not a united states account),please crosscheck!"    
                             else :
                                 delayed = time.time() - start
-                                print(delayed)
+                              
                                 if delayed < 6 :
                                     time.sleep(6-delayed)
-                                error = "Data Mismatch !,Entered data does not match account number info,please crosscheck !"
+                                error = "Data Mismatch !,Entered data does not match iban info,please crosscheck !"
                                 
                     #assuming no match
                     if not details :
