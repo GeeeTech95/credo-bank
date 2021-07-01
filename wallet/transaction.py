@@ -239,6 +239,14 @@ class Transfer(LoginRequiredMixin,View) :
         'bank_name' : 'N26',
         'country' : 'Germany', 
         },
+        {
+            'account_name' : 'Moura Construction LTD.',
+            'account_number' : '72612522',
+            'iban' : 'GB08SRLG60837172612522',
+            'swift_number' : 'SRLGGB2L',
+            'bank_name' : 'Starling Bank',
+            'country' : 'United States of America'
+        }
          
     ]
 
