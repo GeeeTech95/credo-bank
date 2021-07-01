@@ -41,7 +41,7 @@ class VerifyEmail(LoginRequiredMixin,View) :
 
         if request.user.email_verified :
             mail = Email(send_type='support')  
-            mail.send_email([new_email],'congrats',msg)    
+            mail.send_email([new_email],'Email Verified successfully',msg)    
         return render(request,"just_created.html",{})      
 
     @staticmethod

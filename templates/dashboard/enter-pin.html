@@ -41,6 +41,7 @@
                             <a href="#0" hidden="" id="t-button"  class="btn disabled btn-primary">.</a>
                         </div>
                         </form>
+                        <a hidden href="{% url 'dashboard' %}" id="dashboard-click">click me</a>
                     </div>
                 </div>
             </div>
@@ -51,7 +52,7 @@
 
 {% block js %}
 <script>
-
+   
 $("#form-div").on('submit','#enter-pin-form',function(event){
     event.preventDefault();
     $("#submit-button").attr('hidden','true')
@@ -72,8 +73,8 @@ $("#form-div").on('submit','#enter-pin-form',function(event){
             $("#pop-up-modal-title").html('<b>Successful</b>')
             $(".pop-up-modal-body center img").removeAttr('hidden')
             $(".pop-up-modal-body p").html(data.success)
-
-
+            $("#modal-pop-up-footer #modal-close-button").attr("hidden","")
+            $("#modal-pop-up-footer #dashboard-link").removeAttr("hidden")
             $("#globalmodal").modal("show");
 
          }
@@ -83,6 +84,8 @@ $("#form-div").on('submit','#enter-pin-form',function(event){
             $("#submit-button").attr('hidden','true')
             $("#t-button").html('Pending!')
             $("#t-button").removeAttr('hidden')
+            $("#modal-pop-up-footer #modal-close-button").attr("hidden","")
+            $("#modal-pop-up-footer #dashboard-link").removeAttr("hidden")
             $("#pop-up-modal-title").html('<b>Processing</b>')
             //$(".pop-up-modal-body center img").removeAttr('hidden')
             $(".pop-up-modal-body p").html(data.processing)

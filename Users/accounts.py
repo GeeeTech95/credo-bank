@@ -51,7 +51,7 @@ class Register(CreateView) :
             if user is not None and user.is_active :
                 login(request,auth_user)
             #redirect to validate email and phone number 
-            return HttpResponseRedirect(reverse('validate-phone-number'))
+            return HttpResponseRedirect(reverse('validate-email'))
            
         else :
             return render(request,self.template_name,locals())    

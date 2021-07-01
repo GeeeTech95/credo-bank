@@ -213,9 +213,9 @@
                   </a>
                   {% endfor %} 
                 </div>
-                <div class="dropdown-footer text-center">
+                <!--div class="dropdown-footer text-center">
                   <a href="#">View All <i class="fas fa-chevron-right"></i></a>
-                </div>
+                </div-->
               </div>
             </li>
                 
@@ -336,7 +336,8 @@
           </div>
           <div  id="modal-pop-up-footer" class="modal-footer bg-whitesmoke br">
             <button hidden type="button" class="btn btn-primary"></button>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <a id="dashboard-link" hidden href="{% url 'dashboard' %}"><button id="dashboard-link-button" >Close</button></a>
+            <button id="modal-close-button"  type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
           </div>
         </div>
       </div>

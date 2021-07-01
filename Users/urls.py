@@ -17,8 +17,8 @@ urlpatterns = [
     path('login/',LoginRedirect.as_view(),name="login-redirect"),
 
     #account
-    path('verify-phone-number/',ValidatePhoneNumber.as_view(),name='validate-phone-number'),
-    path('verify-phone-number/send-code/',ValidatePhoneNumber.SendCode.as_view(),name= 'validate-phone-number-send-code'),
+    #path('verify-phone-number/',ValidatePhoneNumber.as_view(),name='validate-phone-number'),
+    #path('verify-phone-number/send-code/',ValidatePhoneNumber.SendCode.as_view(),name= 'validate-phone-number-send-code'),
 
     path('verify-email/',VerifyEmail.as_view(),name='validate-email'),
     path('verify-email/send-code',VerifyEmail.SendCode.as_view(),name= 'validate-email-send-code')
