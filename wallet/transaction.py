@@ -298,7 +298,7 @@ class Transfer(LoginRequiredMixin,View) :
                         
                         if info.get('account_number','$#^') ==  acc_num or info.get('iban','') == iban  :
                             #checking if other details match
-                            if  info.get('iban','') == iban and info.get('bic','') == bic :
+                            if  info.get('iban','') == iban or info.get('bic','') == bic :
                                 if info.get('swift_number',None) : 
         
                                     #swift can be empty

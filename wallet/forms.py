@@ -46,11 +46,11 @@ class TransferForm(forms.Form) :
             return None
         return swift_number 
 
-    def clean_bic(self) :
+    """def clean_bic(self) :
         bic = self.cleaned_data['bic']
         if self.cleaned_data['transfer_type']  != "Internal Transfer"  and  len(bic) < 1 :
             raise forms.ValidationError("BIC cannot be empty for {} ".format(self.cleaned_data['transfer_type']))
-        return bic      
+        return bic"""      
 
     def clean_amount(self) :
         amt = self.cleaned_data['amount']   
