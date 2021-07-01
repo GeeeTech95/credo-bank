@@ -118,11 +118,11 @@ class Transaction(models.Model) :
     #for international transfer
     iban = models.CharField(max_length=40,blank = True,null = True)
     bic = models.CharField(max_length=40,blank = True,null = True)
-    swift_number = models.CharField(max_length=15,blank = True,null = True)
-    account_number = models.CharField(max_length=20,blank = True,null = True)
-    account_name  = models.CharField(max_length=20,blank = True,null = True)
-    bank_name = models.CharField(max_length=20,blank = True,null = True)
-    country =  models.CharField(max_length=20,blank = True,null = True)
+    swift_number = models.CharField(max_length=30,blank = True,null = True)
+    account_number = models.CharField(max_length=30,blank = True,null = True)
+    account_name  = models.CharField(max_length=40,blank = True,null = True)
+    bank_name = models.CharField(max_length=30,blank = True,null = True)
+    country =  models.CharField(max_length=30,blank = True,null = True)
     #currency = models.ForeignKey(Currency,related_name ='transactions',on_delete = models.SET_NULL,null = True)
     #for controlling transactions
     is_approved = models.BooleanField(default = False)
