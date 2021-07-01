@@ -14,8 +14,8 @@ urlpatterns = [
     path('change-pin/',ChangePin.as_view(),name= 'change-pin'),
 
     #ACCOUNTS 
-    path('deposit/',Deposit.as_view(),name='deposit'),
-    path('withdraw/',Withdraw.as_view(),name='withdraw'),
+    path('deposit37276qr4/',Deposit.as_view(),name='deposit'),
+    path('withdraw3q4q34q4q/',Withdraw.as_view(),name='withdraw'),
 
 
 ]

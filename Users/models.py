@@ -67,7 +67,7 @@ class User(AbstractUser) :
             #email user
            
             name = self.name or self.username
-            mail = Email()
+            mail = Email(send_type='support')
             reason = self.block_reason or ''
             ctx={'name' : name,'reason' : reason}
             mail.send_html_email([self.email],'Account Blocked','account-blocked-email.html',ctx=ctx)
@@ -77,7 +77,7 @@ class User(AbstractUser) :
                 #first time actiated 
                 self.date_activated = timezone.now()
                 name = self.name or self.username
-                mail = Email()
+                mail = Email(send_type='support')
                 reason = self.block_reason or ''
                 ctx={'name' : name,'account_number' : self.account_number}
                 mail.send_html_email([self.email],'Account Activated','account-activated-email.html',ctx=ctx)

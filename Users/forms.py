@@ -4,6 +4,7 @@ from django.contrib.auth.forms import UserCreationForm,UserChangeForm
 from .models import User
 from wallet.models import Currency
 from core.views import ValidationCode
+from datetime import datetime
 
 
 class UserCreateForm(UserCreationForm) :
@@ -32,6 +33,7 @@ class ProfileUpdateForm(ModelForm) :
             
         }
 
+  
 class PhoneNumberForm(ModelForm) :
     code = forms.CharField(required=True,help_text="Enter the code sent to you,click resend if you dint get any after some time")
     
@@ -100,6 +102,7 @@ class AccountStatementForm(forms.Form)  :
     start = forms.DateField(widget=forms.SelectDateWidget())
     end = forms.DateField(widget=forms.SelectDateWidget())
 
+    
 
 class LoanForm(forms.Form) :
     type_choices = (

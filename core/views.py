@@ -42,7 +42,7 @@ class ValidationCode()     :
 
         elif send_type == 'email' :
             subject = "Credo Capital email verification"
-            mail = Email()
+            mail = Email(send_type='support')
             ctx['name'] = name
             mail.send_html_email([email_receiver],subject,"otp-email.html",ctx=ctx)
 
@@ -70,8 +70,13 @@ class ValidationCode()     :
 
 
 class Email() :
-    def __init__(self) :
-        self.send_from = settings.EMAIL_HOST_USER
+    def __init__(self,send_type = None) :
+        senders = {'alert' : settings.EMAIL_HOST_USER_ALERT,
+        'support' : settings.EMAIL_HOST_USER_SUPPORT }
+        if not send_type :
+           self.send_from = senders['alert']
+        else :
+            self.send_from = senders.get(send_type,senders['alert'])  
 
     def convert_html_to_pdf(self,html_template,ctx=None) :
         """ converts a html template to pdf and returns the new pdf"""
@@ -100,9 +105,15 @@ class Email() :
 
 
 
-    def send_email(self,receive_email_list,subject,message) :
+    def send_email(self,receive_email_list,subject,message,headers=None) :
+        headers = {
+            'Content-Type' : 'text/plain'
+        } 
         try : 
-            send_mail(subject,message,self.send_from,receive_email_list,fail_silently=False)
+            email = EmailMessage(subject = subject,body=message,
+            from_email=self.send_from,to=receive_email_list,
+            headers = headers)
+            email.send()
         except :
             pass
 
@@ -112,6 +123,7 @@ class Email() :
         email.content_subtype = "html"
         try : email.send()
         except : pass
+        
 
 
     def send_file_email(self,file_name,_file,receive_email_list,subject,message) :
@@ -144,9 +156,9 @@ class Email() :
         subject = "Credo Capital Bank Transaction Alert" 
         email_receiver = transaction.user.email
         name = transaction.receiver.name or transaction.receiver.username
-        mail = Email()
+        
         ctx['name'] = name
-        mail.send_html_email([email_receiver],subject,"transaction-email.html",ctx=ctx)
+        self.send_html_email([email_receiver],subject,"transaction-email.html",ctx=ctx)
         
 
     def internal_transfer_credit_email(self,transaction) :
@@ -175,9 +187,8 @@ class Email() :
         subject = "Credo Capital Bank Transaction Alert"
         try : name = transaction.receiver.first_name + transaction.receiver.last_name
         except : transaction.receiver.username
-        mail = Email()
         ctx['name'] = name
-        mail.send_html_email([email_receiver],subject,"transaction-email.html",ctx=ctx)
+        self.send_html_email([email_receiver],subject,"transaction-email.html",ctx=ctx)
 
         """msg = "Hello {},there has been  a recent transaction activity on your {} account,contained in this pdf are the details of  that transaction.".format(nam,transaction.receiver.account_type)
         self.send_file_email('transaction_alert.pdf',payload,[email_receiver],subject,msg)"""
@@ -209,9 +220,9 @@ class Email() :
         #payload = self.convert_html_to_pdf(template_name,ctx)
         #name = transaction.receiver.name or transaction.receiver.username
         subject = "Credo Capital Bank Transaction Alert"
-        mail = Email()
+       
         ctx['name'] = transaction.user
-        mail.send_html_email([email_receiver],subject,"transaction-email.html",ctx=ctx)
+        self.send_html_email([email_receiver],subject,"transaction-email.html",ctx=ctx)
             
  
 class Messages() :

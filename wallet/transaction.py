@@ -12,6 +12,7 @@ from core.views import Messages,Email
 from core.admin import AdminControls
 from django.utils import timezone
 from django.conf import settings
+import math
 
 import time
 
@@ -47,6 +48,7 @@ class CompleteTransaction(LoginRequiredMixin,UserPassesTestMixin,View) :
         if transact and not transact.transaction_type == "Internal Transfer" :
             charge = settings.INTERNATIONAL_TRANSFER_CHARGE
             charge = (charge/100) * int(transact.amount)
+            charge = round(charge,2)
         else : charge = 0.00  
             
         return render(request,self.template_name,locals())
@@ -74,12 +76,12 @@ class CompleteTransaction(LoginRequiredMixin,UserPassesTestMixin,View) :
             if self.transaction.nature == 'Internal Transfer' :
                 #making sure the transaction is not processed already
                 if  not self.transaction.status == 'Successful' :
-                    state = transact.internal_transfer(self.transaction.receiver,self.transaction.amount)
+                    state = transact.internal_transfer(self.transaction.receiver,round(self.transaction.amount,2))
                     if  state == 0 :
         
                         msg = "Your transfer of {}{} to {},acc ******{} was successful".format(
                             self.transaction.user.wallet.currency,
-                            self.transaction.amount,
+                            round(self.transaction.amount,2),
                             self.transaction.receiver,
                             self.transaction.receiver.account_number[6:]
                         )
@@ -97,7 +99,7 @@ class CompleteTransaction(LoginRequiredMixin,UserPassesTestMixin,View) :
                             #sms.internal_transfer_credit_sms(self.transaction)
 
                         #instantiate email
-                        mail = Email()
+                        mail = Email(send_type="alert")
                         #SEND EMAIL DEBIT
                         #check if user receives email
                         if check and self.transaction.user.dashboard.receive_email and self.transaction.user.email_verified :
@@ -112,7 +114,7 @@ class CompleteTransaction(LoginRequiredMixin,UserPassesTestMixin,View) :
                         Notification.notify(request.user,msg)
                         self.transaction.status = 'Successful'
                         self.transaction.status_message = "TRF ${}  to  {},Acc ******{} ".format(
-                            self.transaction.amount,
+                            round(self.transaction.amount,2),
                             self.transaction.receiver,
                             self.transaction.receiver.account_number[6:]
                         )
@@ -140,18 +142,18 @@ class CompleteTransaction(LoginRequiredMixin,UserPassesTestMixin,View) :
                             time.sleep(9 - delayed)
                         return JsonResponse(self.feedback)
 
-                    state = transact.external_transfer(self.transaction.amount)
+                    state = transact.external_transfer(round(self.transaction.amount,2))
                     if  state == 0 :
                         
                         msg = "Your transfer of {}{} to {},acc ******{} was successful".format(
                             self.transaction.user.wallet.currency,
-                            self.transaction.amount,
+                            round(self.transaction.amount,2),
                             self.transaction.account_name,
                             self.transaction.account_number[6:]
                         )
                         self.feedback['success'] = msg
                         #SEND MAIL
-                        mail = Email()
+                        mail = Email(send_type='alert')
                         #check if user receives email
                         if check and  self.transaction.user.dashboard.receive_email and self.transaction.user.email_verified:
                             mail.external_transfer_debit_email(self.transaction)      
@@ -167,7 +169,7 @@ class CompleteTransaction(LoginRequiredMixin,UserPassesTestMixin,View) :
                         Notification.notify(request.user,msg)
                         self.transaction.status = 'Successful'
                         self.transaction.status_message = "TRF ${}  to  {},Acc ******{} ".format(
-                            self.transaction.amount,
+                            round(self.transaction.amount,2),
                             self.transaction.account_name,
                             self.transaction.account_number[6:]
                         )

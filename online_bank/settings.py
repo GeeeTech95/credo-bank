@@ -172,12 +172,23 @@ TWILLO_ACCOUNT_SID =  'AC213bba1c05225bedc1ebccccd8dbd9e0'
 TWILLO_AUTH_TOKEN =   '8512ae91f275f2bf0c8bf864e61692f3'
 SMS_PHONE_NUMBER =  '+19709866198'
 
-#EMAIL
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_USE_TLS = True
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'geeetech.inc@gmail.com'
-EMAIL_HOST_PASSWORD = 'oehfphhfktpoezyh'
+#EMAIL FOR GMAIL
+#EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+#EMAIL_HOST = 'smtp.gmail.com'
+#EMAIL_USE_TLS = True
+#EMAIL_PORT = 587
+#EMAIL_HOST_USER = 'geeetech.inc@gmail.com'
+#EMAIL_HOST_PASSWORD = 'oehfphhfktpoezyh'
+
+
+#EMAIL FOR ZOHO
+EMAIL_HOST  = "smtp.zoho.com"
+EMAIL_HOST_USER_ALERT = "alert@credocapitalbank.com"
+EMAIL_HOST_USER_SUPPORT = "support@credocapitalbank.com"
+EMAIL_HOST_PASSWORD = '#@Kyletech99g-klazik'
+EMAIL_PORT = "587"
+EMAIL_USE_TLS = "True"
+#EMAIL_USE_SSL = "False"
+
 
 

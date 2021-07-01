@@ -5,12 +5,14 @@ from core.views import Email
 from django.template.loader import render_to_string
 from .forms import ContactForm
 from core.views import Messages
+from django.core.mail import EmailMessage
 
 
 class Index(TemplateView) :
     template_name = 'home.html'
 
     def get(self,request,*args,**kwargs) :
+        
         return render(request,self.template_name,locals())
 
     def get_context_data(self,*args,**kwargs) : 

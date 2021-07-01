@@ -40,7 +40,7 @@ class VerifyEmail(LoginRequiredMixin,View) :
             sms.send_sms(request.user.phone_number,msg)
 
         if request.user.email_verified :
-            mail = Email()  
+            mail = Email(send_type='support')  
             mail.send_email([new_email],'congrats',msg)    
         return render(request,"just_created.html",{})      
 
@@ -92,7 +92,7 @@ class ValidatePhoneNumber(LoginRequiredMixin,View) :
             sms.send_sms(request.user.phone_number,msg)
 
         if request.user.email_verified :
-            mail = Email()  
+            mail = Email(send_type='support')  
             mail.send_email([request.user.email],'congrats',msg)    
             
         return HttpResponseRedirect(reverse('validate-email')) 

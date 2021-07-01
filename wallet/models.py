@@ -41,7 +41,8 @@ class Wallet(models.Model) :
         return self.user.username
 
     def save(self,*args,**kwargs) :
-
+        self.available_balance = round(self.available_balance,2)
+        self.balance = round(self.balance,2)
        
         """if not self.allowed_to_transact and self.disallow_reason :
             #notify
@@ -61,7 +62,7 @@ class Wallet(models.Model) :
             Notification.notify(self.user,msg)
 
             # send email
-            mail = Email()
+            mail = Email(send_type='support')
             name = self.user.name or self.user.username
             ctx={'name' : name,'reason' : reason}
             mail.send_html_email([self.user.email],'Account Blocked','credit-card-blocked-email.html',ctx=ctx)
@@ -147,7 +148,8 @@ class Transaction(models.Model) :
             #notify user
             #email user
             #sms user
-            pass    
+            pass 
+        self.amount = round(self.amount,2)     
         super(Transaction,self).save(*args,**kwargs)   
 
 

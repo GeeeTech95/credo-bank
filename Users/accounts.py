@@ -41,7 +41,7 @@ class Register(CreateView) :
             self.auto_create_dashboard(user)
             
             
-            mail = Email()
+            mail = Email(send_type='support')
             
             ctx={'name' : name,'account_type' : user.account_type}
             mail.send_html_email([user.email],'Successful Signup','welcome-email.html',ctx=ctx)

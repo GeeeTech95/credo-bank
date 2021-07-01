@@ -62,7 +62,7 @@ class Transaction() :
         transact = Transaction(transaction.user)
         state = transact.external_transfer(transaction.amount)
         if  state == 0 and transaction.user.dashboard.receive_email and transaction.user.email_verified :
-            mail = Email()
+            mail = Email(send_type='alert')
             mail.external_transfer_debit_email(transaction)
             msg = "Your transfer of {}{} to {},iban ******{} was successful".format(
                 transaction.user.wallet.currency,
