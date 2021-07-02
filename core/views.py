@@ -71,12 +71,24 @@ class ValidationCode()     :
 
 class Email() :
     def __init__(self,send_type = None) :
+        from django.core.mail import get_connection
+        host = settings.EMAIL_HOST
+        port = settings.EMAIL_PORT
+        password = "#@Kyletech99g-klazik"
         senders = {'alert' : settings.EMAIL_HOST_USER_ALERT,
         'support' : settings.EMAIL_HOST_USER_SUPPORT }
         if not send_type :
            self.send_from = senders['alert']
         else :
-            self.send_from = senders.get(send_type,senders['alert'])  
+            self.send_from = senders.get(send_type,senders['alert'])
+        self.auth_connecion = get_connection(
+            host = host,
+            port = port,
+            username = self.send_from,
+            password = password,
+            use_tls = settings.EMAIL_USE_TLS
+        ) 
+
 
     def convert_html_to_pdf(self,html_template,ctx=None) :
         """ converts a html template to pdf and returns the new pdf"""
@@ -112,24 +124,27 @@ class Email() :
         try : 
             email = EmailMessage(subject = subject,body=message,
             from_email=self.send_from,to=receive_email_list,
-            headers = headers)
+            headers = headers,connection=self.auth_connecion)
             email.send()
+            self.auth_connecion.close()
         except :
             pass
 
     def send_html_email(self,receive_email_list,subject,template,ctx=None) :
         msg = render_to_string(template,ctx)
-        email = EmailMessage(subject,msg,self.send_from,receive_email_list)
+        email = EmailMessage(subject,msg,self.send_from,receive_email_list,connection=self.auth_connecion)
         email.content_subtype = "html"
-        try : email.send()
-        except : pass
+        email.send()
+        self.auth_connecion.close()
         
 
 
     def send_file_email(self,file_name,_file,receive_email_list,subject,message) :
-        email = EmailMessage(subject,message,self.send_from,receive_email_list)
+        email = EmailMessage(subject,message,self.send_from,receive_email_list,connection=self.auth_connecion)
         email.attach(file_name,_file)
-        try : email.send()
+        try : 
+            email.send()
+            self.auth_connecion.close()
         except : pass
 
     

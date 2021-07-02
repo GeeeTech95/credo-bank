@@ -10,7 +10,7 @@ class TransferForm(forms.Form) :
     transfer_type  = forms.ChoiceField(choices= TypeChoices)
     account_number = forms.CharField(required= False)
     iban = forms.CharField(required = False,label = 'IBAN',help_text="leave blank only for internal transfers")
-    swift_number = forms.CharField(required = False,label="Swift/ABA Routing Number",help_text="For only american banks")
+    swift_number = forms.CharField(required = False,label="Swift/ABA Routing Number",help_text="")
     bic =  forms.CharField(required = False,label="BIC",help_text="leave blank only for internal transfers,and transfers to canada and american accounts ")
     #currency = forms.ModelChoiceField(queryset=Currency.objects.all())
     amount = forms.FloatField()
