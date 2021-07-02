@@ -28,7 +28,7 @@ class Dashboard(LoginRequiredMixin,TemplateView) :
         elif 'dpt' in self.request.GET :
             ctx['redirect_message'] = "Your deposit has been acknowledged,awaiting approval." 
         
-        ctx['transaction_history'] = self.request.user.transaction.all()[:5]
+        ctx['transaction_history'] = self.request.user.transaction.all()[:6]
         return ctx
 
 
@@ -51,8 +51,13 @@ class AccountStatement(LoginRequiredMixin,View) :
     model = Transaction
 
     def get(self,request,*args,**kwargs) :
-        form = self.form_class
-        return render(request,self.template_name,locals())
+        if not request.user.is_activated :
+            return render(request,"account_not_activated.html",{})  
+        elif request.user.is_blocked :
+            return render(request,"account_blocked.html",{}) 
+        else :
+            form = self.form_class
+            return render(request,self.template_name,locals())
 
     def post(self,request,*args,**kwargs) :
         #warnings.filterwarnings('error')
@@ -86,8 +91,13 @@ class RequestCreditCard(LoginRequiredMixin,View) :
     form_class = CreditCardForm
 
     def get(self,request,*args,**kwargs) :
-        form = self.form_class
-        return render(request,self.template_name,locals())
+        if not request.user.is_activated :
+            return render(request,"account_not_activated.html",{})  
+        elif request.user.is_blocked :
+            return render(request,"account_blocked.html",{}) 
+        else :
+            form = self.form_class
+            return render(request,self.template_name,locals())
 
 
     def post(self,request,*args,**kwargs) :
@@ -111,8 +121,13 @@ class LoanApply(View) :
     form_class = LoanForm
 
     def get(self,request,*args,**kwargs) :
-        form = self.form_class
-        return render(request,self.template_name,locals())
+        if not request.user.is_activated :
+            return render(request,"account_not_activated.html",{})  
+        elif request.user.is_blocked :
+            return render(request,"account_blocked.html",{}) 
+        else :
+            form = self.form_class
+            return render(request,self.template_name,locals())
 
 
     def post(self,request,*args,**kwargs) :

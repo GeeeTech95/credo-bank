@@ -130,6 +130,7 @@ class Transaction(models.Model) :
     is_failed = models.BooleanField(default = False)
     failure_reason = models.TextField(null = True,blank = True)
     date = models.DateTimeField(auto_now_add=True)
+    new_date = models.DateTimeField(null = True,blank = True)
 
     
 
@@ -149,14 +150,21 @@ class Transaction(models.Model) :
             #email user
             #sms user
             pass 
-        self.amount = round(self.amount,2)     
+        self.amount = round(self.amount,2)   
+
+        if not self.new_date : self.new_date = self.date  
         super(Transaction,self).save(*args,**kwargs)   
 
 
     def __str__(self) :
         return self.transaction_id
+    
+    @property
+    def show_date(self)  :
+        if self.new_date : return self.new_date
+        else : return self.date  
 
 
     class Meta() :
-        ordering = ['-date']
+        ordering = ['-new_date']
 

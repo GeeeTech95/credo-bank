@@ -90,7 +90,7 @@
                         
                        
                         <td>{{transact.status_message}}</td>
-                        <td>{{transact.date}}</td>
+                        <td>{{transact.show_date}}</td>
                         <td>
                             {% ifequal transact.status 'Pending' %}
                           <a href="{% url 'complete-transaction' transact.transaction_id %}"><div class="badge badge-primary">Complete Transaction</div></a>
