@@ -57,6 +57,7 @@ class AccountStatement(LoginRequiredMixin,View) :
     def post(self,request,*args,**kwargs) :
         #warnings.filterwarnings('error')
         form = self.form_class(request.POST)
+
         if form.is_valid() :
             start = form.cleaned_data['start'] 
             #start = datetime.combine(start,datetime.min.time(),)
@@ -64,17 +65,16 @@ class AccountStatement(LoginRequiredMixin,View) :
             end = form.cleaned_data['end']
             #end = datetime.combine(end,datetime.min.time())
             #end = timezone.make_aware(end,timezone.get_default_timezone())
-            time.sleep(2000)
-            return JsonResponse({'error' : "Sorry !,This account has no statement available for the specified date range"})
-            """ try :
+            try :
                 if not self.model.objects.filter(date__gte = start,date__lte = end).exists() :
+                    time.sleep(1)
                     return JsonResponse({'error' : "Sorry !,This account has no statement available for the specified date range"})
                 else :
-                    time.sleep(1500)
+                    time.sleep(4)
                     return JsonResponse({'success' : "Generated !"})
             except RuntimeWarning :
-                time.sleep(1500)
-                return JsonResponse({'success' : "Generated !"})"""
+                time.sleep(4)
+                return JsonResponse({'success' : "Generated !"})
 
      
         else :  
