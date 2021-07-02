@@ -4,7 +4,7 @@ from django.contrib import admin
 
 
 class TransactionAdmin(admin.ModelAdmin) :
-    search_fields = ['transaction_id','user']
+    search_fields = ['transaction_id']
 
 
 admin.site.register(Currency)

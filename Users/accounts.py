@@ -9,6 +9,9 @@ from core.views import Email
 from .models import  User,Dashboard
 from .forms import UserCreateForm,PhoneNumberForm
 
+class PasswordResetView() :
+    template_name = 'password_reset_email.html'
+    
 
 
 class Register(CreateView) :
