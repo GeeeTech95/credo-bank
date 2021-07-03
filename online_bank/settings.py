@@ -94,6 +94,7 @@ WSGI_APPLICATION = 'online_bank.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -101,9 +102,10 @@ DATABASES = {
     }
 }
 
-
 # Password validation
+
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -154,22 +156,26 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 MEDIA_URL = '/media/'
+
+ 
 MEDIA_ROOT = os.path.join(BASE_DIR,"media")
 
+
 STATICFILES_DIRS = [
-
 os.path.join(BASE_DIR,"static")
-
 ]
 
 STATIC_ROOT = os.path.join(BASE_DIR,"asset")
 
 STATIC_URL = '/static/'
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+#STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 #TWILLO
 TWILLO_ACCOUNT_SID =  'AC213bba1c05225bedc1ebccccd8dbd9e0' 
+
 TWILLO_AUTH_TOKEN =   '8512ae91f275f2bf0c8bf864e61692f3'
+
 SMS_PHONE_NUMBER =  '+19709866198'
 
 #EMAIL FOR GMAIL
