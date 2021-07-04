@@ -30,7 +30,7 @@
         data-background="{% static 'assets/images/page-header.jpg' %}">
         
         <div class="container">
-                <p style="text-align: center">We are always eager to respond to your messages,keep them coming we would never complain.</p>
+                <p style="text-align: center">We are always eager to respond to your messages, keep them coming we would never complain.</p>
             <div class="account-wrapper">
                 <div class="account-area" >
                     <h3 class="account-title">send us a message</h3>
@@ -104,29 +104,26 @@
                         <div class="contact-content">
                             <h4 class="title">office address</h4>
                             <ul>
-                                <li>USA, Callifornia Fivenuen</li>
-                                <li>Callifornia Town Hall</li>
-                                <li>PO:2457-256</li>
+                                <li>Upper west side, New York,USA</li>
                             </ul>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 col-sm-10 col-lg-4">
+                <!--div class="col-md-6 col-sm-10 col-lg-4">
                     <div class="contact-item">
                         <div class="contact-thumb">
-                            <!-- <img src="{% static './assets/images/contact/call.png' %}" alt="contact"> -->
+                            <!-- <img src="{% static './assets/images/contact/call.png' %}" alt="contact"> ->
                             <i class="flaticon-call-center"></i>
                         </div>
                         <div class="contact-content">
                             <h4 class="title">phone number</h4>
                             <ul>
-                                <li><a href="Tel:939383883890">01478-878-6578-24545</a></li>
-                                <li><a href="Tel:939383883890">024178-2457-658777</a></li>
-                                <li><a href="Tel:939383883890">05478454254-10</a></li>
+                                <li><a href="Tel:+19709866198">+19709866198</a></li>
+                               
                             </ul>
                         </div>
                     </div>
-                </div>
+                </div-->
                 <div class="col-md-6 col-sm-10 col-lg-4">
                     <div class="contact-item">
                         <div class="contact-thumb">
@@ -137,14 +134,9 @@
                             <h4 class="title">email address</h4>
                             <ul>
                                 <li>
-                                    <a href="Mailto:softkingsupport@.com">softkingsupport@.com</a>
+                                    <a href="Mailto:support@credocapitalbank.com">support@credocapitalbank.com</a>
                                 </li>
-                                <li>
-                                    <a href="Mailto:wwwsmsio145.com">wwwsmsio145.com</a>
-                                </li>
-                                <li>
-                                    <a href="Mailto:support24/7.com">support24/7.com</a>
-                                </li>
+                                
                             </ul>
                         </div>
                     </div>
@@ -184,12 +176,12 @@
                  }
 				 
 				 else if(data.error){
-                    alert(data.error)
-                     //$.each(data.error,function(field,value){
-                        ///err = value[0].message
-                        //$('#'+ field + '-errors').html(err)
-                    // })
-					//$('#message-errors').html(data.error.message)
+                    
+					$('#message-errors').html(data.message_errors)
+                    $('#title-errors').html(data.title_errors)
+                    $('#email-errors').html(data.email_errors)
+                    $('#name-errors').html(data.email_errors)
+                    $('#phone_number-errors').html(data.email_errors)
                     $("#contact-us-button").html("send message");
                  
                    

@@ -5,7 +5,7 @@ from core.views import Email
 from django.template.loader import render_to_string
 from .forms import ContactForm
 from core.views import Messages
-from django.core.mail import EmailMessage
+from django.core.mail import EmailMessage,send_mail
 
 
 class Index(TemplateView) :
@@ -69,6 +69,7 @@ class Contact(View) :
     def get(self,request,*args,**kwargs) :
         return render(request,self.template_name,{'cclass' : 'active'})
 
+    
     def post(self,request,*args,**kwargs) :
         feedback = {}
         form = self.form_class(request.POST)  
@@ -86,10 +87,18 @@ class Contact(View) :
                 title,
                 message,
                 email,
-                ['mercy@j.com'],
+                ['support@credocapitalbank.com'],
                 fail_silently = True
 
             )
             feedback['success'] = True
-        else : feedback['error'] = form.errors.as_json()
+        else : 
+           
+            for field,err in form.errors.items() :
+                errr = ""
+                for er in err :  errr = errr + '<br>' + er
+                feedback[field+'_errors'] = errr
+           
+            #form.errors.as_json()
+            feedback['error'] = True
         return JsonResponse(feedback)    
