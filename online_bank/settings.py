@@ -195,7 +195,7 @@ EMAIL_HOST_USER_SUPPORT = "support@credocapitalbank.com"
 #for other emails 
 EMAIL_HOST_USER = "support@credocapitalbank.com"
 DEFAULT_FROM_EMAIL  = "support@credocapitalbank.com"
-EMAIL_HOST_PASSWORD = '#@Kyletech99g-klazik'
+EMAIL_HOST_PASSWORD = 'Kyletech99'
 
 EMAIL_PORT = "587"
 EMAIL_USE_TLS = "True"

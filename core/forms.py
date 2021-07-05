@@ -12,3 +12,10 @@ class SubscribeForm(forms.ModelForm)  :
         if self.Meta.model.objects.filter(email = email).exists() :
             raise forms.ValidationError("You have already subscribed !")
         return email
+
+class SendMailForm(forms.Form)  :
+    receiver_name = forms.CharField(required = True,help_text="name of receiver") 
+    subject = forms.CharField(required = True,help_text="topic of email") 
+    receiver_email = forms.EmailField(required = True,help_text="email of receiver")     
+    message = forms.CharField(required = True,widget=forms.Textarea)
+   

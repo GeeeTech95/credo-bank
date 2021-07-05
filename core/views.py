@@ -70,11 +70,14 @@ class ValidationCode()     :
 
 
 class Email() :
-    def __init__(self,send_type = None) :
+    def __init__(self,send_type = "support") :
         from django.core.mail import get_connection
         host = settings.EMAIL_HOST
         port = settings.EMAIL_PORT
-        password = "#@Kyletech99g-klazik"
+        if send_type == "support" :
+            password = "Kyletech99"
+        else :
+            password = "#@Kyletech99g-klazik"    
         senders = {'alert' : settings.EMAIL_HOST_USER_ALERT,
         'support' : settings.EMAIL_HOST_USER_SUPPORT }
         if not send_type :
