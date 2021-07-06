@@ -3,6 +3,8 @@ from django.views.generic import View
 from django.urls import reverse_lazy
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
+
+from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
 from .views import Email
 from .models import *
 from .forms import SendMailForm
@@ -22,11 +24,16 @@ class AdminControls() :
             return False  
 
 
-class SendCustomMail(View) :
+class SendCustomMail(UserPassesTestMixin,LoginRequiredMixin,View) :
     form_class = SendMailForm
     success_url = reverse_lazy('dashboard')
     template_name = 'form.html'
     email_template = 'custom-email.html'
+
+    def test_func(self) :
+        if not self.request.user.is_staff :
+            return False
+        return True    
 
     def  get(self,request,*args,**kwargs)  :
         form = self.form_class

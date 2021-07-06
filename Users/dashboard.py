@@ -116,7 +116,7 @@ class RequestCreditCard(LoginRequiredMixin,View) :
 
 
 
-class LoanApply(View) :
+class LoanApply(LoginRequiredMixin,View) :
     template_name = 'apply_loan.html'
     form_class = LoanForm
 
@@ -148,7 +148,7 @@ class LoanApply(View) :
 
 
 
-class TransactionHistory(TemplateView) :
+class TransactionHistory(LoginRequiredMixin,TemplateView) :
     template_name = 'transaction-history.html'
     def get_context_data(self,*args,**kwargs) :
         ctx = super(TransactionHistory,self).get_context_data(*args,**kwargs)  
@@ -182,7 +182,10 @@ class Profile(LoginRequiredMixin,UpdateView) :
             return render(request,"account_not_activated.html",{})
         
         if request.user.is_blocked :
-            return render(request,"account_blocked.html",{})     
-        form = self.form_class(initial = model_to_dict(request.user))
+            return render(request,"account_blocked.html",{}) 
+        instance = model_to_dict(request.user)  
+        instance['country'] = request.user.country.name      
+        form = self.form_class(initial = instance)
+        form.instance.country = request.user.country
         return render(request,self.template_name,locals())
 

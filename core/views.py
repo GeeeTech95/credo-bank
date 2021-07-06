@@ -9,7 +9,6 @@ from django.utils import timezone
 from core.helpers import Helper
 import imgkit
 from io import BytesIO
-
 from  xhtml2pdf import pisa
 import random
 from twilio.rest import Client
