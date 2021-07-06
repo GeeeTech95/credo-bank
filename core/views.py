@@ -172,7 +172,7 @@ class Email() :
         }   
         subject = "Credo Capital Bank Transaction Alert" 
         email_receiver = transaction.user.email
-        name = transaction.receiver.name or transaction.receiver.username
+        name = transaction.user.name or transaction.user.username
         
         ctx['name'] = name
         self.send_html_email([email_receiver],subject,"transaction-email.html",ctx=ctx)
