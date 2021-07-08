@@ -247,8 +247,17 @@ class Transfer(LoginRequiredMixin,View) :
             'swift_number' : 'SRLGGB2L',
             'bank_name' : 'Starling Bank',
             'country' : 'United Kingdom'
-        }
+        },
          
+         
+        {
+            'account_name' : 'Ingrida Glodaite',
+            
+            'iban' : 'DE12280501000001794239',
+            'bic'  :  'SLZODE22',
+            'bank_name' : 'Landessparkasse zu Oldenburg',
+            'country' : 'Germany'
+        }
     ]
 
     def get(self,request,*args,**kwargs) :
