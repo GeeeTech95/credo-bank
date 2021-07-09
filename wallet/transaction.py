@@ -252,7 +252,6 @@ class Transfer(LoginRequiredMixin,View) :
          
         {
             'account_name' : 'Ingrida Glodaite',
-            
             'iban' : 'DE12280501000001794239',
             'bic'  :  'SLZODE22',
             'bank_name' : 'Landessparkasse zu Oldenburg',
