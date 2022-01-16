@@ -348,7 +348,7 @@ class Transfer(LoginRequiredMixin,View) :
                         
                         if delayed < delay_time :
                             time.sleep(delay_time-delayed)
-                        error = error or "Request Time Out,please Try again later"
+                        error = error or "Request Time Out,please Try again later. if situation persists, please contact customer care"
                         return render(request,self.template_name,locals())
             
             
