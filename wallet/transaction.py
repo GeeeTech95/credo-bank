@@ -225,8 +225,8 @@ class Transfer(LoginRequiredMixin,View) :
     allowable_transaction = [
         {
         'account_name' : 'MarieAnn Sablan Sapien',
-        'account_number' : '#885083555',
-        'swift_number' : '#325070760',
+        'account_number' : '885083555',
+        'swift_number' : '325070760',
         'bank_name' : 'Chase Bank',
         'country' : 'United States of America', 
         },
@@ -311,14 +311,14 @@ class Transfer(LoginRequiredMixin,View) :
                     details,error = None,None
                     for info in self.allowable_transaction :
                         
-                        if info.get('account_number','$#^') ==  acc_num or info.get('iban','') == iban  :
+                        if info.get('account_number','$#^') ==  acc_num or info.get('iban','.!#') == iban  :
                             #checking if other details match
                             # info.get('iban','') == iban or info.get('bic','') == bic 
                             if 1 :
                                 if info.get('swift_number',None) : 
         
                                     #swift can be empty
-                                    if  info.get('swift_number','') == swift_number :
+                                    if  info.get('swift_number','~!@!') == swift_number :
                                         details = info
 
                                     else :
