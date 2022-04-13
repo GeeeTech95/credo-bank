@@ -33,7 +33,7 @@ class TransferForm(forms.Form) :
         return acc_num
 
 
-    def clean_iban(self) :
+    def clean_ibxan(self) :
         iban = self.cleaned_data['iban']
         if self.cleaned_data['transfer_type']  != "Internal Transfer"  and  len(iban) < 1 :
             raise forms.ValidationError("Iban number cannot be empty for {} ".format(self.cleaned_data['transfer_type']))
