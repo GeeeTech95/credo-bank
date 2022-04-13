@@ -223,7 +223,13 @@ class Transfer(LoginRequiredMixin,View) :
     #for swift_number,first 4 is for bank code,next 2 is country,next two is state/city code,
     #optional 3 for branch
     allowable_transaction = [
-
+        {
+        'account_name' : 'MarieAnn Sablan Sapien',
+        'account_number' : '#885083555',
+        'swift_number' : '#325070760',
+        'bank_name' : 'Chase Bank',
+        'country' : 'United States of America', 
+        },
         {
         'account_name' : 'Birgit Hengelage',
         'iban' : 'DE36100110012621610891',

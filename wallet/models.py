@@ -153,6 +153,12 @@ class Transaction(models.Model) :
         self.amount = round(self.amount,2)   
 
         if not self.new_date : self.new_date = self.date  
+        if self.transaction_type == "Internal Transfer" :
+            self.charge = settings.INTERNATIONAL_TRANSFER_CHARGE
+            self.charge = (charge/100) * int(self.amount)
+            self.charge = round(charge,2)
+        
+        else : charge = 0.00  
         super(Transaction,self).save(*args,**kwargs)   
 
 
