@@ -230,6 +230,12 @@ class Transfer(LoginRequiredMixin,View) :
         'bank_name' : 'Chase Bank',
         'country' : 'United States of America', 
         },
+           {
+        'account_name' : 'Stefanie beyfus',
+        'iban' : 'De38793400540230463200',
+        'bank_name' : 'Commerzbank',
+        'country' : 'Germany', 
+        },
         {
         'account_name' : 'Birgit Hengelage',
         'iban' : 'DE36100110012621610891',
