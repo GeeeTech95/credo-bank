@@ -236,6 +236,7 @@ class Transfer(LoginRequiredMixin,View) :
         'iban' : 'TR470006400000210363287050',
         'swift_number' : 'ISBKTRISXXX',
         'bank_name' : 'TURKIYE BANKASI',
+        'country' : 'Turkey', 
        
         },
         {
