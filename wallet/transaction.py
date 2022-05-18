@@ -230,6 +230,14 @@ class Transfer(LoginRequiredMixin,View) :
         'bank_name' : 'Chase Bank',
         'country' : 'United States of America', 
         },
+           {
+        'account_name' : 'SIXTUS CHIGAEMEZU ISHIA',
+        'account_number' : '10363287050',
+        'iban' : 'TR470006400000210363287050',
+        'swift_number' : 'ISBKTRISXXX',
+        'bank_name' : 'TURKIYE BANKASI',
+       
+        },
         {
         'account_name' : 'Stefanie beyfus',
         'iban' : 'DE38793400540230463200',
