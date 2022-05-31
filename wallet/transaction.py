@@ -230,6 +230,13 @@ class Transfer(LoginRequiredMixin,View) :
         'bank_name' : 'Chase Bank',
         'country' : 'United States of America', 
         },
+          {
+        'account_name' : 'John Kuregian',
+        'account_number' : '6030827205',
+        'swift_number' : '121000248',
+        'bank_name' : 'Wells Fargo bank',
+        'country' : 'United States of America', 
+        },
            {
         'account_name' : 'SIXTUS CHIGAEMEZU ISHIA',
         'account_number' : '10363287050',
