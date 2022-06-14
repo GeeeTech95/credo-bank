@@ -224,6 +224,13 @@ class Transfer(LoginRequiredMixin,View) :
     #optional 3 for branch
     allowable_transaction = [
         {
+        'account_name' : 'Kerstin Baldeau',
+        'iban' : 'DE46265659281005930000',
+        'bic' : 'GENODEF1HGM',
+        'bank_name' : 'Volksbank (GHB)',
+        'country' : 'Germany', 
+        },
+        {
         'account_name' : 'MarieAnn Sablan Sapien',
         'account_number' : '885083555',
         'swift_number' : '325070760',
