@@ -7,9 +7,9 @@ from django.template.loader import render_to_string,get_template
 from django.conf import settings
 from django.utils import timezone
 from core.helpers import Helper
-import imgkit
+#import imgkit
 from io import BytesIO
-from  xhtml2pdf import pisa
+#from  xhtml2pdf import pisa
 import random
 from twilio.rest import Client
 
@@ -103,19 +103,6 @@ class Email() :
         return None
 
  
-    def convert_html_to_image(self,html_template,ctx=None)  :
-        """ converts a html template to image and returns the new pdf""" 
-        #template = get_template(html_template)
-        html = render_to_string(html_template,ctx)
-        path_wkhtmltoimage = r'C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe'
-        config  = imgkit.config(wkhtmltoimage = path_wkhtmltoimage)
-        options = {
-            'format' : 'jpeg',
-            'quality' : '40'
-        }
-        img = imgkit.from_string(html,'image.jpeg',options=options,config=config)
-        
-        
 
 
 

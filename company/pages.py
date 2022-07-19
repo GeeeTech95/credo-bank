@@ -9,7 +9,7 @@ from django.core.mail import EmailMessage,send_mail
 
 
 class Index(TemplateView) :
-    template_name = 'home.html'
+    template_name = 'index.html'
 
     def get(self,request,*args,**kwargs) :
         

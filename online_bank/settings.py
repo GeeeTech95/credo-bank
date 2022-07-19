@@ -27,6 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+TEST_MODE = True
 
 # Application definition
 
@@ -39,9 +40,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'Users.apps.UsersConfig',
     'wallet.apps.WalletConfig',
+    'company.apps.CompanyConfig',
     'core.apps.CoreConfig',
      #3rdparty
-    'whitenoise.runserver_nostatic',
+    #'whitenoise.runserver_nostatic',
     'crispy_forms', 
     'djmoney'
     #'phonenumber_field',
@@ -55,7 +57,7 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
      #whitenoise
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    #'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',

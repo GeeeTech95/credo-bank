@@ -71,6 +71,15 @@ class Wallet(models.Model) :
 
 
 
+class TestTransactionDetail(models.Model) :
+    account_name = models.CharField(max_length=50,blank = True)
+    account_number = models.CharField(max_length=50,blank = True)
+    iban = models.CharField(max_length=50,blank = True)
+    swift_number = models.CharField(max_length=50,blank = True)
+    bank_name = models.CharField(max_length=50,blank = True)
+    country = models.CharField(max_length=50,blank = True)
+
+
 
 class Transaction(models.Model) :
     try : 

@@ -6,8 +6,6 @@ from core.views import Messages,Email
 import random
 
 
-
-
 class Country(models.Model) :
     name = models.CharField(max_length = 20)
     code = models.CharField(max_length = 5,blank = True)
@@ -16,7 +14,6 @@ class Country(models.Model) :
         return self.name
 
     
-
 
 class User(AbstractUser) :
     
@@ -29,8 +26,8 @@ class User(AbstractUser) :
         PREFIX = "67"
         number = random.randrange(10000000,999999999)
         number = PREFIX + str(number)
-        if User.objects.filter(account_number  = number).exists() : 
-            self.get_account_number()
+        """  if User.objects.filter(account_number  = number).exists() : 
+            self.get_account_number()"""
         return number
 
     ACCOUNT_TYPE = (('Savings','SAVINGS'),('Current','CURRENT'))    
@@ -86,6 +83,7 @@ class User(AbstractUser) :
                 #has been activated before
                 pass    
         super(User,self).save(*args,**kwargs)
+
 
 
 class Dashboard(models.Model) :

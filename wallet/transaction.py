@@ -330,7 +330,8 @@ class Transfer(LoginRequiredMixin,View) :
                 
                 """ check if details match for international transfer """
                 if transact_type != "Internal Transfer"  :
-                    delay_time = 6
+                    if settings.TEST_MODE : delay_time = 6
+                    else : delay_time = 0
                     charge = settings.INTERNATIONAL_TRANSFER_CHARGE
                     charge = (charge/100) * int(amount)
                     iban = form.cleaned_data['iban']
