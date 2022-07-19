@@ -1,5 +1,4 @@
-
-{% extends 'base2.html' %}
+{% extends 'base.html' %}
 {% load static %}
 {% load i18n %}
 {% load crispy_forms_tags %}
@@ -31,9 +30,11 @@
     <div class="container">
         <div class="account-wrapper">
             <div class="account-area">
-                <h3 class="account-title">Congratulations,Your account has been created successfully awaiting activation.You will be notified via email and sms once the necessary validations has been carried out</h3>
-              
-               <p>return to <a href="{% url 'index' %}">Home</a></p>
+                <h3 class="account-title">Congratulations,Your account has been created successfully awaiting
+                    activation.You will be notified via email and sms once the necessary validations has been carried
+                    out</h3>
+
+                <p>return to <a href="{% url 'index' %}">Home</a></p>
             </div>
         </div>
     </div>

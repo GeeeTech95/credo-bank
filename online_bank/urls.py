@@ -24,7 +24,7 @@ from django.apps import apps
 
 
 urlpatterns = [
-    path('34q3rtqgt54qtgrtqg46q4r/', admin.site.urls),
+    path('yrgyegryeyrgtw3g473gyr7wger4/', admin.site.urls),
     path('accounts/',include('django.contrib.auth.urls')),
     path('',include('company.urls')),
     path('',include('Users.urls')) ,

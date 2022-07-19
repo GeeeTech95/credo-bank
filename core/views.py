@@ -123,7 +123,9 @@ class Email() :
         msg = render_to_string(template,ctx)
         email = EmailMessage(subject,msg,self.send_from,receive_email_list,connection=self.auth_connecion)
         email.content_subtype = "html"
-        email.send()
+        try :
+            email.send()
+        except : pass    
         self.auth_connecion.close()
         
 

@@ -1,115 +1,81 @@
-{% extends 'base2.html' %}
+{% extends 'base.html' %}
 {% load static %}
 {% load i18n %}
 {% load crispy_forms_tags %}
 
 {% block content %}
+<div class="content-wrapper">
+    <section class="Login-wrap ptb-100">
+        <div class="container">
+            <div class="row ">
+                <div class="col-xl-6 offset-xl-3 col-lg-8 offset-lg-2 col-md-10 offset-md-1">
+                    <div class="login-form-wrap">
+                        <div class="login-header">
+                            <h3>Verify Email Address</h3>
 
-<!--=================Account Section================= -->
-<section class="account-section padding-top padding-bottom bg_img bg_right_bottom"
-    data-background="{% static 'assets/images/account/account-bg.png' %}">
-    <div class="container">
-        <div class="account-wrapper">
-            <div class="account-area">
-                <h3 class="account-title">Verify Your Email Address</h3>
-                <form  id ="verification-form" method ="POST" action="">
-                    {% csrf_token %}
-                   {{form.as_p}}
-                   <div class="form-group w-100">
-                        <input type="submit" value="Verify">
-                    </div>
-                </form>
-                <div class="forget-pass-group d-flex flex-wrap justify-content-between">
-                    <div class="forget-pass">
-                        <p><a href="#0" target_url="{% url 'validate-email-send-code' %}" class="send-code" id="send-code" style="color:blue">Send Code</a></p>
-                        <p  id="resend-p" hidden  >Dint Receive Any Code ? <a target_url="{% url 'validate-email-send-code' %}"  class="send-code" id="resend-code" href="#0" style="color:blue">Resend Code</a></p>
-                    </div>
-                    <div class="no-account">
-                        <p></p>
+                        </div>
+                        <div class="login-form">
+                            <div class="login-body">
+                                <form class="form-wrap" action="" method="POST">
+                                    {% csrf_token %}
+                                    {{form|crispy}}
+
+                                    <div class="col-lg-12 pt-20">
+                                        <div class="form-group">
+                                            <button class="btn style1">
+                                                Login
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <p><a href="#0" target_url="{% url 'validate-email-send-code' %}"
+                                                class="send-code link style1" id="send-code" >Send Code</a></p>
+                                        
+                                        <p id="resend-p" hidden>Dint Receive Any Code ? <a
+                                                target_url="{% url 'validate-email-send-code' %}" class="send-code link style1"
+                                                id="resend-code" href="#0" >Resend Code</a></p>
+                                        
+                                               
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
-<!--=================Account Section================= -->
-
-<!--=================Sponsor Section================= -->
-<div class="sponsor-section padding-top padding-bottom">
-    <div class="container">
-        <div class="sponsor-slider">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide">
-                    <div class="sponsor-thumb">
-                        <img src="{% static 'assets/images/sponsor/sponsor01.png' %}" alt="sponsor">
-                    </div>
-                </div>
-                <div class="swiper-slide">
-                    <div class="sponsor-thumb">
-                        <img src="{% static 'assets/images/sponsor/sponsor02.png' %}" alt="sponsor">
-                    </div>
-                </div>
-                <div class="swiper-slide">
-                    <div class="sponsor-thumb">
-                        <img src="{% static 'assets/images/sponsor/sponsor03.png' %}" alt="sponsor">
-                    </div>
-                </div>
-                <div class="swiper-slide">
-                    <div class="sponsor-thumb">
-                        <img src="{% static 'assets/images/sponsor/sponsor04.png' %}" alt="sponsor">
-                    </div>
-                </div>
-                <div class="swiper-slide">
-                    <div class="sponsor-thumb">
-                        <img src="{% static 'assets/images/sponsor/sponsor05.png' %}" alt="sponsor">
-                    </div>
-                </div>
-                <div class="swiper-slide">
-                    <div class="sponsor-thumb">
-                        <img src="{% static 'assets/images/sponsor/sponsor06.png' %}" alt="sponsor">
-                    </div>
-                </div>
-                <div class="swiper-slide">
-                    <div class="sponsor-thumb">
-                        <img src="{% static 'assets/images/sponsor/sponsor07.png' %}" alt="sponsor">
-                    </div>
-                </div>
-                <div class="swiper-slide">
-                    <div class="sponsor-thumb">
-                        <img src="{% static 'assets/images/sponsor/sponsor08.png' %}" alt="sponsor">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    </section>
 </div>
+
 {% endblock %}
 
 {% block js %}
 <script>
-$(".send-code").click(function(){
-    var url = $(this).attr('target_url') 
-    var email = $("#email").val()
-    $.ajax({
-    type : "GET",
-    url : url,
-    data : {'email' : email},
+    $(".send-code").click(function () {
+        var url = $(this).attr('target_url')
+        var email = $("#email").val()
+        $.ajax({
+            type: "GET",
+            url: url,
+            data: { 'email': email },
 
-   success : function(data){
-       
-        if(data.success){
-            $("#send-code").css('display','none')
-            $("#resend-p").removeAttr('hidden')
-            alert(data.success)
-           
+            success: function (data) {
+
+                if (data.success) {
+                    $("#send-code").css('display', 'none')
+                    $("#resend-p").removeAttr('hidden')
+                    alert(data.success)
+
+                }
+                if (data.error) {
+                    alert(data.error)
+                }
+            }
         }
-        if(data.error){
-            alert(data.error)
-        }
-    }
-    }
-    )});
+        )
+    });
 
 
 </script>
-    {% endblock %}
+{% endblock %}
