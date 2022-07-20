@@ -60,27 +60,26 @@
     </style>
 
     <!--Start of Tawk.to Script-->
-<script type="text/javascript">
-    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-    (function(){
-    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-    s1.async=true;
-    s1.src='https://embed.tawk.to/62cc60f4b0d10b6f3e7bd107/1g7n5lfv7';
-    s1.charset='UTF-8';
-    s1.setAttribute('crossorigin','*');
-    s0.parentNode.insertBefore(s1,s0);
-    })();
+    <script type="text/javascript">
+        var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+        (function () {
+            var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+            s1.async = true;
+            s1.src = 'https://embed.tawk.to/62cc60f4b0d10b6f3e7bd107/1g7n5lfv7';
+            s1.charset = 'UTF-8';
+            s1.setAttribute('crossorigin', '*');
+            s0.parentNode.insertBefore(s1, s0);
+        })();
     </script>
     <!--End of Tawk.to Script-->
 </head>
 
 <body>
 
-    <!--div class="loader js-preloader">
-        <div></div>
-        <div></div>
-        <div></div>
-    </div-->
+    <div class="loader js-preloader">
+        <img style="height:60px;width: 60px;" src="{% static 'main/img/logo/icon.png' %}" >
+        <!--img src="{%  static 'assets/css/ajax-loader.gif' %}" alt="ajax-loader"-->
+    </div>
 
 
     <!--div class="switch-theme-mode">
@@ -103,11 +102,11 @@
                         <div class="col-lg-8 col-md-12">
                             <div class="header-top-left">
                                 <ul class="contact-info list-style">
-                                   
+
                                     <li><i class="flaticon-email-1"></i> <a
-                                            href="mailto:support@afflus-trade.com">support@afflus-trade.com</a>
+                                            href="mailto:support@credofinancebank.com">support@credofinancebank.com</a>
                                     </li>
-                                   
+
                                 </ul>
                             </div>
                         </div>
@@ -124,10 +123,10 @@
                                             aria-haspopup="true" aria-expanded="false">
                                             <span class="lang-name"></span>
                                         </button>
-                                      
-                                            <div id="google_translate_element" style="margin-top:-10px"></div>
-                                       
-                                       
+
+                                        <div id="google_translate_element" style="margin-top:-10px"></div>
+
+
 
                                         <!--div class="dropdown-menu language-dropdown-menu">
                                             <a class="dropdown-item" href="#">
@@ -176,7 +175,7 @@
                                     {% if user.is_authenticated %}
                                     <a href="{% url 'dashboard' %}" class="btn style1">Dashboard</a>
                                     {% else %}
-                                    <a href="{% url 'register' %}" class="btn style1">Register / Login</a>
+                                    <a href="{% url 'login' %}" class="btn style1">Register / Login</a>
                                     {% endif %}
                                 </li>
                             </ul>
