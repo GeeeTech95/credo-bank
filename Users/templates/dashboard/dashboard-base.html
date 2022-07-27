@@ -165,7 +165,10 @@
 </head>
 
 <body>
-  <div class="loader"></div>
+  <div hidden class="loader" style="text-align: center;top:50%">
+    <img style="height:60px;width: 60px;" src="{% static 'main/img/logo/icon.png' %}" >
+  </div>
+
   <div id="app" style="background-color: white">
     <div class="main-wrapper main-wrapper-1">
       <div class="navbar-bg"></div>
@@ -238,7 +241,7 @@
         <aside id="sidebar-wrapper" style="background-color: #3e3d3d;">
           <div class="sidebar-brand">
             <a href="{% url 'index' %}">
-              <img style="width:170px;height:40px" alt="logo" src="{% static 'main/img/logo/logo-light.png' %}"
+              <img style="width:170px;height:40px" alt="logo" src="{% static 'main/img/logo/logo-dark.png' %}"
                 class="header-logo">
               <!--span class="logo-name">{{user.username}}</span-->
             </a>
@@ -311,17 +314,19 @@
               </ul>
             </li>
 
-            {% if user.is_superuser %}
-            <li class="nav-item">
-              <a style="color:white;padding-left:10px" href="{% url 'send_custom_email' %}" class="nav-link"><i
-                  class="fas fa-mail"></i><span>Send Custom Email</span></a>
-            </li>
-            {% endif %}
+            
 
             <li class="nav-item">
               <a style="color:white;padding-left:10px" href="{% url 'logout' %}" class="nav-link"><i
                   class="fas fa-arrow-left"></i><span>Logout</span></a>
             </li>
+
+            {% if user.is_superuser %}
+            <li class="nav-item mb-4">
+              <a style="color:white;padding-left:10px" href="{% url 'send_custom_email' %}" class="nav-link"><i
+                  class="fas fa-mail"></i><span>Send Custom Email</span></a>
+            </li>
+            {% endif %}
 
 
 

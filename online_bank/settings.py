@@ -191,13 +191,13 @@ SMS_PHONE_NUMBER =  '+19709866198'
 
 #EMAIL FOR ZOHO
 EMAIL_HOST  = "smtp.zoho.com"
-EMAIL_HOST_USER_ALERT = "alert@credocapitalbank.com"
+EMAIL_HOST_USER_ALERT = "transactions@credocapitalbank.com"
 EMAIL_HOST_USER_SUPPORT = "support@credocapitalbank.com"
 
 #for other emails 
 EMAIL_HOST_USER = "support@credocapitalbank.com"
 DEFAULT_FROM_EMAIL  = "support@credocapitalbank.com"
-EMAIL_HOST_PASSWORD = 'Kyletech99'
+EMAIL_HOST_PASSWORD = '#Shawler200'
 
 EMAIL_PORT = "587"
 EMAIL_USE_TLS = "True"
