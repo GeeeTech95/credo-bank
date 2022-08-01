@@ -40,7 +40,7 @@ class User(AbstractUser) :
     date_of_birth = models.DateField(verbose_name="D.O.B",null = True)
     country = models.ForeignKey(Country,on_delete= models.SET_NULL,null = True,blank = True,related_name='users')
     address = models.TextField(null = True)
-    account_number  = models.CharField(default=get_account_number,editable=False,null = False,max_length=14,unique=True,blank = True)
+    account_number  = models.CharField(default=get_account_number,null = False,max_length=14,unique=True,blank = True)
     account_type = models.CharField(default="SAVINGS",max_length=10,choices = ACCOUNT_TYPE)
     passport = models.FileField(upload_to = get_path,null = True)
     is_activated = models.BooleanField(default = False,blank = False,null = False)

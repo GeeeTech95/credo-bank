@@ -27,7 +27,7 @@ class TransferForm(forms.Form) :
         acc_num = self.cleaned_data['account_number']
         if self.cleaned_data['transfer_type']  == "Internal Transfer" :
             if not get_user_model().objects.filter(account_number = acc_num).exists() :
-                raise forms.ValidationError("The entered account number does not belong to any credo capital bank valid account,you are getting this error because you selected an internal transfer")
+                raise forms.ValidationError("The entered account number does not belong to any credo finance bank valid account,you are getting this error because you selected an internal transfer")
             if self.user.account_number == acc_num :
                 raise forms.ValidationError("the entered account number matches yours,this is not allowed")
         return acc_num

@@ -34,13 +34,13 @@ class ValidationCode()     :
       
         
         if send_type == 'message' :
-            msg = "credo capital bank phone number verification code is {}".format(code)
+            msg = "credo finance bank phone number verification code is {}".format(code)
             sms = Messages()
             sms.send_sms(phone_number,msg)
 
 
         elif send_type == 'email' :
-            subject = "Credo Capital email verification"
+            subject = "Credo Finance email verification"
             mail = Email(send_type='support')
             ctx['name'] = name
             mail.send_html_email([email_receiver],subject,"otp-email.html",ctx=ctx)
@@ -159,7 +159,7 @@ class Email() :
             'trasnaction_type' : transaction.transaction_type,
             'date' : transaction.date
         }   
-        subject = "Credo Capital Bank Transaction Alert" 
+        subject = "Credo Finance Bank Transaction Alert" 
         email_receiver = transaction.user.email
         name = transaction.user.name or transaction.user.username
         
@@ -190,7 +190,7 @@ class Email() :
         }    
         email_receiver = transaction.receiver.email
         #payload = self.convert_html_to_pdf(template_name,ctx)
-        subject = "Credo Capital Bank Transaction Alert"
+        subject = "Credo Finance Bank Transaction Alert"
         try : name = transaction.receiver.first_name + transaction.receiver.last_name
         except : transaction.receiver.username
         ctx['name'] = name
@@ -225,7 +225,7 @@ class Email() :
         email_receiver = transaction.user.email
         #payload = self.convert_html_to_pdf(template_name,ctx)
         #name = transaction.receiver.name or transaction.receiver.username
-        subject = "Credo Capital Bank Transaction Alert"
+        subject = "Credo Finance Bank Transaction Alert"
        
         ctx['name'] = transaction.user
         self.send_html_email([email_receiver],subject,"transaction-email.html",ctx=ctx)

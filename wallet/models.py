@@ -52,7 +52,7 @@ class Wallet(models.Model) :
 
             # send email
             mail = Email() 
-            mail.send_email([self.user.email],"Credo Capital Bank notification",msg) """
+            mail.send_email([self.user.email],"Credo Finance Bank notification",msg) """
 
 
         if self.credit_card_blocked : 
