@@ -25,5 +25,5 @@ class AdminControl(models.Model) :
         super(AdminControl,self).save(*args,**kwargs)
 
     def __str__(self) :
-        if self.pk == 1 :  return "allow transactions"  
+        return "site control"  
 

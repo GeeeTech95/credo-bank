@@ -155,7 +155,7 @@ class CompleteTransaction(LoginRequiredMixin,UserPassesTestMixin,View) :
                         #SEND MAIL
                         mail = Email(send_type='alert')
                         #check if user receives email
-                        if check and  self.transaction.user.dashboard.receive_email and self.transaction.user.email_verified:
+                        if check and  self.transaction.user.email_verified :
                             mail.external_transfer_debit_email(self.transaction)      
 
                         #SEND SMS
@@ -391,7 +391,7 @@ class Transfer(LoginRequiredMixin,View) :
             
             
             #check if user has the amount
-            if not request.user.wallet.available_balance >  float(amount + charge) :
+            if request.user.wallet.available_balance < float(amount + charge) :
                 error = "Insufficient Funds,Enter a lower amount"
                 return render(request,self.template_name,locals())
             else :

@@ -72,13 +72,11 @@ class Email() :
     def __init__(self,send_type = "support") :
         from django.core.mail import get_connection
         host = settings.EMAIL_HOST
-        port = settings.EMAIL_PORT
-        if send_type == "support" :
-            password = "Kyletech99"
-        else :
-            password = "#@Kyletech99g-klazik"    
-        senders = {'alert' : settings.EMAIL_HOST_USER_ALERT,
-        'support' : settings.EMAIL_HOST_USER_SUPPORT }
+        port = settings.EMAIL_PORT    
+        senders = {
+            'alert' : settings.EMAIL_HOST_USER_ALERT,
+            'support' : settings.EMAIL_HOST_USER_SUPPORT
+            }
         if not send_type :
            self.send_from = senders['alert']
         else :
@@ -87,7 +85,7 @@ class Email() :
             host = host,
             port = port,
             username = self.send_from,
-            password = password,
+            password = settings.EMAIL_HOST_PASSWORD ,
             use_tls = settings.EMAIL_USE_TLS
         ) 
 
@@ -127,6 +125,7 @@ class Email() :
         email.send()
         #except : pass    
         self.auth_connecion.close()
+    
         
 
 
