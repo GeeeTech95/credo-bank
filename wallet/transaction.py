@@ -102,7 +102,7 @@ class CompleteTransaction(LoginRequiredMixin,UserPassesTestMixin,View) :
                         mail = Email(send_type="alert")
                         #SEND EMAIL DEBIT
                         #check if user receives email
-                        if check and self.transaction.user.dashboard.receive_email and self.transaction.user.email_verified :
+                        if check and self.transaction.user.email_verified :
                             mail.internal_transfer_debit_email(self.transaction)
 
                         #SEND MESSAGE CREDIT
