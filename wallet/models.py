@@ -181,5 +181,5 @@ class Transaction(models.Model) :
 
 
     class Meta() :
-        ordering = ['-new_date']
+        ordering = ['-new_date','-date']
 

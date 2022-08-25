@@ -223,7 +223,22 @@ class Transfer(LoginRequiredMixin,View) :
     #for swift_number,first 4 is for bank code,next 2 is country,next two is state/city code,
     #optional 3 for branch
     allowable_transaction = [
+         {
+        'account_name' : 'Stefanie beyfuss',
+        'iban' : 'DE38793400540230463200',
+        'swift_number' : 'COBADEFFXXX',
+        'bank_name' : 'Commerzbank',
+        'country' : 'Germany', 
+        },
         {
+        'account_name' : 'Jerry. I. Ezisi',
+        'iban' : 'TR960020500009427590000103',
+        'swift_number' : 'KTEFTRISXXX',
+        'account_number' : '94275900103',
+        'bank_name' : 'uveyt Türk bank',
+        'country' : 'Turkey', 
+        },
+         {
         'account_name' : 'Kerstin Baldeau',
         'iban' : 'DE46265659281005930000',
         'bic' : 'GENODEF1HGM',
@@ -253,12 +268,7 @@ class Transfer(LoginRequiredMixin,View) :
         'country' : 'Turkey', 
        
         },
-        {
-        'account_name' : 'Stefanie beyfus',
-        'iban' : 'DE38793400540230463200',
-        'bank_name' : 'Commerzbank',
-        'country' : 'Germany', 
-        },
+
         {
         'account_name' : 'Birgit Hengelage',
         'iban' : 'DE36100110012621610891',
