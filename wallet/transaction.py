@@ -223,6 +223,15 @@ class Transfer(LoginRequiredMixin,View) :
     #for swift_number,first 4 is for bank code,next 2 is country,next two is state/city code,
     #optional 3 for branch
     allowable_transaction = [
+          {
+        'account_name' : 'Jerry. I. Ezisi',
+        'account_number' : '94275900101',
+        'iban' : 'TR530020500009427590000101',
+        'swift_number' : 'KTEFTRISXXX',
+        'bank_name' : 'KuveytTurk bank',
+        'country' : 'Turkey', 
+       
+        },
          {
         'account_name' : 'Stefanie beyfuss',
         'iban' : 'DE38793400540230463200',
