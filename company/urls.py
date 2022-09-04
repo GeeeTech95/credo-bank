@@ -6,7 +6,6 @@ from .services import Services
 urlpatterns = [
     path('',Index.as_view(),name = 'index'),
     path('test/',About.as_view(),name = 'about-us'),
-    path('contact/',Contact.as_view(),name = 'contact'),
     path('services/',Services.as_view(),name = 'info'),
     path('FAQ/',Faq.as_view(),name='faq'),
     #path('terms-of-service/',TOS.as_view(),name = 'tos'),  
