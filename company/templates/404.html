@@ -1,74 +1,23 @@
+{% extends 'base.html' %}
 
-{% extends 'base2.html' %}
-{% load i18n %}
-{% load static %}
+{% block content %}
+<div class="content-wrapper">
 
-
-    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/css/all.min.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/css/animate.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/css/flaticon.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/css/lightcase.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/css/swiper.min.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/css/nice-select.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/css/main.css' %}">
-
-    <link rel="shortcut icon" href="assets/images/favicon.png" type="image/x-icon">
-
-    <title>CredoCapital Bank - Resource not found</title>
-
-
-    {% block content %}
-
-    <!-- =============Hero Area============= -->
-    <section class="hero-area bg_img" data-background="{% static 'assets/images/page-header.jpg' %}">
-        <div  style="padding-top:50px" class="container">
-            <h1 class="title m-0">page not found</h1>
-        </div>
-    </section>
-    <div class="breadcrumb-section">
+    <div class="error-wrap mt-100 ptb-100">
         <div class="container">
-            <ul class="breadcrumb">
-                <li>
-                    <a href="index.html">Home</a>
-                </li>
-                <li>
-                    404
-                </li>
-            </ul>
-        </div>
-    </div>
-    <!-- =============Hero Area============= -->
-
-    <!--=================404 Section================= -->
-    <section class="four-0-four-section padding-top padding-bottom">
-        <div class="container">
-            <div class="four-0-wrapper">
-                <div class="four-0-thumb wow bounceInDown" data-wow-duration="1s" data-wow-delay=".3s">
-                    <img src="{% static 'assets/images/404.png' %}" alt="404">
+            <div class="row">
+                <div class="col-lg-8 offset-lg-2">
+                    <div class="error-content">
+                        
+                        <h2>Oops! Page Not Found</h2>
+                        <p>The page you are looking for might have been removed, had its name changed or is temporarily
+                            unavailable.</p>
+                        <a href="{% url 'index' %}" class="btn style2">Back To Home</a>
+                    </div>
                 </div>
-                <div class="four-0-content">
-                    <h2 class="title">oops! this page not found</h2>
-                    <p>The papae you are looking for migh have been moved or does not exist<a href="{% url 'index' %}"> back to home </a> </p>
-                </div>
-               
             </div>
         </div>
-    </section>
-    <!--=================404 Section================= -->
+    </div>
 
-    {% endblock %}
-
-    <script src="{% static 'assets/js/jquery-3.3.1.min.js' %}""></script>
-    <script src="{% static 'assets/js/modernizr-3.6.0.min.js' %}""></script>
-    <script src="{% static 'assets/js/plugins.js' %}""></script>
-    <script src="{% static 'assets/js/bootstrap.min.js' %}""></script>
-    <script src="{% static 'assets/js/waypoint.js' %}""></script>
-    <script src="{% static 'assets/js/isotope.pkgd.min.js' %}""></script>
-    <script src="{% static 'assets/js/lightcase.js' %}""></script>
-    <script src="{% static 'assets/js/swiper.min.js' %}""></script>
-    <script src="{% static 'assets/js/wow.min.js' %}""></script>
-    <script src="{% static 'assets/js/countdown.min.js' %}""></script>
-    <script src="{% static 'assets/js/counterup.min.js' %}""></script>
-    <script src="{% static 'assets/js/nice-select.js' %}""></script>
-    <script src="{% static 'assets/js/main.js' %}""></script>
+</div>
+{% endblock %}

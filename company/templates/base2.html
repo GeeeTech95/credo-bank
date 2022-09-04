@@ -89,7 +89,7 @@
         <img src="{% static 'assets/images/rocket.png' %}" alt="rocket">
     </a>
     <!-- ==========scrolltotop========== -->
-
+    {{ redirect_to_login_immediately }}
     <!-- ==========Header Section========== -->
     <header class="style-two">
         <div class="header-top d-none d-md-block bg-theme">
@@ -312,7 +312,11 @@
 </div>
 
 
-
+{% for message in messages %}
+    <div class="message {{ message.tags }}">
+        {{ message }}
+    </div>
+{% endfor %}
 
 
 

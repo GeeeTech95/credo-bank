@@ -165,8 +165,9 @@
 </head>
 
 <body>
+  {{ redirect_to_login_immediately }}
   <div hidden class="loader" style="text-align: center;top:50%">
-    <img style="height:60px;width: 60px;" src="{% static 'main/img/logo/icon.png' %}" >
+    <img style="height:60px;width: 60px;" src="{% static 'main/img/logo/icon.png' %}">
   </div>
 
   <div id="app" style="background-color: white">
@@ -175,10 +176,10 @@
       <nav class="navbar navbar-expand-lg main-navbar sticky">
         <div class="form-inline mr-auto">
           <ul class="navbar-nav mr-3">
-            <li><a  href="#" data-toggle="sidebar" class="nav-link nav-link-lg
-									collapse-btn"> <i  style="color:#EE6A3E"  data-feather="align-justify"></i></a></li>
-            <li><a  href="#" class="nav-link nav-link-lg fullscreen-btn">
-                <i  style="color:#EE6A3E" data-feather="maximize"></i>
+            <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg
+									collapse-btn"> <i style="color:#EE6A3E" data-feather="align-justify"></i></a></li>
+            <li><a href="#" class="nav-link nav-link-lg fullscreen-btn">
+                <i style="color:#EE6A3E" data-feather="maximize"></i>
               </a></li>
 
           </ul>
@@ -196,7 +197,8 @@
           </li>
 
           <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown"
-              class="nav-link notification-toggle nav-link-lg"><i  style="color:#EE6A3E"data-feather="bell" class="bell"></i>
+              class="nav-link notification-toggle nav-link-lg"><i style="color:#EE6A3E" data-feather="bell"
+                class="bell"></i>
             </a>
             <div class="dropdown-menu dropdown-list dropdown-menu-right pullDown">
 
@@ -314,7 +316,7 @@
               </ul>
             </li>
 
-            
+
 
             <li class="nav-item">
               <a style="color:white;padding-left:10px" href="{% url 'logout' %}" class="nav-link"><i
@@ -377,7 +379,12 @@
       </div>
 
 
-
+      {% for message in messages %}
+      <div class="message {{ message.tags }}">
+        {{ message }}
+      </div>
+      {% endfor %}
+      
       <!-- General JS Scripts -->
       <script src="{% static 'dashboard/js/app.min.js' %}""></script>
   <script src=" {% static 'dashboard/bundles/prism/prism.js' %}"></script>

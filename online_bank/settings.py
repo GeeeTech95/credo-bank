@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/3.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
-
+from django.utils.timezone import timedelta
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -29,6 +29,12 @@ ALLOWED_HOSTS = ['*']
 
 TEST_MODE = True
 
+AUTO_LOGOUT = {
+    'IDLE_TIME': timedelta(minutes=5),
+    'REDIRECT_TO_LOGIN_IMMEDIATELY': True,
+    'SESSION_TIME': timedelta(hours=1),
+    'MESSAGE': 'Your session has expired. Please login again to continue.',
+    }  # logout after 10 minutes of downtime
 # Application definition
 
 INSTALLED_APPS = [
@@ -61,6 +67,7 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'django_auto_logout.middleware.auto_logout',
     #language translation   
     #'django.middleware.locale.LocalMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -85,6 +92,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                 #auto logout
+                'django_auto_logout.context_processors.auto_logout_client',
             ],
         },
     },
