@@ -189,27 +189,33 @@ TWILLO_AUTH_TOKEN =   '8512ae91f275f2bf0c8bf864e61692f3'
 
 SMS_PHONE_NUMBER =  '+19709866198'
 
-#EMAIL FOR GMAIL
-#EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-#EMAIL_HOST = 'smtp.gmail.com'
-#EMAIL_USE_TLS = True
-#EMAIL_PORT = 587
-#EMAIL_HOST_USER = 'geeetech.inc@gmail.com'
-#EMAIL_HOST_PASSWORD = 'oehfphhfktpoezyh'
-
 
 #EMAIL FOR ZOHO
 EMAIL_HOST  = "smtp.zoho.com"
-EMAIL_HOST_USER_ALERT = "transactions@credofinancebank.com"
-EMAIL_HOST_USER_SUPPORT = "support@credofinancebank.com"
+EMAIL_HOST_USER_ALERT = "support@credocapitalbank.com"
+EMAIL_HOST_USER_SUPPORT = "support@credocapitalbank.com"
 
 #for other emails 
-EMAIL_HOST_USER = "support@credofinancebank.com"
-DEFAULT_FROM_EMAIL  = "support@credofinancebank.com"
-EMAIL_HOST_PASSWORD = '#Shawler200'
+EMAIL_HOST_USER = "support@credocapitalbank.com"
+DEFAULT_FROM_EMAIL  = "support@credocapitalbank.com"
+EMAIL_HOST_PASSWORD = '#@Kyletech99'
 
 EMAIL_PORT = "587"
 EMAIL_USE_TLS = "True"
+
+
+#EMAIL FOR ZOHO
+#EMAIL_HOST  = "smtp.zoho.com"
+#EMAIL_HOST_USER_ALERT = "transactions@credofinancebank.com"
+#EMAIL_HOST_USER_SUPPORT = "support@credofinancebank.com"
+
+#for other emails 
+#EMAIL_HOST_USER = "support@credofinancebank.com"
+#DEFAULT_FROM_EMAIL  = "support@credofinancebank.com"
+#EMAIL_HOST_PASSWORD = '#Shawler200'
+
+#EMAIL_PORT = "587"
+#EMAIL_USE_TLS = "True"
 #EMAIL_USE_SSL = "False"
 
 
