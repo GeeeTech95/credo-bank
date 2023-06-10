@@ -1,472 +1,653 @@
 {% extends 'base.html' %}
 {% load static %}
+
 {% block content %}
 
-<section class="hero-wrap style3 bg-squeeze" style="background-color: #F5F5F5;">
-    
-    <div class="hero-img-wrap">
-        <div class="hero-slide-item">
-            <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-lg-6">
-                        <div class="hero-content">
-                  
-                            <h1>We consider you first in everything we do</h1>
-                            <p>Experience Credo Capital Bank at the peak of modern mobile banking</p>
-                            <a href="{% url 'register' %}" class="btn style1">Create Account</a>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="app-img-wrap">
-                            <!--img class="bounce" src="{% static 'main/img/hero/banner.jpg' %}" alt="Image"-->
-                            <img class="app-shape-one" src="{% static 'main/img/hero/hero-slide-20.png' %}" alt="Image">
-                        </div>
-                        <!--div class="hero-img-wrap">
-                            <img src="{% static 'main/img/hero/hero-slide-20.png' %}" alt="Image">
-                        </div-->
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
-</section>
-
-
-<!--div class="service-charge-wrap bg-stratos ptb-100">
-    <div class="container">
-        <form action="#" class="charge-form">
-            <div class="row justify-content-center">
-                <div class="col-lg-4 col-md-6">
-                    <div class="form-group">
-                        <label for="send_money">Your Send Money</label>
-                        <input type="number" id="send_money" name="send_money" placeholder="$1000">
-                        <select>
-                            <option value="1">USD</option>
-                            <option value="2">EURO</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="form-group">
-                        <label for="recieved_money">Recipient Gets</label>
-                        <input type="number" id="recieved_money" name="recieved_money" placeholder="$1000">
-                        <select>
-                            <option value="1">USD</option>
-                            <option value="2">EURO</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-12">
-                    <div class="form-group form-btn">
-                        <button type="submit" class="btn style1 w-100 d-block">Get Estimation</button>
-                    </div>
-                </div>
-                <div class="col-lg-12">
-                    <p><span>82.50</span> Exchange Rate <span>$5.50</span> Transition Fees</p>
-                    <p>By clicking continue, I am agree with <a href="terms-of-service.html"
-                            class="link style1">Terms & Policy</a></p>
-                </div>
-            </div>
-        </form>
-    </div>
-</div-->
-
-<section class="feature-wrap  pb-75">
-    <div class="content-title style1 p-3">
-        <span>Bank with the best</span>
-        <h2>Why choose us</h2>
-        <p>There are many reasons you should use {{site_name}}, we want you to see for yourself</p>
-    </div>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-6 col-sm-6 col-6">
-                <div class="single-unified-platform ">
-                    <i class="flaticon-wallet"></i>
-                    <h5>Global Reach & Local Presence</h5>
-                    <p>{{site_name}} has presence accross 5 countries and 2 continents, providing you opportunities to manage international assets. You know the awesome thing about us? we keep on expanding.</p>
-                </div>
-            </div>
-            <div class="col-lg-6 col-sm-6 col-6">
-                <div class="single-unified-platform">
-                    <i class="flaticon-id-card"></i>
-                    <h5>Secured & Fast Transactions</h5>
-                    <p>Slow internet banking reduces business strength, we dont want that for your business. Experience modern banking right from your devices, increase profitability and client trust.</p>
-                </div>
-            </div>
-            <div class="col-lg-6 col-sm-6 col-6 mt-3">
-                <div class="single-unified-platform">
-                    <i class="flaticon-id-card"></i>
-                    <h5>Optimum User Experience</h5>
-                    <p>We care so much about your convenience, we made sure your experience with your personalized <a href="{% url 'dashboard' %}">account portal</a> is optimum.</p>
-                </div>
-            </div>
-            <div class="col-lg-6 col-sm-6 col-6 mt-3">
-                <div class="single-unified-platform">
-                    <i class="flaticon-id-card"></i>
-                    <h5>Live Support</h5>
-                    <p> We always have a support personnel round the clock, ready to answer your questions and enquiries. Just a click away</p>
-                </div>
-            </div>
-       
-        </div>
-    </div>
-</section>
-
-
-<section class="why-choose-wrap style1 pb-100 bg-bunting">
-    <div class="container">
-        <div class="row gx-5 align-items-center">
-            <div class="col-lg-6">
-                <div class="wh-img-wrap">
-                    <img src="{% static 'main/img/why-choose-us/why-choose-us-1.jpg' %}" alt="Image">
-                   
-                
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="wh-content">
-                    <div class="content-title style1">
-                        <span>Let's bring you up to speed</span>
-                        <h2>Banking Process Designed Specially For You</h2>
-                        <p>Modern business world requires you to have a bank you can rely on, we are here to ensure that.</p>
-                    </div>
-                    <div class="feature-item-wrap">
-                        <div class="feature-item">
-                            <span class="feature-icon">
-                                <i class="flaticon-graph"></i>
-                            </span>
-                            <div class="feature-text">
-                                <h3>24/7 support</h3>
-                                <p>Our support team  is always readily available to make your life easier.</p>
+<!-- Carousel Start -->
+<div class="container-fluid p-0 mb-5 wow fadeIn" data-wow-delay="0.1s">
+    <div id="header-carousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <!--div class="carousel-item" >
+                    <img class="w-100" src="{% static 'img/carousel-1.jpg' %}">
+                    <div class="carousel-caption">
+                        <div class="container">
+                            <div class="row justify-content-start">
+                                <div class="col-lg-8">
+                                    <p class="d-inline-block border border-white rounded text-primary fw-semi-bold py-1 px-3 animated slideInDown">Welcome to Finanza</p>
+                                    <h1 class="display-1 mb-4 animated slideInDown">Your Financial Status Is Our Goal</h1>
+                                    <a href="" class="btn btn-primary py-3 px-5 animated slideInDown">Explore More</a>
+                                </div>
                             </div>
                         </div>
-                        <div class="feature-item">
-                            <span class="feature-icon">
-                                <i class="flaticon-loan-1"></i>
-                            </span>
-                            <div class="feature-text">
-                                <h3>Email & sms notification</h3>
-                                <p>Get to know what is happenning to your account on the go, email and sms is free, you don't have to pay a dime.</p>
-                            </div>
-                        </div>
-                        <div class="feature-item">
-                            <span class="feature-icon">
-                                <i class="flaticon-computer"></i>
-                            </span>
-                            <div class="feature-text">
-                                <h3>Fast Banking Expereince</h3>
-                                <p>Transactions on {{site_name}} go with the speed of light, your clients will always love to stay in business with you.</p>
-                            </div>
-                        </div>
-                        <div class="feature-item">
-                            <span class="feature-icon">
-                                <i class="flaticon-computer"></i>
-                            </span>
-                            <div class="feature-text">
-                                <h3>100% Secure</h3>
-                                <p>Your money is very safe with us, no third party can have access to your data. Trust us to always protect you.</p>
+                    </div>
+                </div-->
+            <div class="carousel-item active">
+                <img class="w-100" src="{% static 'img/carousel-2.jpg' %}">
+
+                <div class="carousel-caption">
+                    <div class="container">
+                        <div class="row justify-content-start">
+                            <div class="col-lg-7">
+                                <p hidden
+                                    class="d-inline-block border border-white rounded text-primary fw-semi-bold py-1 px-3 animated slideInDown">
+                                    Welcome to Metros Capital Bank</p>
+                                <h1 class="display- mb-4 animated slideInDown">The Banking Experience Second To None.
+                                </h1>
+                                <a href="{% url 'register' %}"
+                                    class="btn btn-primary py-3 px-5 animated slideInDown">Create Account</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <button hidden class="carousel-control-prev" type="button" data-bs-target="#header-carousel"
+            data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button hidden class="carousel-control-next" type="button" data-bs-target="#header-carousel"
+            data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
     </div>
-</section>
+</div>
+<!-- Carousel End -->
 
 
-<section class="feature-wrap  pb-75">
-    <div class="content-title style1 p-3">
-        <span>Our services</span>
-        <h2>How We Improve Your Banking Experience
-        </h2>
-        <!--p>There are many reasons you should use {{site_name}}, we want you to see for yourself</p-->
-    </div>
+<!-- About Start -->
+<div class="container-xxl py-5" id="about-us">
     <div class="container">
-        <div class="row justify-content-center">
-            <!--div class="col-lg-3 col-sm-6 col-6">
-                <div class="single-choose-us wow fadeInUp delay-0-8s animated" style="visibility: visible;">
-                    <img src="{% static 'main/img/why-choose-us/why-choose-4.jpg' %}" alt="Image">
-
-                    <div class="why-choose-content pt-2">
-                        <h4>Improved Safety</h4>
-                        <p>We understand the serious business of handling money better than anyone else. Security is always on the top of our check list, transactions on {{site_name}} uses 128-bit encryption, so you are sure your transactions and money are always safe.</p>
-                    </div>
-                </div>
-            </div-->
-            <div class="col-lg-3 col-sm-6 col-6">
-                <div class="single-choose-us wow fadeInUp delay-0-8s animated" style="visibility: visible;">
-                    <img src="{% static 'main/img/blog/blog-5.jpg' %}" alt="Image">
-
-                    <div class="why-choose-content pt-2">
-                        <h4>Zero Cost Banking</h4>
-                        <p>We mean it when we say "ZERO COST", get prompt updates, sms and email notifications, access your information, browse your transaction history, and so much more free of charge. {{site_name}} will never take any fee from you especially without your permission. Experience modern online banking at zero charges.</p>
-                    </div>
-                </div>
+        <div class="row g-4 align-items-end mb-4">
+            <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
+                <img class="img-fluid rounded" src="{% static 'img/carousel-3.jpg' %}">
             </div>
-            <div class="col-lg-3 col-sm-6 col-6 pt-2">
-                <div class="single-choose-us wow fadeInUp delay-0-8s animated" style="visibility: visible;">
-                    <img src="{% static 'main/img/blog/blog-4.jpg' %}" alt="Image">
-
-                    <div class="why-choose-content pt-2">
-                        <h4>Reward For Saving</h4>
-                        <p>There is always a reward for  good behaviour, we reward you for the good habit of saving. We can even help you tuck some cash away, this even offers you more interest on your savings.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-
-
-<!--section class="why-choose-wrap style1 pb-100 bg-bunting">
-    <div class="container">
-        <div class="row gx-5 align-items-center">
-            <div class="col-lg-6">
-                <div class="wh-img-wrap">
-                    <img src="{% static 'main/img/why-choose-us/wh-img-1.png' %}">
-                    <img class="wh-shape-one bounce" src="{% static 'main/img/why-choose-us/wh-shape-1.png' %}">
-                    <img class="wh-shape-two animationFramesTwo"
-                        src="{% static 'main/img/why-choose-us/wh-shape-2.png' %}">
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="wh-content">
-                    <div class="content-title style1">
-                        <span>Why Choose Us</span>
-                        <h2>Get World Class &amp; Fastest Online Payment Service</h2>
-                        <p>There are many variations of passages of Lorem Ipsum amet avoilble but majority have
-                            suffered alteration in some form, by injected humur or randomise words which don't
-                            sure amet sit dolor quras alto lorem.</p>
-                    </div>
-                    <div class="feature-item-wrap">
-                        <div class="feature-item">
-                            <span class="feature-icon">
-                                <i class="flaticon-graph"></i>
-                            </span>
-                            <div class="feature-text">
-                                <h3>Low Costing</h3>
-                                <p>Vestibulum ac diam sit amet quam vehicula elemen tum sed sit amet dui
-                                    praesent sapien pelle tesque.</p>
-                            </div>
+            <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.3s">
+                <p class="d-inline-block border rounded text-primary fw-semi-bold py-1 px-3">About Us</p>
+                <h1 class="display-5 mb-4">Heralding A Modern Banking Experience.</h1>
+                <p class="mb-4">
+                    Welcome to {{site_name}}, where we're committed to providing our customers with exceptional banking
+                    experiences. We're a trusted financial institution that's been serving communities for 8 years,
+                    offering a wide range of financial products and services to help you achieve your
+                    financial goals.
+                </p>
+                <div class="border rounded p-4">
+                    <nav>
+                        <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
+                            <button class="nav-link fw-semi-bold active" id="nav-story-tab" data-bs-toggle="tab"
+                                data-bs-target="#nav-story" type="button" role="tab" aria-controls="nav-story"
+                                aria-selected="true">Our Story</button>
+                            <button class="nav-link fw-semi-bold" id="nav-mission-tab" data-bs-toggle="tab"
+                                data-bs-target="#nav-mission" type="button" role="tab" aria-controls="nav-mission"
+                                aria-selected="false">Mission</button>
+                            <button class="nav-link fw-semi-bold" id="nav-vision-tab" data-bs-toggle="tab"
+                                data-bs-target="#nav-vision" type="button" role="tab" aria-controls="nav-vision"
+                                aria-selected="false">Vision</button>
                         </div>
-                        <div class="feature-item">
-                            <span class="feature-icon">
-                                <i class="flaticon-loan-1"></i>
-                            </span>
-                            <div class="feature-text">
-                                <h3>Safe &amp; Secure</h3>
-                                <p>Vestibulum ac diam sit amet quam vehicula elemen tum sed sit amet dui
-                                    praesent sapien pelle tesque.</p>
-                            </div>
+                    </nav>
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade show active" id="nav-story" role="tabpanel"
+                            aria-labelledby="nav-story-tab">
+                            <p>Over the years, we've grown and expanded our services to meet the changing needs of our
+                                customers. However, our commitment to personalized service and community engagement has
+                                remained the cornerstone of our business. We take pride in being a trusted financial
+                                partner to thousands of individuals, families, and businesses across the region.</p>
+                            <p class="mb-0">At {{site_name}}, we're dedicated to providing innovative solutions that
+                                make
+                                banking more convenient, accessible, and secure. From our state-of-the-art online and
+                                mobile banking tools to our network of conveniently located branches, we offer a range
+                                of options to help our customers manage their finances with ease.</p>
+
                         </div>
-                        <div class="feature-item">
-                            <span class="feature-icon">
-                                <i class="flaticon-computer"></i>
-                            </span>
-                            <div class="feature-text">
-                                <h3>Live Support</h3>
-                                <p>Vestibulum ac diam sit amet quam vehicula elemen tum sed sit amet dui
-                                    praesent sapien pelle tesque.</p>
-                            </div>
+                        <div class="tab-pane fade" id="nav-mission" role="tabpanel" aria-labelledby="nav-mission-tab">
+                            <p>Our mission is to provide an exceptional online banking experience that is secure,
+                                convenient, and personalized for each of our customers. </p>
+                            <p class="mb-2">
+                                We believe in building long-term relationships with our customers and getting to know
+                                their unique financial needs and goals. Our team of experienced professionals is
+                                dedicated to
+                                providing personalized service and guidance to help our customers make informed
+                                decisions about their money.
+                            </p>
+                            <p class="mb-0">We strive to empower individuals and businesses to achieve their financial
+                                goals with our innovative solutions and superior customer service.</p>
+                        </div>
+                        <div class="tab-pane fade" id="nav-vision" role="tabpanel" aria-labelledby="nav-vision-tab">
+                            <p>At {{site_name}}, our vision is to be the premier financial institution in the
+                                communities
+                                we serve, known for our personalized service, innovative solutions, and commitment to
+                                community engagement.
+                            </p>
+                            <p class="mb-0">We envision a future where banking is more than just a transactional
+                                experience, but a collaborative partnership between our customers and our team of
+                                experienced professionals. We believe that by putting the needs of our customers first
+                                and
+                                building strong, long-term relationships, we can help our communities thrive and grow
+                            </p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</section-->
-
-
-<div class="app-wrap">
-    <div class="container">
-        <div class="counter-card-wrap" style="background: #3e3d3d;">
-            <div class="counter-card">
-                <div class="counter-text">
-                    <div class="counter-num">
-                        <span class="odometer" data-count="5"></span> +
+        <div class="border rounded p-4 wow fadeInUp" data-wow-delay="0.1s">
+            <div class="row g-4">
+                <div class="col-lg-4 wow fadeIn" data-wow-delay="0.1s">
+                    <div class="h-100">
+                        <div class="d-flex">
+                            <div class="flex-shrink-0 btn-lg-square rounded-circle bg-primary">
+                                <i class="fa fa-times text-white"></i>
+                            </div>
+                            <div class="ps-3">
+                                <h4>No Banking Charges</h4>
+                                <span>Banking with us means you don't have to loose money whenever perform a transaction
+                                    on your account.</span>
+                            </div>
+                            <div class="border-end d-none d-lg-block"></div>
+                        </div>
+                        <div class="border-bottom mt-4 d-block d-lg-none"></div>
                     </div>
-                    <p>Support Countries</p>
                 </div>
-            </div>
-            <div class="counter-card">
-                <div class="counter-text">
-                    <div class="counter-num">
-                        <span class="odometer" data-count="35"></span>K+
+                <div class="col-lg-4 wow fadeIn" data-wow-delay="0.3s">
+                    <div class="h-100">
+                        <div class="d-flex">
+                            <div class="flex-shrink-0 btn-lg-square rounded-circle bg-primary">
+                                <i class="fa fa-users text-white"></i>
+                            </div>
+                            <div class="ps-3">
+                                <h4>Dedicated Team</h4>
+                                <span>Professionalism at it's peak. making sure you don't lack the oversight you
+                                    need.</span>
+                            </div>
+                            <div class="border-end d-none d-lg-block"></div>
+                        </div>
+                        <div class="border-bottom mt-4 d-block d-lg-none"></div>
                     </div>
-                    <p>Happy Customers</p>
                 </div>
-            </div>
-            <div class="counter-card">
-                <div class="counter-text">
-                    <div class="counter-num">
-                        <span class="odometer" data-count="2"></span>
+                <div class="col-lg-4 wow fadeIn" data-wow-delay="0.5s">
+                    <div class="h-100">
+                        <div class="d-flex">
+                            <div class="flex-shrink-0 btn-lg-square rounded-circle bg-primary">
+                                <i class="fa fa-phone text-white"></i>
+                            </div>
+                            <div class="ps-3">
+                                <h4>24/7 Support</h4>
+                                <span>You are our priority, feel free to contact us whenever you have any enquiry or
+                                    complaints. Be sure we would always attend to you.</span>
+                            </div>
+                        </div>
                     </div>
-                    <p>Continent</p>
-                </div>
-            </div>
-            <div class="counter-card">
-                <div class="counter-text">
-                    <div class="counter-num">
-                        <span class="odometer" data-count="237"></span>
-                    </div>
-                    <p>Staffs</p>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<!-- About End -->
 
 
-
-
-
-<section class="shopping-wrap ptb-100">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-lg-6 col-12 order-lg-1 order-2">
-                <div class="shopping-content">
-                   
-                    <div class="content-title style1 ">
-                        <span>Power to to great things</span>
-                        <h2>Our Customers are in charge</h2>
-                        <p>There are many reasons you should use {{site_name}}, we want you to see for yourself</p>
-                    </div>
-                    <ul class="content-feature-list list-style">
-                        <li><i class="ri-check-double-line"></i>Increase Profitability</li>
-                        <li><i class="ri-check-double-line"></i>Explore new opportunities</li>
-                        <li><i class="ri-check-double-line"></i>100% user control, right from your dashboard
-                        </li>
-                        <li><i class="ri-check-double-line"></i>Enjoy rugged security and privacy.
-                        </li>
-                    </ul>
-                    <a href="{% url 'register' %}" class="btn style1">Signup Now</a>
-                </div>
+<!-- Facts Start -->
+<div class="container-fluid facts my-5 py-5">
+    <div class="container py-5">
+        <div class="row g-5">
+            <div class="col-sm-6 col-lg-3 text-center wow fadeIn" data-wow-delay="0.1s">
+                <i class="fa fa-users fa-3x text-white mb-3"></i>
+                <h1 class="display-4 text-white" data-toggle="counter-up">102462</h1>
+                <span class="fs-5 text-white">Customers</span>
+                <hr class="bg-white w-25 mx-auto mb-0">
             </div>
-            <div class="col-lg-6 col-12 order-lg-2 order-1">
-                <div class="shopping-img-wrap p-2">
-                    <img src="{% static 'main/img/blog/blog-3.jpg' %}">
-                    <!--img src="{% static 'main/img/shopping/shopping-sape-3.png' %}"-->
-                </div>
+            <div class="col-sm-6 col-lg-3 text-center wow fadeIn" data-wow-delay="0.3s">
+                <i class="fa fa-check fa-3x text-white mb-3"></i>
+                <h1 class="display-4 text-white" data-toggle="counter-up">784678</h1>
+                <span class="fs-5 text-white">Transactions</span>
+                <hr class="bg-white w-25 mx-auto mb-0">
+            </div>
+            <div class="col-sm-6 col-lg-3 text-center wow fadeIn" data-wow-delay="0.5s">
+                <i class="fa fa-users-cog fa-3x text-white mb-3"></i>
+                <h1 class="display-4 text-white" data-toggle="counter-up">346</h1>
+                <span class="fs-5 text-white">Dedicated Staff</span>
+                <hr class="bg-white w-25 mx-auto mb-0">
+            </div>
+            <div class="col-sm-6 col-lg-3 text-center wow fadeIn" data-wow-delay="0.7s">
+                <i class="fa fa-award fa-3x text-white mb-3"></i>
+                <h1 class="display-4 text-white" data-toggle="counter-up">8</h1>
+                <span class="fs-5 text-white">Awards Achieved</span>
+                <hr class="bg-white w-25 mx-auto mb-0">
             </div>
         </div>
     </div>
-</section>
+</div>
+<!-- Facts End -->
 
 
-
-
-
-
-<section class="testimonial-wrap ptb-100  bg-albastor">
+<!-- Features Start -->
+<div class="container-xxl feature py-5">
     <div class="container">
-        <div class="row">
-            <div class="col-xl-6 offset-xl-3 col-lg-8 offset-lg-2">
-                <div class="section-title style1 text-center mb-40">
-                    <span>Our Testimonials</span>
-                    <h2>What Our Client Says</h2>
-                </div>
-            </div>
-        </div>
-        <div class="testimonial-slider-three owl-carousel">
-            <div class="testimonial-card style3">
-                <span class="quote-icon">
-                    <i class="flaticon-quotation-mark"></i>
-                </span>
-                <p class="client-quote">
-                    I give {{site_name}} a 100 for quick customer support, issues get resolved quickly.
+        <div class="row g-5 align-items-center">
+            <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
+                <p class="d-inline-block border rounded text-primary fw-semi-bold py-1 px-3">Why Choose Us!</p>
+                <h1 class="display-5 mb-4">Reasons Why We Remain The Top Choice!</h1>
+                <p class="mb-4">
+                    There are some reasons why customers would always be in business with us,
                 </p>
-                <div class="testimonial-card-thumb">
-                    <div class="client-info-wrap">
-                        <div class="client-img">
-                            <img src="{% static 'assets/images/testimonial/testimonial02.png' %}">
-                        </div>
-                        <div class="client-info">
-                            <h4>Danielle Bechtelar</h4>
-                            <span>Founder, Cason telecoms.</span>
+                <a class="btn btn-primary py-2 px-3 mb-3" href="{% url 'register' %}">Join The Better Bank</a>
+                <img class="mb-2" src="{% static 'img/why-choose.jpg' %}"
+                    style="width: 100%;height: auto;border-radius: 25px;">
+            </div>
+            <div class="col-lg-6">
+                <div class="row g-4 align-items-center">
+                    <div class="col-md-6">
+                        <div class="row g-4">
+                            <div class="col-12 wow fadeIn" data-wow-delay="0.3s">
+                                <div class="feature-box border rounded p-4">
+                                    <i class="fa fa-check fa-3x text-primary mb-3"></i>
+                                    <h4 class="mb-3">Security</h4>
+                                    <p class="mb-3">We understand that protecting your financial information is of the
+                                        utmost importance, and we have implemented several features to ensure your peace
+                                        of mind.<br>
+                                        1.Two-Factor Authentication<br>
+                                        2.State of the Art SSL<br>
+                                        3.128-bit Encryption
+                                    </p>
+                                    <ul>
+
+                                    </ul>
+                                    <!--a class="fw-semi-bold" href="">Read More <i class="fa fa-arrow-right ms-1"></i></a-->
+                                </div>
+                            </div>
+                            <div class="col-12 wow fadeIn" data-wow-delay="0.5s">
+                                <div class="feature-box border rounded p-4">
+                                    <i class="fa fa-check fa-3x text-primary mb-3"></i>
+                                    <h4 class="mb-3">Convenience</h4>
+                                    <p class="mb-3">
+                                        We deliver modern banking to dorr step. Making available the power of internet
+                                        banking to finger. We continously improve our processes to improve your
+                                        convenience.
+                                    </p>
+
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="testimonial-card style3">
-                <span class="quote-icon">
-                    <i class="flaticon-quotation-mark"></i>
-                </span>
-                <p class="client-quote">When it comes  to paying my international suppliers, {{site_name}} makes all the hassle go away.</p>
-                <div class="testimonial-card-thumb">
-                    <div class="client-info-wrap">
-                        <div class="client-img">
-                            <img src="{% static 'assets/images/testimonial/testimonial06.png' %}">
-                        </div>
-                        <div class="client-info">
-                            <h4>Dr. philip ichnok</h4>
-                            <span>Director  Benac clinic</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="testimonial-card style3">
-                <span class="quote-icon">
-                    <i class="flaticon-quotation-mark"></i>
-                </span>
-                <p class="client-quote">{{site_name}} makes it possible that i have less issues with my international clients, transactions happen with the speed of light.</p>
-                <div class="testimonial-card-thumb">
-                    <div class="client-info-wrap">
-                        <div class="client-img">
-                            <img src="{% static 'assets/images/testimonial/testimonial01.png' %}">
-                        </div>
-                        <div class="client-info">
-                            <h4>Eunice Maderson</h4>
-                            <span>Business Woman</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="testimonial-card style3">
-                <span class="quote-icon">
-                    <i class="flaticon-quotation-mark"></i>
-                </span>
-                <p class="client-quote">Research shows that {{site_name}} boasts a number of features that BitMEX simply
-                    does not.</p>
-                <div class="testimonial-card-thumb">
-                    <div class="client-info-wrap">
-                        <div class="client-img">
-                            <img src="{% static 'main/img/testimonials/client-3.jpg' %}">
-                        </div>
-                        <div class="client-info">
-                            <h4>Henry Paterson</h4>
-                            <span>Crypto Broker</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="testimonial-card style3">
-                <span class="quote-icon">
-                    <i class="flaticon-quotation-mark"></i>
-                </span>
-                <p class="client-quote">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                    tempor incididunt ut labore et dolore magna aliqua enim minim veniam, quis nostrud exercise
-                    amet loremtation amet ullamco laboris nisi ut aliquip ex eacoo consequat. Duisaute irure
-                    dolor in reprehen ametderit in voluptate velit esse cillum dolore eu fugiat.</p>
-                <div class="testimonial-card-thumb">
-                    <div class="client-info-wrap">
-                        <div class="client-img">
-                            <img src="{% static 'main/img/testimonials/client-4.jpg' %}">
-                        </div>
-                        <div class="client-info">
-                            <h4>Brock Lee</h4>
-                            <span>Developer</span>
+                    <div class="col-md-6 wow fadeIn" data-wow-delay="0.7s">
+                        <div class="feature-box border rounded p-4">
+                            <i class="fa fa-check fa-3x text-primary mb-3"></i>
+                            <h4 class="mb-3">Great Customer Service</h4>
+                            <p class="mb-3">CWe ensured you have all the attention you need and whenever you need it,
+                                feel free to tell us where it hurts, we always listen.</p>
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</section>
+</div>
+<!-- Features End -->
+
+<!-- Service Start -->
+<div class="container-xxl service py-5" id="services">
+    <div class="container">
+        <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
+            <p class="d-inline-block border rounded text-primary fw-semi-bold py-1 px-3">Our Services</p>
+            <h1 class="display-5 mb-5">Financial Services That Will Make Your Life Better</h1>
+        </div>
+        <div class="row g-4 wow fadeInUp" data-wow-delay="0.3s">
+            <div class="col-lg-4">
+                <div class="nav nav-pills d-flex justify-content-between w-100 h-100 me-4">
+                    <button class="nav-link w-100 d-flex align-items-center text-start border p-4 mb-0 active"
+                        data-bs-toggle="pill" data-bs-target="#tab-pane-1" type="button">
+                        <h5 class="m-0"><i class="fa fa-bars text-primary me-3"></i>
+                            Checking and Savings Accounts
+                        </h5>
+                    </button>
+
+                    <button class="nav-link w-100 d-flex align-items-center text-start border p-4 mb-0"
+                        data-bs-toggle="pill" data-bs-target="#tab-pane-2" type="button">
+                        <h5 class="m-0"><i class="fa fa-bars text-primary me-3"></i>Credit Cards</h5>
+                    </button>
+                    <button class="nav-link w-100 d-flex align-items-center text-start border p-4 mb-0"
+                        data-bs-toggle="pill" data-bs-target="#tab-pane-3" type="button">
+                        <h5 class="m-0"><i class="fa fa-bars text-primary me-3"></i>Loans</h5>
+                    </button>
+                    <button class="nav-link w-100 d-flex align-items-center text-start border p-4 mb-0"
+                        data-bs-toggle="pill" data-bs-target="#tab-pane-4" type="button">
+                        <h5 class="m-0"><i class="fa fa-bars text-primary me-3"></i>Investment Banking</h5>
+                    </button>
+                    <button class="nav-link w-100 d-flex align-items-center text-start border p-4 mb-0"
+                        data-bs-toggle="pill" data-bs-target="#tab-pane-5" type="button">
+                        <h5 class="m-0"><i class="fa fa-bars text-primary me-3"></i>Online Banking</h5>
+                    </button>
+                </div>
+            </div>
+            <div class="col-lg-8">
+                <div class="tab-content w-100">
+                    <div class="tab-pane fade show active" id="tab-pane-1">
+                        <div class="row g-4">
+                            <div class="col-md-6" style="min-height: 350px;">
+                                <div class="position-relative h-100">
+                                    <img class="position-absolute rounded w-100 h-100"
+                                        src="{% static 'img/saving.jpg' %}" style="object-fit: cover;" alt="">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <h3 class="mb-4">Savings Plan Perfect For Your Needs</h3>
+                                <p class="mb-4">Looking for a safe place to deposit your money? Our checking and savings
+                                    accounts are designed to help you achieve your financial goals. With competitive
+                                    interest rates and online account management tools, you can easily monitor your
+                                    money and access it whenever you need it. Open your account today and start building
+                                    your financial future.</p>
+                                <!--p><i class="fa fa-check text-primary me-3"></i>Secured Loans</p>
+                                <p><i class="fa fa-check text-primary me-3"></i>Credit Facilities</p>
+                                <p><i class="fa fa-check text-primary me-3"></i>Cash Advanced</p>
+                                <a href="" class="btn btn-primary py-3 px-5 mt-3">Read More</a-->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="tab-pane-2">
+                        <div class="row g-4">
+                            <div class="col-md-6" style="min-height: 350px;">
+                                <div class="position-relative h-100">
+                                    <img class="position-absolute rounded w-100 h-100"
+                                        src="{% static 'img/credit-card.jpg' %}" style="object-fit: cover;" alt="">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <h3 class="mb-4">Convenience At It's Peak</h3>
+                                <p class="mb-4">Whether you're looking for a card with rewards or a low interest rate,
+                                    we've got you covered. Our credit cards offer flexible payment options, fraud
+                                    protection, and exclusive benefits. Apply online today and start enjoying the
+                                    convenience and security of using a credit card.</p>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="tab-pane-3">
+                        <div class="row g-4">
+                            <div class="col-md-6" style="min-height: 350px;">
+                                <div class="position-relative h-100">
+                                    <img class="position-absolute rounded w-100 h-100" src="{% static 'img/loan.jpg' %}"
+                                        style="object-fit: cover;" alt="">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <h3 class="mb-4">The Financial Support You Deserve</h3>
+                                <p class="mb-4">Need to finance a major purchase or cover unexpected expenses? Our loans
+                                    offer competitive rates and flexible repayment terms to help you achieve your
+                                    financial goals. Whether you need a personal loan, auto loan, or mortgage, we've got
+                                    you covered. Apply online today and see how we can help.</p>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="tab-pane-4">
+                        <div class="row g-4">
+                            <div class="col-md-6" style="min-height: 350px;">
+                                <div class="position-relative h-100">
+                                    <img class="position-absolute rounded w-100 h-100"
+                                        src="{% static 'img/investment.jpg' %}" style="object-fit: cover;" alt="">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <h3 class="mb-4">Preparing For The Lifestyle You Crave For</h3>
+                                <p class="mb-4">Looking to grow your wealth over time? Our investment products can help
+                                    you do just that. From mutual funds to individual retirement accounts, we offer a
+                                    variety of investment options to suit your needs. Our team of financial advisors can
+                                    help you create a personalized investment strategy that aligns with your goals and
+                                    risk tolerance.</p>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="tab-pane-5">
+                        <div class="row g-4">
+                            <div class="col-md-6" style="min-height: 350px;">
+                                <div class="position-relative h-100">
+                                    <img class="position-absolute rounded w-100 h-100"
+                                        src="{% static 'img/banking.jpg' %}" style="object-fit: cover;" alt="">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <h3 class="mb-4">Modern Banking At Your Finger Tips</h3>
+                                <p class="mb-4">Banking has never been more convenient. With our online banking
+                                    services, you can manage your accounts, pay bills, and transfer funds from the
+                                    comfort of your home or on the go. Our user-friendly platform is designed to make
+                                    banking easy and hassle-free. Sign up today and experience the convenience of online
+                                    banking.</p>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Service End -->
 
 
+<!-- Callback Start -->
+<div class="container-fluid callback my-5 pt-5">
+    <div class="container pt-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-7">
+                <div class="bg-white border rounded p-4 p-sm-5 wow fadeInUp" data-wow-delay="0.5s">
+                    <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
+                        <p class="d-inline-block border rounded text-primary fw-semi-bold py-1 px-3">Get In Touch</p>
+                        <h1 class="display-5 mb-5">Contact Our Customer Care</h1>
+                    </div>
+                    <div class="row g-3">
+                        <div class="col-sm-6">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="name" placeholder="Your Name">
+                                <label for="name">Your Name</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-floating">
+                                <input type="email" class="form-control" id="mail" placeholder="Your Email">
+                                <label for="mail">Your Email</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="mobile" placeholder="Your Mobile">
+                                <label for="mobile">Your Mobile</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="subject" placeholder="Subject">
+                                <label for="subject">Subject</label>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-floating">
+                                <textarea class="form-control" placeholder="Leave a message here" id="message"
+                                    style="height: 100px"></textarea>
+                                <label for="message">Message</label>
+                            </div>
+                        </div>
+                        <div class="col-12 text-center">
+                            <button class="btn btn-primary w-100 py-3" type="submit">Submit Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Callback End -->
+
+
+
+<!-- Projects Start -->
+<div class="container-xxl py-5" id="product-and-services">
+    <div class="container">
+        <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
+            <p class="d-inline-block border rounded text-primary fw-semi-bold py-1 px-3">Financial Guidance & Support
+            </p>
+            <h1 class="display-5 mb-5">How We Can Improve Your Finances</h1>
+        </div>
+        <div class="owl-carousel project-carousel wow fadeInUp" data-wow-delay="0.3s">
+            <div class="project-item pe-5 pb-5">
+                <div class="project-img mb-3">
+                    <img class="img-fluid rounded" src="{% static 'img/retirement.jpg' %}" alt="">
+                    <a href=""><i class="fa fa-link fa-3x text-primary"></i></a>
+                </div>
+                <div class="project-title">
+                    <h4 class="mb-0">Retirement Strategies</h4>
+
+                </div>
+
+            </div>
+            <div class="project-item pe-5 pb-5">
+                <div class="project-img mb-3">
+                    <img class="img-fluid rounded" src="{% static 'img/treasury.webp' %}" alt="">
+                    <a href=""><i class="fa fa-link fa-3x text-primary"></i></a>
+                </div>
+                <div class="project-title">
+                    <h4 class="mb-0">Treasury Management</h4>
+                </div>
+            </div>
+            <div class="project-item pe-5 pb-5">
+                <div class="project-img mb-3">
+                    <img class="img-fluid rounded" src="{% static 'img/commercial-capital.webp' %}" alt="">
+                    <a href=""><i class="fa fa-link fa-3x text-primary"></i></a>
+                </div>
+                <div class="project-title">
+                    <h4 class="mb-0">Corporate Banking</h4>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- Projects End -->
+
+
+
+
+
+<!-- Testimonial Start -->
+<div class="container-xxl py-5">
+    <div class="container">
+        <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
+            <p class="d-inline-block border rounded text-primary fw-semi-bold py-1 px-3">Testimonial</p>
+            <h1 class="display-5 mb-5">What Our Clients Say!</h1>
+        </div>
+        <div class="owl-carousel testimonial-carousel wow fadeInUp" data-wow-delay="0.3s">
+            <div class="testimonial-item">
+                <div class="testimonial-text border rounded p-4 pt-5 mb-5">
+                    <div class="btn-square bg-white border rounded-circle">
+                        <i class="fa fa-quote-right fa-2x text-primary"></i>
+                    </div>
+
+                    I've been banking with {{site_name}} for years now, and I've always been impressed with their
+                    exceptional customer service. Their online banking is so easy to use and have made
+                    managing my finances a breeze. I highly recommend this bank to anyone looking for a reliable and
+                    trustworthy financial institution."
+                </div>
+                <img class="rounded-circle mb-3" src="{% static 'img/testimonial-1.jpg' %}" alt="">
+                <h4>Elizabeth Kane</h4>
+                <span>Journalist</span>
+            </div>
+            <div class="testimonial-item">
+                <div class="testimonial-text border rounded p-4 pt-5 mb-5">
+                    <div class="btn-square bg-white border rounded-circle">
+                        <i class="fa fa-quote-right fa-2x text-primary"></i>
+                    </div>
+                    I had a fantastic experience working with this bank. Their customer service team was incredibly
+                    helpful, and they went above and beyond to help me with my banking needs. I appreciate the attention
+                    to detail and personalized approach they take with their clients. I would definitely recommend this
+                    bank to anyone looking for a great banking experience."
+                </div>
+                <img class="rounded-circle mb-3" src="{% static 'img/testimonial-3.jpg' %}" alt="">
+                <h4>Maria Glenns</h4>
+                <span>Fashion Designer</span>
+            </div>
+            <div class="testimonial-item">
+                <div class="testimonial-text border rounded p-4 pt-5 mb-5">
+                    <div class="btn-square bg-white border rounded-circle">
+                        <i class="fa fa-quote-right fa-2x text-primary"></i>
+                    </div>
+                    This bank has been a lifesaver for me. I was struggling to manage my finances on my own, but their
+                    online banking tools and budgeting resources have helped me get back on track. The website is easy
+                    to navigate, and their team is always available to answer my questions. I'm grateful for their
+                    support and guidance.
+                </div>
+                <img class="rounded-circle mb-3" src="{% static 'img/testimonial-6.jpg' %}" alt="">
+                <h4>Peter Lutherford</h4>
+                <span>Business Man</span>
+            </div>
+            <div class="testimonial-item">
+                <div class="testimonial-text border rounded p-4 pt-5 mb-5">
+                    <div class="btn-square bg-white border rounded-circle">
+                        <i class="fa fa-quote-right fa-2x text-primary"></i>
+                    </div>
+                    I've had nothing but positive experiences with this bank. Their website is user-friendly, and their
+                    mobile app makes it easy to manage my finances on the go. I appreciate the security measures they
+                    have in place to protect my account, and their customer service team is always quick to respond to
+                    my inquiries. Highly recommend!
+                </div>
+                <img class="rounded-circle mb-3" src="{% static 'img/testimonial-5.jpg' %}" alt="">
+                <h4>John Stramas</h4>
+                <span>Engineer</span>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Testimonial End -->
+
+
+<!-- Expertise Start -->
+<div class="container-xxl py-5" id="our-expertise">
+    <div class="container">
+        <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
+            <p class="d-inline-block border rounded text-primary fw-semi-bold py-1 px-3">Our Expertise</p>
+            <h1 class="display-5 mb-5">How We Revolutionalize The Financial Market</h1>
+        </div>
+        <div class="owl-carousel testimonial-carousel wow fadeInUp" data-wow-delay="0.3s">
+            <div class="testimonial-item">
+
+                <div class=" border rounded mb-5">
+                    <img style="width:100%;height: auto;" class=" mb-2" src="{% static 'img/personal.jpg' %}" alt="">
+                    <h4 class="mb-1 mt-3">Personal Accounts</h4>
+                    <p class="p-3">Keep your money where it grows, explore the uniqueness of our personal account and
+                        the awesome packages that comes with it.</p>
+                </div>
+
+
+            </div>
+            <div class="testimonial-item">
+
+                <div class=" border rounded mb-5">
+                    <img style="width:100%;height: auto;" class=" mb-2" src="{% static 'img/sme.jpg' %}" alt="">
+                    <h4 class="mb-1 mt-3">Business & SME's</h4>
+                    <p class="p-3">Get an account to grow your business We have a wide range of accounts to fit
+                        everyone, so whether you want a basic account or one bursting with options, you will find the
+                        right account that meets your expectations.</p>
+                </div>
+
+
+            </div>
+            <div class="testimonial-item">
+
+                <div class=" border rounded mb-5">
+                    <img style="width:100%;height: auto;" class=" mb-2" src="{% static 'img/corporate.jpg' %}" alt="">
+                    <h4 class="mb-1 mt-3">Corporate Banking</h4>
+                    <p class="p-3">When you consider the advantages that come with our Corporate Account, coupled with
+                        the support and guidance you receive from your ever attentive relationship manager, you would be
+                        right to consider it a valuable business asset.</p>
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
+</div>
+<!-- Expertise End -->
 
 
 
