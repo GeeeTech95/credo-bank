@@ -4,21 +4,14 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
+<div class="container-xxl py-5" id="about-us">
+    <div class="container">
+        <h5 class="account-title">Your account has been blocked, please contact support.</h5>
+        <p style="color:red">Reason : <br>{% autoescape off %}{{user.block_reason}}{% endautoescape %}</p>
+        <p>return to <a href="{% url 'index' %}">Home</a></p>
 
-<div class="content-wrapper">
-    <section class="Login-wrap ptb-100">
-        <div class="container">
-            <div class="account-wrapper">
-                <div class="account-area">
-                    <h5 class="account-title">Your account has been blocked, please contact support.</h5>
-                    <p style="color:red">Reason : <br>{% autoescape off %}{{user.block_reason}}{% endautoescape %}</p>
-                    <p>return to <a href="{% url 'index' %}">Home</a></p>
-                    
-                    
-                </div>
-            </div>
-        </div>
-    </section>
+
+    </div>
 </div>
 
 
