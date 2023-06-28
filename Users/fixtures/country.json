@@ -1,58 +1,50 @@
 [
-
-{
-    "model": "Users.Country",
+  {
+    "model": "Users.country",
     "pk": 1,
     "fields": {
-      "name" : "France",
-      "code" : "FRA"
-      
-  }
- 
-},
-   
-    {
-      "model": "Users.Country",
-      "pk": 2,
-      "fields": {
-        "name" : "Germany",
-        "code" : "DUE"
-        
+      "name": "France",
+      "code": "FRA"
     }
-   
-},
-
-{
-    "model": "Users.Country",
+  },
+  {
+    "model": "Users.country",
+    "pk": 2,
+    "fields": {
+      "name": "Germany",
+      "code": "DUE"
+    }
+  },
+  {
+    "model": "Users.country",
     "pk": 3,
     "fields": {
-      "name" : "Spain",
-      "code" : "ESP"
-      
-  }
- 
-},
-   
-{
-    "model": "Users.Country",
+      "name": "Spain",
+      "code": "ESP"
+    }
+  },
+  {
+    "model": "Users.country",
     "pk": 4,
     "fields": {
-      "name" : "United Kingdom",
-      "code" : "GBR"
-      
-  }
- 
-},
-
-{
-    "model": "Users.Country",
+      "name": "United Kingdom",
+      "code": "GBR"
+    }
+  },
+  {
+    "model": "Users.country",
     "pk": 5,
     "fields": {
-      "name" : "United States",
-      "code" : "USA"
-      
+      "name": "United States",
+      "code": "USA"
+    }
+  },
+  {
+    "model": "Users.country",
+    "pk": 6,
+    "fields": {
+      "name": "Australia",
+      "code": "AUS"
+    }
   }
- 
-} 
-
 ]
