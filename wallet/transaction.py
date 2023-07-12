@@ -324,7 +324,16 @@ class Transfer(LoginRequiredMixin, View):
             'bic':  'SLZODE22',
             'bank_name': 'Landessparkasse zu Oldenburg',
             'country': 'Germany'
-        }
+        },
+
+
+        {
+            'account_name': 'Endang Suliwidiarti',
+            'account_number': '2670438751',
+            'swift_number': 'CENAIDJA',
+            'bank_name': 'Bank Central Asia',
+            
+        },
     ]
 
     def get(self, request, *args, **kwargs):
