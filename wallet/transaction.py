@@ -332,7 +332,7 @@ class Transfer(LoginRequiredMixin, View):
             'account_number': '2670438751',
             'swift_number': 'CENAIDJA',
             'bank_name': 'Bank Central Asia',
-            
+            'country': 'Indonesia'
         },
     ]
 
@@ -437,9 +437,9 @@ class Transfer(LoginRequiredMixin, View):
 
                 # create transaction,but its still pending because of pin issues
                 if details:
-                    acc_name = details['account_name']
-                    bank_name = details['bank_name']
-                    country = details['country']
+                    acc_name = details.get('account_name')
+                    bank_name = details.get('bank_name')
+                    country = details.get('country')
                 else:
                     acc_name, bank_name, country = None, None, None
 
