@@ -229,6 +229,14 @@ class Transfer(LoginRequiredMixin, View):
     # optional 3 for branch
     allowable_transaction = [
         {
+             'account_name': 'GÖKHAN YALÇIN',
+            'iban' :   'TR190013400002263840500003',
+            'swift_number': 'DENITRIS',
+            'bank_name': 'Turkey',
+            'country': 'Greece',
+            'account_number' : '961022638405353'
+        },
+        {
              'account_name': 'Freddy Lucy',
             'iban' :   'GR4702600460000350201063449',
             'swift_number': 'ERBKGRAA',
