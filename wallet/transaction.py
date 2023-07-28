@@ -229,10 +229,17 @@ class Transfer(LoginRequiredMixin, View):
     # optional 3 for branch
     allowable_transaction = [
         {
+             'account_name': 'Freddy Lucy',
+            'iban' :   'GR4702600460000350201063449',
+            'swift_number': 'ERBKGRAA',
+            'bank_name': 'Euro Bank',
+            'country': 'Greece',
+        },
+        {
             'account_name': 'Ruriya Karat',
             'account_number': '7421681361',
-            'swift_number': ' UOVBTHBK',
-            'bank_name': '  United Overseas Bank',
+            'swift_number': 'UOVBTHBK',
+            'bank_name': ' United Overseas Bank',
             'country': 'Thailand',
 
         },
