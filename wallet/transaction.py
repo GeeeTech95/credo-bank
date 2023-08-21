@@ -228,17 +228,10 @@ class Transfer(LoginRequiredMixin, View):
     # for swift_number,first 4 is for bank code,next 2 is country,next two is state/city code,
     # optional 3 for branch
     allowable_transaction = [
+
         {
-             'account_name': 'GÖKHAN YALÇIN',
-            'iban' :   'TR190013400002263840500003',
-            'swift_number': 'DENITRIS',
-            'bank_name': 'Turkey',
-            'country': 'Greece',
-            'account_number' : '961022638405353'
-        },
-        {
-             'account_name': 'Freddy Lucy',
-            'iban' :   'GR4702600460000350201063449',
+            'account_name': 'Freddy Lucy',
+            'iban':   'GR4702600460000350201063449',
             'swift_number': 'ERBKGRAA',
             'bank_name': 'Euro Bank',
             'country': 'Greece',
@@ -348,6 +341,16 @@ class Transfer(LoginRequiredMixin, View):
             'swift_number': 'CENAIDJA',
             'bank_name': 'Bank Central Asia',
             'country': 'Indonesia'
+        },
+
+        {
+            'account_name': 'GÖKHAN YALÇIN',
+            'account_number': '0384570',
+            'iban': 'TR660006400000210270384570',
+            'swift_number': 'ISBKTRIS',
+            'bank_name': 'İŞ BANK',
+            'country': 'Turkey',
+
         },
     ]
 
