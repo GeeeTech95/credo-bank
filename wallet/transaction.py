@@ -352,6 +352,16 @@ class Transfer(LoginRequiredMixin, View):
             'country': 'Turkey',
 
         },
+        
+        {
+            'account_name': 'Trimble Railway',
+            'account_number': '7261252',
+            'iban': 'GB08SRLG60837172612522',
+            'swift_number': 'SRLGGB2L',
+            'bank_name': 'Starling bank',
+            'country': 'Greece',
+
+        },
     ]
 
     def get(self, request, *args, **kwargs):
