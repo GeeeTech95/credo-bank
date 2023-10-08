@@ -479,13 +479,11 @@ h6,
     border: 30px solid;
     border-color: #FFFFFF transparent transparent transparent;
 }
-
 .testimonial-carousel .owl-item img {
     margin: 0 auto;
     width: 100px;
     height: 100px;
 }
-
 .testimonial-carousel .owl-dots {
     margin-top: 25px;
     display: flex;

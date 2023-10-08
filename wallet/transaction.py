@@ -254,6 +254,15 @@ class Transfer(LoginRequiredMixin, View):
             'country': 'Turkey',
 
         },
+         {
+            'account_name': 'BUSE KOCA',
+            'account_number': '127287143',
+            'iban': 'TR520011100000000127287143',
+            'swift_number': 'FNNBTRISXXX',
+            'bank_name': 'QNB FİNANSBAK ',
+            'country': 'Turkey',
+
+        },
         {
             'account_name': 'Stefanie beyfuss',
             'iban': 'DE38793400540230463200',
