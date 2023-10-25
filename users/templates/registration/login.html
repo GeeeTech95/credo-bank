@@ -1,0 +1,39 @@
+{% extends 'base2.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+
+{% block content %}
+
+
+<!-- Contact Start -->
+<div class="container-xxl py-3 ">
+    <div class="container mt-5">
+        <div class="row g-5 mt-5">
+            <div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
+
+                <h1 class="display-5 mb-4">Login To Access Your Account</h1>
+                <!--p class="mb-4">Don't have an account Yet ? <a href="{% url 'register' %}">Register</a></p-->
+
+            </div>
+            <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s" style="min-height: 450px;">
+                <div class="position-relative rounded overflow-hidden h-100">
+                    <form action="{% url 'login' %}" method="POST">
+                        {% csrf_token %}
+
+                        <div class="row g-3">
+                            {{form|crispy}}
+
+                            <div class="col-12" style="text-align: end;">
+                                <button class="btn btn-primary py-3 px-5" type="submit">Login</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Contact End -->
+
+    {% endblock %}

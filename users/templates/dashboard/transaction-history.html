@@ -1,0 +1,184 @@
+{% extends 'dashboard-base.html' %}
+{% load static %}
+{% load mytags %}
+{% load humanize %}
+
+{% block content %}
+<div class="user-content">
+    <div class="user-panel">
+
+        <h2 class="user-panel-title">Transactions</h2>
+        <div class="table-responsive">
+            {% if not user.has_transaction %}
+            {% include "empty.html" with text=" You have no transactions to show, They will appear here." %}
+            {% else %}
+
+            <ul class="nav nav-tabs nav-tabs-line" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#all">
+                        All
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#pending-trx">
+                        Pending
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#failed">
+                        Failed
+                    </a>
+                </li>
+            </ul><!-- .nav-tabs-line -->
+
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="all">
+                    {% if all_transactions %}
+                    <ul class="listview image-listview">
+
+                        {% for tx in all_transactions %}
+                        <li>
+                            <div class="item">
+                                {% if tx.transaction_type == "debit" %}
+                                <div class="icon-box bg-danger" style="color:white">
+                                    <ion-icon name="arrow-up-outline"></ion-icon>
+                                </div>
+                                {% else %}
+                                <div class="icon-box bg-success" style="color:white">
+                                    <ion-icon name="arrow-down-outline"></ion-icon>
+                                </div>
+                                {% endif %}
+
+                                <div class="in">
+                                    <div>
+
+                                        {{tx.description}}
+                                        <footer>
+                                            {{tx.show_date|date:"d M, Y T:H"}}
+                                        </footer>
+                                    </div>
+                                    <span class="">
+
+                                        {{user.wallet.currency.code}} {{tx.amount|to_decimal|intcomma}}
+
+                                    </span>
+                                </div>
+                            </div>
+                        </li>
+                        {% endfor %}
+
+
+
+
+                    </ul>
+
+                    {% else %}
+                    {% include "empty.html" with text="you have no successful transactions at the moment, they would
+                    appear here." %}
+                    {% endif %}
+
+                </div>
+                <div class="tab-pane fade" id="pending-trx">
+                    {% if pending_transactions %}
+
+                    <ul class="listview image-listview">
+                    {% for tx in pending_transactions %}
+                    <li>
+                        <div class="item">
+                            {% if tx.transaction_type == "debit" %}
+                            <div class="icon-box bg-danger" style="color:white">
+                                <ion-icon name="arrow-up-outline"></ion-icon>
+                            </div>
+                            {% else %}
+                            <div class="icon-box bg-warning" style="color:white">
+                                <ion-icon name="arrow-up-outline"></ion-icon>
+                            </div>
+                            {% endif %}
+
+                            <div class="in">
+                                <div>
+
+                                    {{tx.description}}
+                                    <footer>
+                                    {{tx.show_date|date:"d M, Y T:H"}}
+                                    </footer>
+                                </div>
+                                <div >
+                                    <a href="{% url 'complete-transaction' tx.transaction_id %}" 
+                                    class="btn btn-xs btn-warning">
+                                        finalize
+                                    </a>
+                                </div>
+                                <span class="">
+
+                                    {{user.wallet.currency.code}} {{tx.amount|to_decimal|intcomma}}
+
+                                </span>
+                            </div>
+                        </div>
+                    </li>
+                    {% endfor %}
+                    </ul>
+                  
+
+                    {% else %}
+                    {% include "empty.html" with text="you have no pending transactions at the moment, they would appear here." %}
+                    {% endif %}
+
+                </div><!-- .tab-pane -->
+
+                <div class="tab-pane fade" id="failed">
+                    <ul class="listview image-listview">
+                    {% if failed_transactions %}
+                    {% for tx in failed_transactions %}
+                    <li>
+                        <div class="item">
+                            {% if tx.transaction_type == "debit" %}
+                            <div class="icon-box bg-danger" style="color:white">
+                                <ion-icon name="arrow-up-outline"></ion-icon>
+                            </div>
+                            {% else %}
+                            <div class="icon-box bg-success" style="color:white">
+                                <ion-icon name="arrow-down-outline"></ion-icon>
+                            </div>
+                            {% endif %}
+
+                            <div class="in">
+                                <div>
+
+                                    {{tx.description}}
+                                    <footer>
+                                        {{tx.show_date|date:"d M, Y T:H"}}
+                                    </footer>
+                                </div>
+                          
+                                <span class="">
+
+                                    {{user.wallet.currency.code}} {{tx.amount|to_decimal|intcomma}}
+
+                                </span>
+                            </div>
+                        </div>
+                    </li>
+                    {% endfor %}
+                    </ul>
+                    {% else %}
+                    {% include "empty.html" with text="you have no failed transactions at the moment, they would appear here." %}
+                    {% endif %}
+
+
+                </div><!-- .tab-pane -->
+            </div><!-- .tab-content -->
+
+            {% endif %}
+        </div>
+
+    </div><!-- .user-panel -->
+</div><!-- .user-content -->
+
+
+
+
+
+
+{% endblock %}
