@@ -26,7 +26,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'nc@ty7fx4rv2a8j7nkd-7$d1$^-s$5o#37b!6qv0uh@nok$c2o'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -34,13 +34,13 @@ TEST_MODE = True
 
 JAZZMIN_SETTINGS = {
     # title of the window (Will default to current_admin_site.site_title if absent or None)
-    "site_title": "Offshore-Pro Admin",
+    "site_title": "Credocapital Bank Admin",
 
     # Title on the login screen (19 chars max) (defaults to current_admin_site.site_header if absent or None)
-    "site_header": "Offshore-Pro",
+    "site_header": "Credocapital Bank",
 
     # Title on the brand (19 chars max) (defaults to current_admin_site.site_header if absent or None)
-    "site_brand": "Offshore-Pro",
+    "site_brand": "Credocapital Bank",
 
     # Logo to use for your site, must be present in static files, used for brand on top left
     "site_logo": "img/logo.png",
@@ -63,7 +63,7 @@ JAZZMIN_SETTINGS = {
     "welcome_sign": "Welcome Admin!",
 
     # Copyright on the footer
-    "copyright": "Offshore-Pro",
+    "copyright": "Credocapital Bank",
 }
 
 

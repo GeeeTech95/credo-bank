@@ -43,6 +43,12 @@ class User(AbstractUser):
         default="SAVINGS", max_length=10, choices=ACCOUNT_TYPE)
     passport = models.FileField(
         upload_to=get_path, null=True, verbose_name="photo")
+    is_activated = models.BooleanField(default = False,blank = False,null = False)
+    date_activated = models.DateTimeField(null = True,blank = True)
+    
+    #admin controls account from here
+    is_blocked = models.BooleanField(default = False)
+    block_reason = models.TextField(blank=True,null=True)
 
 
     # admin controls account from here
