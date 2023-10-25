@@ -6,15 +6,14 @@ from django.urls import reverse
 from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
 from core.notification import Notification
 from .forms import TransferForm, PinForm
-from .models import Wallet, Transaction as transaction_model
-from .helpers import Transaction
-from core.views import Messages, Email
+from .models import Wallet, Transaction as transaction_model, DemoAccountDetails
 from core.admin import AdminControls
 from django.utils import timezone
 from django.conf import settings
 import math
-
+from django.db.models import Q
 import time
+from django.contrib import messages
 
 
 class CompleteTransaction(LoginRequiredMixin, UserPassesTestMixin, View):
@@ -28,21 +27,15 @@ class CompleteTransaction(LoginRequiredMixin, UserPassesTestMixin, View):
 
     def get(self, request, *args, **kwargs):
         transact = None
-        if not request.user.is_activated:
-            return render(request, "account_not_activated.html", locals())
+        form = self.form_class()
 
-        account = request.user.wallet
-        if not account.allowed_to_transact:
-            response = request.user.wallet.disallow_reason or ""
-            return HttpResponse(response)
-        form = self.form_class
         transact_id = kwargs['transact_id']
         try:
             transact = transaction_model.objects.get(
                 transaction_id=transact_id)
-            if transact.status == 'Successful':
+            if transact.status == 'successful':
                 return HttpResponse('This transaction has been processed completely')
-            elif transact.status == 'Processing':
+            elif transact.status == 'processing':
                 return HttpResponse('This transaction is already being processed,you will be notified when completed')
 
         except:
@@ -57,150 +50,43 @@ class CompleteTransaction(LoginRequiredMixin, UserPassesTestMixin, View):
         return render(request, self.template_name, locals())
 
     def post(self, request, *args, **kwargs):
-        if not request.user.is_activated:
-            return render(request, "account_not_activated.html", locals())
         self.feedback = {}
+        account = request.user.wallet
         form = self.form_class(request.POST)
+
         if form.is_valid():
             # check pin match
-            check = True  # delete later
+           
             pin = form.cleaned_data['pin']
             if not pin == request.user.wallet.transaction_pin:
-                self.feedback['error'] = "The Pin You entered is incorrect,please try again !"
+                time.sleep(5)
+                self.feedback['error'] = "The Pin You entered is incorrect, please cross check!"
                 return JsonResponse(self.feedback)
 
             if not request.user.wallet.allowed_to_transact:
-                self.feedback['error'] = request.user.wallet.disallow_reason or ""
+                time.sleep(5)
+                self.feedback['error'] = request.user.wallet.disallow_reason or "You cannot complete this transaction on your account, please contact support"
                 return JsonResponse(self.feedback)
+            
+            delay_time = 10    
+            start = time.time()
+            
+            status = self.transaction.fulfill()
+            msg = status.get("success") or msg.get("error")
+            if msg:
+                messages.success(request, msg)
+           
+            delayed = time.time() - start
+            if delayed < delay_time:
+                time.sleep(delay_time-delayed)  
 
-            transact = Transaction(request.user)
-            if self.transaction.nature == 'Internal Transfer':
-                # making sure the transaction is not processed already
-                if not self.transaction.status == 'Successful':
-                    state = transact.internal_transfer(
-                        self.transaction.receiver, round(self.transaction.amount, 2))
-                    if state == 0:
-
-                        msg = "Your transfer of {}{} to {},acc ******{} was successful".format(
-                            self.transaction.user.wallet.currency,
-                            round(self.transaction.amount, 2),
-                            self.transaction.receiver,
-                            self.transaction.receiver.account_number[6:]
-                        )
-                        self.feedback['success'] = msg
-                        # instantiate messages
-                        #sms = Messages()
-                        # SEND MESSAGE DEBIT
-                        # check if user receives sms
-                        # if check and  self.transaction.user.dashboard.receive_sms and self.transaction.user.phone_number_verified :
-                        # sms.internal_transfer_debit_sms(self.transaction)
-
-                        # SEND MESSAGE CREDIT
-                        # check if receiver receives sms
-                        # if check and  self.transaction.receiver.dashboard.receive_sms and self.transaction.receiver.phone_number_verified :
-                        # sms.internal_transfer_credit_sms(self.transaction)
-
-                        # instantiate email
-                        mail = Email(send_type="alert")
-                        # SEND EMAIL DEBIT
-                        # check if user receives email
-                        if check and self.transaction.user.email_verified:
-                            mail.internal_transfer_debit_email(
-                                self.transaction)
-
-                        # SEND MESSAGE CREDIT
-                        # check if receiver receives email
-                        if check and self.transaction.receiver.dashboard.receive_email and self.transaction.receiver.email_verified:
-                            mail.internal_transfer_credit_email(
-                                self.transaction)
-
-                        # Notify
-                        Notification.notify(request.user, msg)
-                        self.transaction.status = 'Successful'
-                        self.transaction.status_message = "TRF ${}  to  {},Acc ******{} ".format(
-                            round(self.transaction.amount, 2),
-                            self.transaction.receiver,
-                            self.transaction.receiver.account_number[6:]
-                        )
-
-                        self.transaction.save()
-                    else:
-                        self.feedback['error'] = state
-                        return JsonResponse(self.feedback)
-                else:
-                    self.feedback['error'] = 'This transaction has been processed completely'
-
-            else:
-                # for external transfers
-                if not self.transaction.status == 'Successful':
-                    start = time.time()
-                    # Check if admin gave permission for transactions
-                    if not AdminControls.allow_transactions():
-                        msg = "Your transaction is been processed,you will be notified shortly"
-                        self.feedback['processing'] = msg
-                        self.transaction.status = "Processing"
-                        self.transaction.status_message = "Your transaction is been proccessed"
-                        self.transaction.save()
-                        delayed = time.time() - start
-                        if delayed < 9:
-                            time.sleep(9 - delayed)
-                        return JsonResponse(self.feedback)
-
-                    state = transact.external_transfer(
-                        round(self.transaction.amount, 2))
-                    if state == 0:
-
-                        msg = "Your transfer of {}{} to {},acc ******{} was successful".format(
-                            self.transaction.user.wallet.currency,
-                            round(self.transaction.amount, 2),
-                            self.transaction.account_name,
-                            self.transaction.account_number[6:]
-                        )
-                        self.feedback['success'] = msg
-                        # SEND MAIL
-                        mail = Email(send_type='alert')
-                        # check if user receives email
-                        if check and self.transaction.user.email_verified:
-                            mail.external_transfer_debit_email(
-                                self.transaction)
-
-                        # SEND SMS
-                        #sms = Messages()
-                        # SEND DEBIT MESSAGE
-                        # check if user receives sms
-                        # if check and  self.transaction.user.dashboard.receive_sms and self.transaction.user.phone_number_verified :
-                            # sms.external_transfer_debit_sms(self.transaction)
-
-                        # NOTIFY
-                        Notification.notify(request.user, msg)
-                        self.transaction.status = 'Successful'
-                        self.transaction.status_message = "TRF ${}  to  {},Acc ******{} ".format(
-                            round(self.transaction.amount, 2),
-                            self.transaction.account_name,
-                            self.transaction.account_number[6:]
-                        )
-                        self.transaction.save()
-                        delayed = time.time() - start
-                        if delayed < 7:
-                            time.sleep(7 - delayed)
-
-                    else:
-                        self.feedback['error'] = state
-                        return JsonResponse(self.feedback)
-
-                elif self.transaction.status == 'pending':
-                    self.feedback['error'] = "this Transaction is already pending,you will be notified when its completed"
-                else:
-                    self.feedback['error'] = 'This transaction has been processed completely'
-                return JsonResponse(self.feedback)
+            return JsonResponse(status)
 
         else:
             err = getattr(form, 'pin')
             self.feedback['error'] = err.errors
 
             return JsonResponse(self.feedback)
-
-        return JsonResponse(self.feedback)
 
     def test_func(self):
         transact_id = self.kwargs['transact_id']
@@ -227,156 +113,8 @@ class Transfer(LoginRequiredMixin, View):
 
     # for swift_number,first 4 is for bank code,next 2 is country,next two is state/city code,
     # optional 3 for branch
-    allowable_transaction = [
-
-        {
-            'account_name': 'Freddy Lucy',
-            'iban':   'GR4702600460000350201063449',
-            'swift_number': 'ERBKGRAA',
-            'bank_name': 'Euro Bank',
-            'country': 'Greece',
-        },
-        {
-            'account_name': 'Ruriya Karat',
-            'account_number': '7421681361',
-            'swift_number': 'UOVBTHBK',
-            'bank_name': ' United Overseas Bank',
-            'country': 'Thailand',
-
-        },
-
-        {
-            'account_name': 'Jerry. I. Ezisi',
-            'account_number': '94275900101',
-            'iban': 'TR530020500009427590000101',
-            'swift_number': 'KTEFTRISXXX',
-            'bank_name': 'KuveytTurk bank',
-            'country': 'Turkey',
-
-        },
-         {
-            'account_name': 'BUSE KOCA',
-            'account_number': '127287143',
-            'iban': 'TR520011100000000127287143',
-            'swift_number': 'FNNBTRISXXX',
-            'bank_name': 'QNB FİNANSBAK ',
-            'country': 'Turkey',
-
-        },
-        {
-            'account_name': 'Stefanie beyfuss',
-            'iban': 'DE38793400540230463200',
-            'swift_number': 'COBADEFFXXX',
-            'bank_name': 'Commerzbank',
-            'country': 'Germany',
-        },
-        {
-            'account_name': 'Jerry. I. Ezisi',
-            'iban': 'TR960020500009427590000103',
-            'swift_number': 'KTEFTRISXXX',
-            'account_number': '94275900103',
-            'bank_name': 'uveyt Türk bank',
-            'country': 'Turkey',
-        },
-        {
-            'account_name': 'Kerstin Baldeau',
-            'iban': 'DE46265659281005930000',
-            'bic': 'GENODEF1HGM',
-            'bank_name': 'Volksbank (GHB)',
-            'country': 'Germany',
-        },
-        {
-            'account_name': 'MarieAnn Sablan Sapien',
-            'account_number': '885083555',
-            'swift_number': '325070760',
-            'bank_name': 'Chase Bank',
-            'country': 'United States of America',
-        },
-        {
-            'account_name': 'John Kuregian',
-            'account_number': '6030827205',
-            'swift_number': '121000248',
-            'bank_name': 'Wells Fargo bank',
-            'country': 'United States of America',
-        },
-        {
-            'account_name': 'SIXTUS CHIGAEMEZU ISHIA',
-            'account_number': '10363287050',
-            'iban': 'TR470006400000210363287050',
-            'swift_number': 'ISBKTRISXXX',
-            'bank_name': 'TURKIYE BANKASI',
-            'country': 'Turkey',
-
-        },
-
-        {
-            'account_name': 'Birgit Hengelage',
-            'iban': 'DE36100110012621610891',
-            'bic': 'NTSBDEB1XXX',
-            'bank_name': 'N26',
-            'country': 'Germany',
-        },
-
-        {
-            'account_name': 'Fischer Albert',
-            'iban': 'DE79100110012629910310',
-            'bic': 'NTSBDEB1XXX',
-            'bank_name': 'N26',
-            'country': 'Germany',
-        },
-
-        {
-            'account_name': 'Moura Construction LTD.',
-            'account_number': '72612522',
-            'iban': 'GB08SRLG60837172614435',
-            'swift_number': 'SRLGGB2L',
-            'bank_name': 'Starling Bank',
-            'country': 'United Kingdom'
-        },
-
-
-        {
-            'account_name': 'Ingrida Glodaite',
-            'iban': 'DE12280501000001794239',
-            'bic':  'SLZODE22',
-            'bank_name': 'Landessparkasse zu Oldenburg',
-            'country': 'Germany'
-        },
-
-
-        {
-            'account_name': 'Endang Suliwidiarti',
-            'account_number': '2670438751',
-            'swift_number': 'CENAIDJA',
-            'bank_name': 'Bank Central Asia',
-            'country': 'Indonesia'
-        },
-
-        {
-            'account_name': 'GÖKHAN YALÇIN',
-            'account_number': '0384570',
-            'iban': 'TR660006400000210270384570',
-            'swift_number': 'ISBKTRIS',
-            'bank_name': 'İŞ BANK',
-            'country': 'Turkey',
-
-        },
-        
-        {
-            'account_name': 'Trimble Railway',
-            'account_number': '7261252',
-            'iban': 'GB08SRLG60837172612522',
-            'swift_number': 'SRLGGB2L',
-            'bank_name': 'Starling bank',
-            'country': 'Greece',
-
-        },
-    ]
 
     def get(self, request, *args, **kwargs):
-
-        if not request.user.is_activated:
-            return render(request, "account_not_activated.html", {})
 
         if request.user.is_blocked:
             return render(request, "account_blocked.html", {})
@@ -386,9 +124,7 @@ class Transfer(LoginRequiredMixin, View):
 
     def post(self, request, *args, **kwargs):
         start = time.time()
-        if not request.user.is_activated:
-            return render(request, "account_not_activated.html", {})
-
+        feedback = {}
         if request.user.is_blocked:
             return render(request, "account_blocked.html", {})
 
@@ -397,6 +133,7 @@ class Transfer(LoginRequiredMixin, View):
             details, error = None, None
             acc_num = form.cleaned_data['account_number']
             amount = form.cleaned_data['amount']
+            bank_name = form.cleaned_data['bank_name']
             transact_type = form.cleaned_data['transfer_type']
             # if internal
             receipient = None
@@ -405,99 +142,84 @@ class Transfer(LoginRequiredMixin, View):
                 receipient = get_user_model().objects.get(account_number=acc_num)
 
             else:
-
                 """ check if details match for international transfer """
                 if transact_type != "Internal Transfer":
+
                     if settings.TEST_MODE:
-                        delay_time = 6
+                        delay_time = 5
                     else:
                         delay_time = 0
                     charge = settings.INTERNATIONAL_TRANSFER_CHARGE
                     charge = (charge/100) * int(amount)
-                    iban = form.cleaned_data['iban']
-                    bic = form.cleaned_data['bic']
-                    swift_number = form.cleaned_data['swift_number']
+                    if charge > 100 : charge = 100
                     # check if details is in our list,else give network error
                     details, error = None, None
-                    for info in self.allowable_transaction:
+                    matching_account = DemoAccountDetails.objects.filter(
+                        Q(account_number=acc_num)
+                    )
+                    if not matching_account.exists() :
+                        feedback['error'] = "We apologize, but we were unable to locate the account associated with the provided account number. please try again later."
+                        #feedback['error'] = "Connection to the receipient server could not be completed at the moment, please try again later."
+                        time.sleep(3)
+                        return JsonResponse(feedback)
+                    
+                    matching_account = matching_account[0]
+                    delayed = time.time() - start
+                    if delayed < delay_time:
+                        time.sleep(delay_time-delayed)
+                    
+                    if matching_account:
+                        if matching_account.bank_name.lower() != form.cleaned_data.get("bank_name", "!").lower():
+                            error = "The entered account number is not valid  for the entered bank. "
+                            feedback['error'] = error
+                            return JsonResponse(feedback)
+                        details = matching_account
 
-                        if info.get('account_number', '$#^') == acc_num or info.get('iban', '.!#') == iban:
-                            # checking if other details match
-                            # info.get('iban','') == iban or info.get('bic','') == bic
-                            if 1:
-                                if info.get('swift_number', None):
-
-                                    # swift can be empty
-                                    if info.get('swift_number', '~!@!') == swift_number:
-                                        details = info
-
-                                    else:
-                                        delayed = time.time() - start
-                                        if delayed < delay_time:
-                                            time.sleep(delay_time-delayed)
-                                            error = "Data Mismatch !,Entered data does not match iban info,please crosscheck !"
-
-                                else:
-                                    if swift_number:
-                                        error = "The account matching  the entered iban is not associated with a swift number(this is not a united states account),please crosscheck!"
-                                        delayed = start - time.time()
-                                        if delayed < delay_time:
-                                            time.sleep(delay_time-delayed)
-
-                                    else:
-                                        details = info
-                                        delayed = start - time.time()
-                                        if delayed < delay_time:
-                                            time.sleep(delay_time-delayed)
-
-                            else:
-                                delayed = time.time() - start
-
-                                if delayed < delay_time:
-                                    time.sleep(delay_time-delayed)
-                                error = "Data Mismatch !,Entered data does not match iban info,please crosscheck !"
-
-                    # assuming no match
-                    if not details:
-                        delayed = time.time() - start
-
-                        if delayed < delay_time:
-                            time.sleep(delay_time-delayed)
-                        error = error or "Request Time Out,please Try again later. if situation persists, please contact customer care"
-                        return render(request, self.template_name, locals())
+                    else:
+                    
+                        feedback['error'] = error
+                        return JsonResponse(feedback)
 
             # check if user has the amount
             if request.user.wallet.available_balance < float(amount + charge):
                 error = "Insufficient Funds,Enter a lower amount"
-                return render(request, self.template_name, locals())
-            else:
+                feedback['error'] = error
+                return JsonResponse(feedback)
 
+            else:
                 # create transaction,but its still pending because of pin issues
                 if details:
-                    acc_name = details.get('account_name')
-                    bank_name = details.get('bank_name')
-                    country = details.get('country')
+                    acc_name = details.account_name
+                    bank_name = details.bank_name
+                    country = details.country
+                    swift_number = details.swift_number
+                    iban = details.iban
+
                 else:
                     acc_name, bank_name, country = None, None, None
 
                 transact = transaction_model.objects.create(
                     user=request.user,
                     amount=amount,
-                    transaction_type='Debit',
+                    transaction_type='debit',
                     nature=form.cleaned_data['transfer_type'],
                     description=form.cleaned_data['description'],
                     charge=charge,
-                    status="Pending",
+                    status="pending",
                     status_message="Waiting for Transaction Pin Authorization",
                     receiver=receipient,
-                    swift_number=form.cleaned_data.get('swift_number', None),
-                    iban=form.cleaned_data.get('iban', None),
-                    bic=form.cleaned_data.get('bic', None),
+                    swift_number=swift_number,
+                    iban=iban,
                     account_number=acc_num,
                     account_name=acc_name,
                     country=country,
                     bank_name=bank_name
                 )
-                return HttpResponseRedirect(reverse('complete-transaction', args=[transact.transaction_id]))
+                feedback['success'] = True
+                feedback['success_url'] = reverse(
+                    'complete-transaction', args=[transact.transaction_id])
+                return JsonResponse(feedback)
         else:
-            return render(request, self.template_name, locals())
+            time.sleep(1)
+            feedback['error'] = form.errors.as_text()
+            return JsonResponse(feedback)

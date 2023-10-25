@@ -5,7 +5,8 @@ def core(request) :
         'site_name' : "Credo Capital Bank",
         'site_name_short' : "Credo Capital",
         "site_address" : "Russell St, Abbotsford VIC 3067, Australia",
-        "site_mail" :  "support@credocapitalbank.com"
+        "site_mail" :  "support@credocapitalbank.com",
+        'site_url' :"credocapitalbank.com",
          
     }
     return context

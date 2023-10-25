@@ -25,13 +25,17 @@ from django.apps import apps
 
 urlpatterns = [
     path('yrgyegryeyrgtw3g473gyr7wger4/', admin.site.urls),
-    path('accounts/',include('django.contrib.auth.urls')),
-    path('',include('company.urls')),
-    path('',include('Users.urls')) ,
-    path('',include('core.urls')),
-    path('transaction/',include('wallet.urls')),
-    path('account/',include('Users.urls')),
+   path('accounts/', include('django.contrib.auth.urls')),
+    path('accounts/', include('users.urls')),
+    path("", include("company.urls")),
+    path('', include('core.urls')),
+    path('accounts/', include('wallet.urls')),
 ]
 
 if settings.DEBUG :
     urlpatterns += static(settings.MEDIA_URL,document_root = settings.MEDIA_ROOT)
+
+
+handler404 = 'core.views.error_404_handler'
+handler500 = 'core.views.error_500_handler'
+handler403 = 'core.views.error_403_handler'

@@ -1,185 +1,246 @@
+from django.urls import reverse
 from django.db import models
 from django.contrib.auth import get_user_model
 from core.notification import Notification
-from core.views import Email
+from core.communication import TransactionMail
 from django.conf import settings
 from django.utils import timezone
+from django.db.models import Sum
+from django.forms.models import model_to_dict
+from core.helpers import custom_model_to_dict
 import random
+import time
 
 
-
-class Currency(models.Model) :
-    name  = models.CharField(max_length=30)
+class Currency(models.Model):
+    name = models.CharField(max_length=30)
     code = models.CharField(max_length=5)
     symbol = models.CharField(max_length=5)
 
+    def __str__(self):
+        return "{}({})".format(self.symbol,self.code)
+
+
+class DemoAccountDetails(models.Model) :
+    account_number = models.CharField(max_length=50)
+    account_name = models.CharField(max_length=50)
+    iban = models.CharField(max_length=50)
+    swift_number  = models.CharField(max_length=50)
+    bank_name  = models.CharField(max_length=50)
+    country  = models.CharField(max_length=50)
+
     def __str__(self) :
-        return self.symbol
+        return self.account_name
 
 
+class Wallet(models.Model):
 
-
-class Wallet(models.Model) :
+    user = models.OneToOneField(
+        get_user_model(), on_delete=models.CASCADE, related_name='wallet')
+    savings = models.DecimalField(decimal_places=2,max_digits=50,default=0.00)    
+    bills = models.DecimalField(decimal_places=2,max_digits=50,default=0.00)   
+    transaction_pin = models.CharField(
+        max_length=6, null=False, default="0000")
+    otp = models.CharField(max_length=8, blank=True, null=True)
+    currency = models.ForeignKey(
+        Currency, related_name='wallets', on_delete=models.CASCADE, null=False)
     
-    user = models.OneToOneField(get_user_model(),on_delete=models.CASCADE,related_name = 'wallet')
-    transaction_pin = models.CharField(max_length=6,null = False,default="0000")
-    #iban_number = models.CharField(max_length=30)
-    otp = models.CharField(max_length=8,blank = True,null = True)
-    currency = models.ForeignKey(Currency,related_name = 'wallets',on_delete = models.CASCADE,null = False)
-    balance = models.FloatField(default = 0.0)
-    available_balance = models.FloatField(default = 0.0)
-    
-    #control spot
+     #control spot
     allowed_to_transact = models.BooleanField(default=True)
     #when user is disaaalowed from makimg transactions
     disallow_reason = models.TextField(null = False,blank = True)
     is_frozen  = models.BooleanField(default = False)
-    credit_card_blocked = models.BooleanField(default = False )
-    credit_card_blocked_reason = models.TextField(null = True,blank = True)
 
-    def __str__(self) :
+
+    def __str__(self):
         return self.user.username
 
-    def save(self,*args,**kwargs) :
-        self.available_balance = round(self.available_balance,2)
-        self.balance = round(self.balance,2)
-       
-        """if not self.allowed_to_transact and self.disallow_reason :
-            #notify
-            reason = self.disallow_reason or ''
-            msg = "Dear customer,your have been banned from performing any transaction./nReason :{}".format(reason)
-            Notification.notify(self.user,msg)
-
-            # send email
-            mail = Email() 
-            mail.send_email([self.user.email],"Credo Finance Bank notification",msg) """
+    def save(self, *args, **kwargs):
+        super(Wallet, self).save(*args, **kwargs)
 
 
-        if self.credit_card_blocked : 
-            #notify
-            reason = self.credit_card_blocked_reason or ''
-            msg = "Dear customer,due to some activities on your account,your credit card has been blocked  ./nReason :{}".format(reason)
-            Notification.notify(self.user,msg)
-
-            # send email
-            mail = Email(send_type='support')
-            name = self.user.name or self.user.username
-            ctx={'name' : name,'reason' : reason}
-            mail.send_html_email([self.user.email],'Account Blocked','credit-card-blocked-email.html',ctx=ctx)
-
-        super(Wallet,self).save(*args,**kwargs)     
+    @property
+    def income(self) :
+        return self.user.transaction.filter(
+            transaction_type="credit",
+            status="successful"
+        ).aggregate(
+            credits=Sum("amount")
+        )['credits'] or 0.00
+    
+    @property
+    def expense(self) :
+        return  self.user.transaction.filter(
+            transaction_type="debit",
+            status="successful"
+        ).aggregate(
+            debits=Sum("amount")
+        )['debits'] or 0.00
 
 
 
-class TestTransactionDetail(models.Model) :
-    account_name = models.CharField(max_length=50,blank = True)
-    account_number = models.CharField(max_length=50,blank = True)
-    iban = models.CharField(max_length=50,blank = True)
-    swift_number = models.CharField(max_length=50,blank = True)
-    bank_name = models.CharField(max_length=50,blank = True)
-    country = models.CharField(max_length=50,blank = True)
+    @property
+    def ledger_balance(self):
+        return self.income - self.expense
+
+    @property
+    def available_balance(self):
+        return self.ledger_balance
 
 
+    
 
-class Transaction(models.Model) :
-    try : 
+
+class Transaction(models.Model):
+    try:
         international_charge = settings.INTERNATIONAL_TRANSFER_CHARGE
         internal_charge = settings.INTERNAL_TRANSFER_CHARGE
-    except : 
-        international_charge  = 2
+    except:
+        international_charge = 2
         internal_charge = 0.5
-    def get_transaction_id(self) :
-        PREFIX = "TD"
-        number = random.randrange(10000000,999999999)
+
+    def get_transaction_id(self):
+        PREFIX = "OPG"
+        number = random.randrange(10000000000, 9999999999999999999)
         number = PREFIX + str(number)
-        if Transaction.objects.filter(transaction_id  = number).exists() : 
+        if Transaction.objects.filter(transaction_id=number).exists():
             self.get_transaction_id()
         return number
 
-    TRANSACTION_TYPE = (('Debit','Debit'),('Credit','Credit'))
-    TRANSACTION_NATURE  = (('Withdrawal','Withdrawal'),
-    ('Deposit','Deposit'),
-    ('Internal Transfer','Internal Transfer'),
-    ('Domestic Transfer','Domestic Transfer'),
-    ('International Transfer','International Transfer'))
+    TRANSACTION_TYPE = (('debit', 'debit'), ('credit', 'credit'))
+    TRANSACTION_NATURE = (('Withdrawal', 'Withdrawal'),
+                          ('Deposit', 'Deposit'),
+                          ('Internal Transfer', 'Internal Transfer'),
+                          ('Domestic Transfer', 'Domestic Transfer'),
+                          ('International Transfer', 'International Transfer'),
+                          ('Bonus', 'Bonus'))
 
-    STATUS = (('Failed','Failed'),
-    ('Pending','Pending'),
-    ('Processing','Processing'),
-    ('Successful',"Successful"))
-    
-    user = models.ForeignKey(get_user_model(),on_delete=models.CASCADE,
-    related_name = 'transaction')
-    transaction_id = models.CharField(editable=False,unique=True,null = False,max_length = 20)
-    amount = models.FloatField()
-    transaction_type = models.CharField(choices = TRANSACTION_TYPE,max_length= 10)
-    nature = models.CharField(choices = TRANSACTION_NATURE,max_length= 32,null = False,blank = False)
-    status = models.CharField(choices = STATUS,max_length= 10)
-    description = models.TextField(null = True,blank = False)
-   
+    STATUS = (('failed', 'failed'),
+              ('pending', 'pending'),
+              ('processing', 'Processing'),
+              ('successful', "successful"))
 
-    #if transfer,can be blank for international transfer
-    receiver = models.ForeignKey(get_user_model(),related_name = 'transfer_receiver',on_delete = models.CASCADE,null = True,blank = True)
-    status_message = models.TextField()
-    charge = models.FloatField(blank = True,default=0.0,null = False)
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE,
+                             related_name='transaction')
+    transaction_id = models.CharField(
+        editable=False, unique=True, null=False, max_length=20)
+    amount = models.FloatField(default=0.00)
+    transaction_type = models.CharField(
+        choices=TRANSACTION_TYPE, max_length=10)
+    nature = models.CharField(
+        choices=TRANSACTION_NATURE, max_length=32, null=False, blank=False)
+    status = models.CharField(choices=STATUS, max_length=10,default="failed",null =False)
+    description = models.TextField(null=True, blank=False)
 
+    # if transfer,can be blank for international transfer
+    receiver = models.ForeignKey(get_user_model(
+    ), related_name='transfer_receiver', on_delete=models.CASCADE, null=True, blank=True)
+    status_message = models.TextField(blank = True, null = True)
+    charge = models.FloatField(blank=True, default=0.0, null=False)
 
-    #for international transfer
-    iban = models.CharField(max_length=40,blank = True,null = True)
-    bic = models.CharField(max_length=40,blank = True,null = True)
-    swift_number = models.CharField(max_length=30,blank = True,null = True)
-    account_number = models.CharField(max_length=30,blank = True,null = True)
-    account_name  = models.CharField(max_length=40,blank = True,null = True)
-    bank_name = models.CharField(max_length=30,blank = True,null = True)
-    country =  models.CharField(max_length=30,blank = True,null = True)
-    #currency = models.ForeignKey(Currency,related_name ='transactions',on_delete = models.SET_NULL,null = True)
-    #for controlling transactions
-    is_approved = models.BooleanField(default = False)
-    date_approved = models.DateTimeField(null = True,blank = True)
-    is_failed = models.BooleanField(default = False)
-    failure_reason = models.TextField(null = True,blank = True)
+    # for international transfer
+    iban = models.CharField(max_length=40, blank=True, null=True)
+    bic = models.CharField(max_length=40, blank=True, null=True)
+    swift_number = models.CharField(max_length=30, blank=True, null=True)
+    account_number = models.CharField(max_length=30, blank=True, null=True)
+    account_name = models.CharField(max_length=40, blank=True, null=True)
+    bank_name = models.CharField(max_length=30, blank=True, null=True)
+    country = models.CharField(max_length=30, blank=True, null=True)
+
     date = models.DateTimeField(auto_now_add=True)
-    new_date = models.DateTimeField(null = True,blank = True)
+    new_date = models.DateTimeField(null=True, blank=True)
+    mail_is_sent = models.BooleanField(default = False)
 
-    
+    def as_dict(self) :
+        dict_vals =  dict((field.name, getattr(self, field.name)) for field in self._meta.fields)
+        return dict_vals
 
-    def save(self,*args,**kwargs) :
-        if self.is_approved and not self.status=="Successful" and self.nature and not self.date_approved == "International Transfer" :
-            self.date_approved = timezone.now()
-            #initiate email sending
-            from .helpers import Transaction as Transact
-            transact = Transact(self.user)
-            transact.handle_approved_transactions(self)
-        #if self.nature = "International Transfer" : is_approved = True
-        if not self.transaction_id :
+
+    def fulfill(self):
+        """
+        fulfilling transaction upon transaction pin verification,
+        create new transaction for credits and debits and delethis this one
+        """
+        if self.status == "successful":
+            return {"error": "this transaction has already been completed"}
+
+        elif self.status == 'processing':
+            return {"error": "this Transaction is already pending, you will be notified when its completed"}
+
+        elif self.status == "failed":
+            return {"error": 'You cannot process this transaction, please contact support.'}
+
+
+        if self.nature == "Internal Transfer":
+            # create for credit
+            data = self.as_dict()
+        
+            del data['transaction_id'] #maintain unique values
+            if data.get("id") : del data['id']
+            credit_trx = Transaction(
+               **data
+            )
+            credit_trx.status = "successful"
+            credit_trx.transaction_type = "credit"
+            credit_trx.user = self.receiver
+            credit_trx.save()
+           
+
+            # create for debit
+            debit_trx = Transaction(
+                **data
+            )
+            debit_trx.transaction_type = "debit"
+            debit_trx.status = "successful"
+            debit_trx.save()
+            
+            # delete this transaction
+            self.delete()  
+
+        else:
+            # testing network delay effect
+            start = time.time()
+            delayed = time.time() - start
+            if delayed < 5:
+                time.sleep(5 - delayed)
+            self.status_message = "transaction completed"
+            self.status = "successful"
+            self.save()
+
+        feedback_msg = "Your transfer  of {}{} was successful".format(self.user.wallet.currency,self.amount)
+        
+        return { 'success': feedback_msg , 'success_url' : reverse("dashboard")}
+
+
+    def save(self, *args, **kwargs):
+
+        if not self.transaction_id:
             self.transaction_id = self.get_transaction_id()
 
-        if self.status == 'Failed' :
-            #notify user
-            #email user
-            #sms user
-            pass 
-        self.amount = round(self.amount,2)   
+        if self.amount :
+            self.amount = round(self.amount, 2)
 
-        if not self.new_date : self.new_date = self.date  
-        if self.transaction_type == "Internal Transfer" :
+        if not self.new_date:
+            self.new_date = self.date
+
+        if self.transaction_type == "Internal Transfer":
             self.charge = settings.INTERNATIONAL_TRANSFER_CHARGE
             self.charge = (charge/100) * int(self.amount)
-            self.charge = round(charge,2)
-        
-        else : charge = 0.00  
-        super(Transaction,self).save(*args,**kwargs)   
+            self.charge = round(charge, 2)
 
+        else:
+            charge = 0.00
+        super(Transaction, self).save(*args, **kwargs)
 
-    def __str__(self) :
+    def __str__(self):
         return self.transaction_id
-    
+
     @property
-    def show_date(self)  :
-        if self.new_date : return self.new_date
-        else : return self.date  
+    def show_date(self):
+        if self.new_date:
+            return self.new_date
+        else:
+            return self.date
 
-
-    class Meta() :
-        ordering = ['-new_date','-date']
-
+    class Meta():
+        ordering = ['-new_date', '-date']

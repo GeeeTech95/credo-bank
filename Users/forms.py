@@ -22,15 +22,15 @@ class UserCreateForm(UserCreationForm) :
 class ProfileUpdateForm(ModelForm) :
     class Meta() :
         model  = User
-        fields = ['first_name','last_name','phone_number','country','occupation']
+        fields = ['first_name','last_name','email','phone_number','country','occupation']
         widgets = {
             
-            'first_name' : forms.TextInput(attrs={'readonly':True}),
-            'last_name' : forms.TextInput(attrs={'readonly':True}),
-            'phone_number' : forms.TextInput(attrs={'readonly':True}),
-            'country' : forms.TextInput(attrs={'readonly':True}),
-            'occupation' : forms.TextInput(attrs={'readonly':True}),
-            
+            'first_name' : forms.TextInput(attrs={'readonly':False}),
+            'last_name' : forms.TextInput(attrs={'readonly':False}),
+            'phone_number' : forms.TextInput(attrs={'readonly':False}),
+    
+            'occupation' : forms.TextInput(attrs={'readonly':False}),
+            'email' : forms.TextInput(attrs={'readonly':False}),
         }
 
   
@@ -119,6 +119,33 @@ class LoanForm(forms.Form) :
     loan_duration = forms.IntegerField(help_text = "in months")
     description = forms.CharField(widget = forms.Textarea)
 
+
+
+
+class ChangePinForm(forms.Form) :
+    old_pin = forms.CharField(required = True,help_text="Enter Your Old Pin")
+    new_pin = forms.CharField(required = True,help_text="Enter Your New Pin(4 digits)")
+
+    def __init__(self,user  = None,*args,**kwargs) :
+        super(ChangePinForm,self).__init__(*args,**kwargs)
+        self.user = user 
+
+
+    def clean_old_pin(self) :
+        o_pin = self.cleaned_data['old_pin']
+        if o_pin !=  self.user.wallet.transaction_pin :
+            self.o_pin = o_pin
+            raise forms.ValidationError("Pin Mismatch !,Your old pin  does not match please contact support")
+        return  o_pin 
+
+    def clean_new_pin(self) :
+        new_pin = self.cleaned_data['new_pin']
+       
+        if len(new_pin) != 4 :
+            raise forms.ValidationError("Pin Must be exactly 4 digits")
+        #if self.o_pin == new_pin :
+            #raise forms.ValidationError("Sorry !,your old pin corresponds to your new pin") 
+        return  new_pin     
 
 
 

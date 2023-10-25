@@ -1,7 +1,7 @@
 [
    
     {
-      "model": "Users.User",
+      "model": "users.User",
       "pk": 1,
       "fields": {
         "phone_number" : "08162457444",

@@ -1,69 +1,74 @@
 {% extends 'dashboard-base.html' %}
 {% load static %}
-{% load i18n %}
 {% load crispy_forms_tags %}
 
 {% block content %}
+<div class="user-content">
+    <div class="user-panel">
+        <h2 class="user-panel-title">Account Center</h2>
+      
+        <ul class="nav nav-tabs nav-tabs-line" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="personal-data-tab" data-toggle="tab" href="#personal-data">Personal
+                    Data</a>
+            </li>
+            <!--li class="nav-item">
+                <a class="nav-link" id="wallet-address-tab" data-toggle="tab" href="#wallet-address">Wallet Address</a>
+            </li-->
+            <!--li class="nav-item">
+                <a class="nav-link"  id="verify-email-tab" data-toggle="tab" href="#verify-email">Verify Email</a>
+            </li-->
+        </ul><!-- .nav-tabs-line -->
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="personal-data">
+                <form action="{% url 'profile' %}" method="POST">
+                    {% csrf_token %}
+                    {{form|crispy}}
+                    <div class="gaps-1x"></div><!-- 10px gap -->
+                    <div class="d-sm-flex justify-content-between align-items-center">
+                        <button class="btn btn-primary">Update</button>
+                        <!--div class="gaps-2x d-sm-none"></div>
+                        <span class="color-success"><em class="ti ti-check-box"></em> All Changes are saved</span-->
+                    </div>
+                </form><!-- form -->
+            </div><!-- .tab-pane -->
+            <div class="tab-pane fade" id="wallet-address">
+                <p>In order to withdraw your funds from your {{site_name}} wallet to your personal wallet, you need to
+                    enter a valid wallet address.</p>
+            
+            </div><!-- .tab-pane -->
+            <div class="tab-pane fade" id="verify-email">
 
-<!-- Main Content -->
-<div class="main-content">
-  <section class="section">
-    <div class="section-body">
-      <div class="row mt-sm-4">
-        <div class="col-12 col-md-12 col-lg-5">
-          <div class="card author-box">
-            <div class="card-body">
-              <div class="author-box-center">
-                {% if user.passport %}
-                <img style="width:40%;height:40%" alt="image" src="{{user.passport.url}}">
-                {% else %}
-                <img style="width:40%;height:40%" alt="image" src="{% static 'dashboard/img/users/user-1.png' %}">
-                {% endif %}
-                <div class="clearfix"></div><br>
-                <div class="author-box-name">
-                  {{user}}
-                </div>
-                <div class="author-box-job" style="font-size:19px">
-                  Account number : <b>{{user.account_number}}</b><br>
-                  Account Type : <b>{{user.account_type}}</b>
-                </div>
-              </div>
+                <form action="{% url 'verify-email' %}" method="POST">
+                    {% csrf_token %}
+                    {{verify_email_form|crispy}}
+                    {{otp_form|crispy}}
 
-              <div class="text-center">
-                <div class="author-box-description">
-                  <p>
-
-                  </p>
-                </div>
-              </div>
+                    <div class="gaps-1x"></div><!-- 10px gap -->
+                    <div class="d-sm-flex justify-content-between align-items-center">
+                        <button type="submit" style="float: right;" class="btn btn-primary px-2 py-1">verify</button>
+                        <button type="button" style="color:#6fc6df;background-color: white;border: 0px;"
+                            class="btn btn-primary px-2 py-1">send code</button>
 
 
-            </div>
-          </div>
-        </div>
-        <div class="col-12 col-md-12 col-lg-7">
-          <div class="card">
-            <form style="margin:15px" class="needs-validation" novalidate="" method="POST">
-              {% csrf_token %}
-              {{form|crispy}}
-              <!--div class="card-footer text-right">
-                                <button class="btn btn-primary">Update</button>
-                              </div-->
-            </form>
-          </div>
-        </div>
+                    </div>
+                </form><!-- form -->
 
-      </div>
-    </div>
-  </section>
-</div>
-
+            </div><!-- .tab-pane -->
+        </div><!-- .tab-content -->
+    </div><!-- .user-panel -->
+</div><!-- .user-content -->
 {% endblock %}
 
 {% block js %}
-<!-- General JS Scripts ->
-<script src="{% static 'dashboard/js/app.min.js' %}""></script>
-<script src=" {% static 'dashboard/bundles/summernote/summernote-bs4.js' %}""></script>
-<script src="{% static 'dashboard/js/scripts.js' %}""></script>
-<script src=" {% static 'dashboard/js/custom.js' %}""></script-->
+<script>
+    $(document).ready(function () {
+        var tab = "{{tab}}"
+        $("#" + tab + "-tab").trigger("click")
+    })
+
+    $("#verify-email-click").click(function () {
+        $("#verify-email-tab").trigger("click")
+    })
+</script>
 {% endblock %}

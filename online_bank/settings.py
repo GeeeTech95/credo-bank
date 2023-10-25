@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 from django.utils.timezone import timedelta
 import os
 
+
+SITE_NAME  = "Credocapital Bank"
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -23,11 +26,47 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'nc@ty7fx4rv2a8j7nkd-7$d1$^-s$5o#37b!6qv0uh@nok$c2o'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
 TEST_MODE = True
+
+JAZZMIN_SETTINGS = {
+    # title of the window (Will default to current_admin_site.site_title if absent or None)
+    "site_title": "Offshore-Pro Admin",
+
+    # Title on the login screen (19 chars max) (defaults to current_admin_site.site_header if absent or None)
+    "site_header": "Offshore-Pro",
+
+    # Title on the brand (19 chars max) (defaults to current_admin_site.site_header if absent or None)
+    "site_brand": "Offshore-Pro",
+
+    # Logo to use for your site, must be present in static files, used for brand on top left
+    "site_logo": "img/logo.png",
+
+    # Logo to use for your site, must be present in static files, used for login form logo (defaults to site_logo)
+    "login_logo": "img/logo-jazz.png",
+
+    # Logo to use for login form in dark themes (defaults to login_logo)
+    "login_logo_dark": "img/logo-jazz.png",
+
+    # CSS classes that are applied to the logo above
+    "site_logo_classes": "logo",
+
+    "custom_css": "css/style.css",
+
+    # Relative path to a favicon for your site, will default to site_logo if absent (ideally 32x32 px)
+    #"site_icon": "img/favicon.png",
+
+    # Welcome text on the login screen
+    "welcome_sign": "Welcome Admin!",
+
+    # Copyright on the footer
+    "copyright": "Offshore-Pro",
+}
+
+
 
 AUTO_LOGOUT = {
     'IDLE_TIME': timedelta(minutes=5),
@@ -38,13 +77,15 @@ AUTO_LOGOUT = {
 # Application definition
 
 INSTALLED_APPS = [
+      'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
+     'django.contrib.humanize',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'Users.apps.UsersConfig',
+    'users.apps.UsersConfig',
     'wallet.apps.WalletConfig',
     'company.apps.CompanyConfig',
     'core.apps.CoreConfig',
@@ -83,6 +124,8 @@ TEMPLATES = [
             os.path.join(BASE_DIR,'Users/templates/dashboard'),
             os.path.join(BASE_DIR,'templates/email'),
             os.path.join(BASE_DIR,'templates/registration'),
+            os.path.join(BASE_DIR, 'core/templates'),
+            os.path.join(BASE_DIR, 'core/templates/email'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -137,7 +180,7 @@ LOGIN_REDIRECT_URL = 'dashboard'
 
 LOGOUT_REDIRECT_URL = "index"
 
-AUTH_USER_MODEL = 'Users.User'
+AUTH_USER_MODEL = 'users.User'
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
@@ -192,6 +235,7 @@ SMS_PHONE_NUMBER =  '+19709866198'
 
 #EMAIL FOR ZOHO
 EMAIL_HOST  = "smtp.zoho.com"
+EMAIL_HOST_USER_TRANSACTION = "transaction@credocapitalbank.com"
 EMAIL_HOST_USER_ALERT = "support@credocapitalbank.com"
 EMAIL_HOST_USER_SUPPORT = "support@credocapitalbank.com"
 

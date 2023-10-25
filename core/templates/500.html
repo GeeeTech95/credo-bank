@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<!-- 404 Start -->
+<div class="container-xxl py-5 wow fadeInUp mt-5" data-wow-delay="0.1s">
+    <div class="container text-center mt-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <i class="bi bi-exclamation-triangle display-1 text-primary"></i>
+                <!--h1 class="display-1">500</h1-->
+                <h1>Hello esteemed customer, we are serving you better !</h1>
+                <!--h1 class="mb-4">OOps!, An Error Occured</h1-->
+                <p class="mb-4"> We are currently on a sheduled maintenance, we will be back shortly.</p>
+                <!--p class="mb-4">We’re sorry, an error has occured on our own end. Please contact support</p-->
+                <a class="btn btn-primary py-3 px-5" href="{% url 'index' %}">Go Back To Home</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 404 End -->
+
+{% endblock %}

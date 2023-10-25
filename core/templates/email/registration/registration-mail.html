@@ -1,0 +1,29 @@
+{% extends 'email/base-mail.html' %}
+
+{% load static %} 
+
+{% block content %}
+<tr>
+  <td>
+    {% if name %}
+    <strong>
+      <h2>Dear {{name}},</h2>
+    </strong>
+    {% endif %}
+
+    {% autoescape off %}
+    {{text}}
+    {% endautoescape %}
+    <p>Thank you for choosing Offshore-pro Group!</p>
+
+<p>Best regards,</p>
+<p>Team</p>
+<p>{{site_name}}</p>
+
+
+  
+   
+  </td>
+</tr>
+{% endblock %}
+               
