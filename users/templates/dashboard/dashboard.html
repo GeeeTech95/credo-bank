@@ -136,48 +136,95 @@
         </div>
         {% else %}
 
-        <ul class="listview image-listview">
-     
-            <ul class="listview image-listview">
-
-                {% for tx in recent_transactions %}
-                <li>
-                    <div class="item">
-                        {% if tx.transaction_type == "debit" %}
-                        <div class="icon-box bg-danger" style="color:white">
-                            <ion-icon name="arrow-up-outline"></ion-icon>
-                        </div>
+      
+                  <div class="table-responsive" style="max-width: 700px;">
+                    <table class="table table-striped">
+                      <tr>
+                     
+                        <th>Trnsaction ID</th>
+                        <th>Transaction Type</th>
+                        <th>Rceipient</th>
+                        <th>Account Number</th>
+                        <th>Amount</th>
+                        <th>Charge</th>
+                        <th>Description</th>
+                        <th>Status</th>
+                        <th>Status Log</th>
+                        <th>Date</th>
+                        <th>Action</th>
+                      </tr>
+                    
+                      {% for transact in recent_transactions %}
+                      <tr>
+                        
+                        <td>{{transact.transaction_id}}</td>
+                        {% ifequal transact.transaction_type "credit" %}
+                        <td style="color:green">{{transact.transaction_type}}</td>
                         {% else %}
-                        <div class="icon-box bg-success" style="color:white">
-                            <ion-icon name="arrow-down-outline"></ion-icon>
-                        </div>
+                        <td style="color:red">{{transact.transaction_type}}</td>
+                        {% endifequal %}
+                        
+                        {% ifequal transact.nature "Internal Transfer" %}
+                        <td>{{transact.receiver|default:"-"}}</td>
+                        <td>{{transact.receiver.account_number|default:"-"}}</td>
+                  
+                        {% else %}
+                      
+                        <td>{{transact.account_name|default:"-"}}</td>
+                        <td>{{transact.account_number|default:"-"}}</td>
+                         
+                        {% endifequal %}
+
+                        {% ifequal transact.transaction_type "credit" %}
+                        <td style="color:green">+{{user.wallet.currency.code}} {{transact.amount|to_decimal|intcomma}}</td>
+                        {% else %}
+                        <td style="color:red">-{{user.wallet.currency.code}}  {{transact.amount|to_decimal|intcomma}}</td>
+                        {% endifequal %}
+       
+                        <td style="color:red">-{{user.wallet.currency.code}} {{transact.charge|to_decimal|intcomma}}</td>
+                      
+                      
+                        {% if transact.description %}
+                        <td>{{transact.description}}</td>
+                        {% else %}
+                        <td>-</td>
                         {% endif %}
-
-                        <div class="in">
-                            <div>
-
-                                {{tx.description}}
-                                <footer>
-                                    {{tx.show_date|date:"d M, Y T:H"}}
-                                </footer>
-                            </div>
-                            <span class="">
-
-                                {{user.wallet.currency.code}} {{tx.amount|to_decimal|intcomma}}
-
-                            </span>
-                        </div>
-                    </div>
-                </li>
-                {% endfor %}
-
-
-
-
-            </ul>
-
-
-        </ul>
+                        {% ifequal transact.status  "failed" %}
+                        <td><div class="badge badge-danger">Failed</div></td>
+                        {% else %}
+                          {% ifequal transact.status  "processing" %}
+                          <td><div class="badge badge-warning">Processing</div></td>
+                          {% else %}
+                          {% ifequal transact.status  "pending" %}
+                          <td><div class="badge badge-info">Pending</div></td>
+                          {% else %}
+                          <td><div class="badge badge-success">successful</div></td>
+                          {% endifequal %}
+                        {% endifequal %}
+                        {% endifequal %}
+                        
+                       
+                        <td>{{transact.status_message|default:"-"}}</td>
+                        <td>{{transact.show_date}}</td>
+                        <td>
+                         
+                          {% ifequal transact.status 'pending' %}
+                          <a href="{% url 'complete-transaction' transact.transaction_id %}"><div class="badge badge-primary">finalize</div></a>
+                          {% else %}
+                          -
+          
+                          {% endifequal %}
+                        </td>
+                        
+                       
+                       
+                        
+                      </tr>
+                      {% endfor %}
+                  
+                    </table>
+                  </div>
+       
 
         {% endif %}
     </div>
@@ -205,44 +252,94 @@
         </div>
         {% else %}
 
-        <ul class="listview image-listview">
-            {% for tx in recent_pending_transactions %}
-            <li>
-                <div class="item">
-                    {% if tx.transaction_type == "debit" %}
-                    <div class="icon-box bg-danger" style="color:white">
-                        <ion-icon name="arrow-up-outline"></ion-icon>
-                    </div>
-                    {% else %}
-                    <div class="icon-box bg-warning" style="color:white">
-                        <ion-icon name="arrow-up-outline"></ion-icon>
-                    </div>
-                    {% endif %}
 
-                    <div class="in">
-                        <div>
+          <div class="table-responsive" style="max-width: 700px;">
+                    <table class="table table-striped">
+                      <tr>
+                     
+                        <th>Trnsaction ID</th>
+                        <th>Transaction Type</th>
+                        <th>Rceipient</th>
+                        <th>Account Number</th>
+                        <th>Amount</th>
+                        <th>Charge</th>
+                        <th>Description</th>
+                        <th>Status</th>
+                        <th>Status Log</th>
+                        <th>Date</th>
+                        <th>Action</th>
+                      </tr>
+                    
+                      {% for transact in recent_pending_transactions %}
+                      <tr>
+                        
+                        <td>{{transact.transaction_id}}</td>
+                        {% ifequal transact.transaction_type "credit" %}
+                        <td style="color:green">{{transact.transaction_type}}</td>
+                        {% else %}
+                        <td style="color:red">{{transact.transaction_type}}</td>
+                        {% endifequal %}
+                        
+                        {% ifequal transact.nature "Internal Transfer" %}
+                        <td>{{transact.receiver|default:"-"}}</td>
+                        <td>{{transact.receiver.account_number|default:"-"}}</td>
+                  
+                        {% else %}
+                      
+                        <td>{{transact.account_name|default:"-"}}</td>
+                        <td>{{transact.account_number|default:"-"}}</td>
+                         
+                        {% endifequal %}
 
-                            {{tx.description}}
-                            <footer>
-                            {{tx.show_date|date:"d M, Y T:H"}}
-                            </footer>
-                        </div>
-                        <div >
-                            <a href="{% url 'complete-transaction' tx.transaction_id %}" 
-                            class="btn btn-xs btn-warning">
-                                finalize
-                            </a>
-                        </div>
-                        <span class="">
-
-                            {{user.wallet.currency.code}} {{tx.amount|to_decimal|intcomma}}
-
-                        </span>
-                    </div>
-                </div>
-            </li>
-            {% endfor %}
-            </ul>
+                        {% ifequal transact.transaction_type "credit" %}
+                        <td style="color:green">+{{user.wallet.currency.code}} {{transact.amount|to_decimal|intcomma}}</td>
+                        {% else %}
+                        <td style="color:red">-{{user.wallet.currency.code}}  {{transact.amount|to_decimal|intcomma}}</td>
+                        {% endifequal %}
+       
+                        <td style="color:red">-{{user.wallet.currency.code}} {{transact.charge|to_decimal|intcomma}}</td>
+                      
+                      
+                        {% if transact.description %}
+                        <td>{{transact.description}}</td>
+                        {% else %}
+                        <td>-</td>
+                        {% endif %}
+                        {% ifequal transact.status  "failed" %}
+                        <td><div class="badge badge-danger">Failed</div></td>
+                        {% else %}
+                          {% ifequal transact.status  "processing" %}
+                          <td><div class="badge badge-warning">Processing</div></td>
+                          {% else %}
+                          {% ifequal transact.status  "pending" %}
+                          <td><div class="badge badge-info">Pending</div></td>
+                          {% else %}
+                          <td><div class="badge badge-success">successful</div></td>
+                          {% endifequal %}
+                        {% endifequal %}
+                        {% endifequal %}
+                        
+                       
+                        <td>{{transact.status_message|default:"-"}}</td>
+                        <td>{{transact.show_date}}</td>
+                        <td>
+                         
+                          {% ifequal transact.status 'pending' %}
+                          <a href="{% url 'complete-transaction' transact.transaction_id %}"><div class="badge badge-primary">finalize</div></a>
+                          {% else %}
+                          -
+          
+                          {% endifequal %}
+                        </td>
+                        
+                       
+                       
+                        
+                      </tr>
+                      {% endfor %}
+                  
+                    </table>
+                  </div>
 
         {% endif %}
     </div>

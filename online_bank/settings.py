@@ -26,7 +26,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'nc@ty7fx4rv2a8j7nkd-7$d1$^-s$5o#37b!6qv0uh@nok$c2o'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -236,7 +236,7 @@ SMS_PHONE_NUMBER =  '+19709866198'
 #EMAIL FOR ZOHO
 EMAIL_HOST  = "smtp.zoho.com"
 EMAIL_HOST_USER_TRANSACTION = "transaction@credocapitalbank.com"
-EMAIL_HOST_USER_ALERT = "support@credocapitalbank.com"
+EMAIL_HOST_USER_ALERT = "transaction@credocapitalbank.com"
 EMAIL_HOST_USER_SUPPORT = "support@credocapitalbank.com"
 
 #for other emails 

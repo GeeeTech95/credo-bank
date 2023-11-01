@@ -17,6 +17,7 @@
     <!-- Custom styles for this template -->
     <link rel="stylesheet" href="{% static 'dashboard/css/style.css' %}?ver=101">
     <link rel="stylesheet" href="{% static 'dashboard/css/extra.css' %}">
+
      
     <style>
         @media  (min-width: 575px){
@@ -167,7 +168,11 @@
                     <ul class="user-nav">
 
                       
-                        <li>Contact Support<span>{{support_email}}</span></li>
+                        <li>
+                            <a href="mailto:{{site_mail}}">
+                            Contact Support<span>{{support_email}}</span>
+                            </a>
+                        </li>
                         <li class="mt-2"><a href="{% url 'logout' %}">Logout</a></li>
                     </ul><!-- .user-nav -->
                     <div class="d-lg-none">
