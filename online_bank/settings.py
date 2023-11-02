@@ -46,10 +46,10 @@ JAZZMIN_SETTINGS = {
     "site_logo": "img/logo.png",
 
     # Logo to use for your site, must be present in static files, used for login form logo (defaults to site_logo)
-    "login_logo": "img/logo-jazz.png",
+    "login_logo": "img/logo/logo-jazz.png",
 
     # Logo to use for login form in dark themes (defaults to login_logo)
-    "login_logo_dark": "img/logo-jazz.png",
+    "login_logo_dark": "img/logo/logo-jazz.png",
 
     # CSS classes that are applied to the logo above
     "site_logo_classes": "logo",
@@ -67,12 +67,26 @@ JAZZMIN_SETTINGS = {
 }
 
 
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+        },
+    },
+    "loggers": {
+        "django": {"handlers": ["console"], "level": "INFO"},
+    },
+}
+
+
 
 AUTO_LOGOUT = {
     'IDLE_TIME': timedelta(minutes=5),
     'REDIRECT_TO_LOGIN_IMMEDIATELY': True,
     'SESSION_TIME': timedelta(hours=1),
-    'MESSAGE': 'Your session has expired. Please login again to continue.',
+    'MESSAGE': 'Welcome back, your previous session expired !',
     }  # logout after 10 minutes of downtime
 # Application definition
 
