@@ -26,7 +26,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'nc@ty7fx4rv2a8j7nkd-7$d1$^-s$5o#37b!6qv0uh@nok$c2o'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -90,7 +90,7 @@ INSTALLED_APPS = [
     'company.apps.CompanyConfig',
     'core.apps.CoreConfig',
      #3rdparty
-    #'whitenoise.runserver_nostatic',
+    'whitenoise.runserver_nostatic',
     'crispy_forms', 
     'djmoney'
     #'phonenumber_field',
@@ -104,7 +104,7 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
      #whitenoise
-    #'whitenoise.middleware.WhiteNoiseMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -223,7 +223,7 @@ STATIC_ROOT = os.path.join(BASE_DIR,"asset")
 
 STATIC_URL = '/static/'
 
-#STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 #TWILLO
 TWILLO_ACCOUNT_SID =  'AC213bba1c05225bedc1ebccccd8dbd9e0' 
