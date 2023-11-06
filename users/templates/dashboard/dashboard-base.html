@@ -200,8 +200,7 @@
 
     {% if messages %}
     {% for message in messages %}
-    <div class="alert alert-info alert-dismissible show fade"
-        style="background-color:{{main_theme}};margin:20px;z-index:2000;width:90%;top:50px;position:absolute">
+    <div class="alert alert-info alert-dismissible show fade" style="background-color:{{main_theme}};margin:20px;z-index:2000;width:90%;top:50px;position:absolute">
         <div class="alert-body">
             <button class="close" data-dismiss="alert">
                 <span>&times;</span>
@@ -216,12 +215,12 @@
     <!-- modal -->
     <!-- Modal @s -->
     <div class="modal fade" id="load-modal" data-bs-keyboard="false" data-bs-backdrop="static" style="align-items: center;text-align: center;">
-        <div class="modal-dialog modal-sm" style="padding: 10px;left: calc(50vw - 100px);position: fixed">
-            <div class="modal-content" style="width: fit-content;">
+        <div class="modal-dialog modal-sm" style="background-color: transparent; left: calc(50vw - 50px);position: fixed;height: max-content;width: max-content;">
+            <div class="modal-content" style="width: fit-content;background-color: transparent;border: 0;">
                
                 <div class="modal-body p-md-4 p-lg-5" >
                    
-                    <img src="{% static 'img/loader2.webp' %}" height="100px" width="100px">
+                    <img src="{% static 'img/loader2.webp' %}" height="50px" width="50px">
                 </div>
             </div>
         </div> 
@@ -253,7 +252,7 @@
             
                 <div class="modal-body p-md-0 p-lg-0 align-items-center"  id="success-modal-content">
                     <center>
-                        <img class="mb-0"  src="{% static 'img/success.gif' %}" style="height: auto;width: 150px;">                        <p class="pt-0" id="success-modal-content-text">Completed Successfully </p>
+                        <img class="mb-0"  src="{% static 'img/success.gif' %}" style="height: auto;width: 100px;">                        <p class="pt-0" id="success-modal-content-text">Completed Successfully </p>
                         <a href="{% url 'dashboard' %}">
                         <button type="button" class="btn btn-primary mt-2 mb-2">Check  Dashboard</button>
                         </a>
