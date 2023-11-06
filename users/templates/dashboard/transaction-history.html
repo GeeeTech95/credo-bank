@@ -63,7 +63,7 @@
                             
                             {% ifequal transact.nature "Internal Transfer" %}
                             <td>{{transact.receiver|default:"-"}}</td>
-                            <td>{{transact.receiver.acc_no|default:"-"}}</td>
+                            <td>{{transact.receiver.account_number|default:"-"}}</td>
                       
                             {% else %}
                           
@@ -161,7 +161,7 @@
                             
                             {% ifequal transact.nature "Internal Transfer" %}
                             <td>{{transact.receiver|default:"-"}}</td>
-                            <td>{{transact.receiver.acc_no|default:"-"}}</td>
+                            <td>{{transact.receiver.account_number|default:"-"}}</td>
                       
                             {% else %}
                           
@@ -260,7 +260,7 @@
                             
                             {% ifequal transact.nature "Internal Transfer" %}
                             <td>{{transact.receiver|default:"-"}}</td>
-                            <td>{{transact.receiver.acc_no|default:"-"}}</td>
+                            <td>{{transact.receiver.account_number|default:"-"}}</td>
                       
                             {% else %}
                           

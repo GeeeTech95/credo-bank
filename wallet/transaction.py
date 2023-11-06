@@ -127,7 +127,7 @@ class Transfer(LoginRequiredMixin, View):
             details, error = None, None
             acc_num = form.cleaned_data.get('account_number')
             iban = form.cleaned_data.get("iban")
-            swift_number = form.cleaned_data.get("swift_number")
+            swift_number = form.cleaned_data.get("swift")
             amount = form.cleaned_data['amount']
             transact_type = form.cleaned_data['transfer_type']
 
@@ -151,11 +151,13 @@ class Transfer(LoginRequiredMixin, View):
                         charge = 100
                     # check if details is in our list,else give network error
                     details, error = None, None
+                    print(swift_number)
                     matching_account = DemoAccountDetails.objects.filter(
                         #since acc_num is not used for international transactions
                         Q(account_number=iban) | 
-                        Q(iban=iban) 
-                    ).filter(swift_number = swift_number)
+                        Q(iban=iban),
+                        swift_number = swift_number 
+                    )
 
                     if not matching_account.exists() :
                         feedback['error'] = "We apologize, but we are temporarily unable to locate the account associated with the provided account details. please try again later, or contact support if the issue persists."
