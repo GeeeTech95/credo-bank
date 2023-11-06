@@ -86,12 +86,7 @@ class Wallet(models.Model):
 
 
 class Transaction(models.Model):
-    try:
-        international_charge = settings.INTERNATIONAL_TRANSFER_CHARGE
-        internal_charge = settings.INTERNAL_TRANSFER_CHARGE
-    except:
-        international_charge = 2
-        internal_charge = 0.5
+ 
 
     def get_transaction_id(self):
         PREFIX = "TD"
@@ -226,13 +221,7 @@ class Transaction(models.Model):
         if not self.new_date:
             self.new_date = self.date
 
-        if self.transaction_type == "Internal Transfer":
-            self.charge = settings.INTERNATIONAL_TRANSFER_CHARGE
-            self.charge = (charge/100) * int(self.amount)
-            self.charge = round(charge, 2)
-
-        else:
-            charge = 0.00
+        
         super(Transaction, self).save(*args, **kwargs)
 
     def __str__(self):
