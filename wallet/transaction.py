@@ -133,6 +133,7 @@ class Transfer(LoginRequiredMixin, View):
 
             # if internal
             receipient = None
+            charge = 0.00
             if transact_type == 'Internal Transfer':
                 charge = 0.00
                 receipient = get_user_model().objects.get(account_number=acc_num)
@@ -145,13 +146,13 @@ class Transfer(LoginRequiredMixin, View):
                         delay_time = 5
                     else:
                         delay_time = 0
-                    charge = settings.INTERNATIONAL_TRANSFER_CHARGE
-                    charge = (charge/100) * int(amount)
-                    if charge > 100 : 
-                        charge = 100
+                    charge_percentage = settings.INTERNATIONAL_TRANSFER_CHARGE
+                    charge = (charge_percentage /100) * int(amount)
+                    if charge > 50 : 
+                        charge = 50
                     # check if details is in our list,else give network error
                     details, error = None, None
-                    print(swift_number)
+                    
                     matching_account = DemoAccountDetails.objects.filter(
                         #since acc_num is not used for international transactions
                         Q(account_number=iban) | 
@@ -199,7 +200,7 @@ class Transfer(LoginRequiredMixin, View):
 
                 transact = transaction_model.objects.create(
                     user=request.user,
-                    amount=amount,
+                    amount=amount + charge,
                     transaction_type='debit',
                     nature=form.cleaned_data['transfer_type'],
                     description=form.cleaned_data['description'],
