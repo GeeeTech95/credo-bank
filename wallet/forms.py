@@ -61,10 +61,12 @@ class TransferForm(forms.Form):
                    ('Domestic Transfer','Domestic Transfer'))
     transfer_type = forms.ChoiceField(choices=TypeChoices)
     account_number = forms.CharField(
-        required=True, help_text="Receipient Account Number / IBAN ")
-   
-    bank_name = forms.CharField(
-        required=False, label="Bank Name", help_text="Receipient Bank Name")
+        required=False, help_text="Recipient Account Number")
+    iban = forms.CharField(
+        required=False,label="IBAN / Account Number")
+    swift = forms.CharField(
+        required=False,label="BIC / Swift Code", help_text="The swift code / routing number/ swift number/ bank identification code")
+  
     
     amount = forms.FloatField()
     description = forms.CharField()
@@ -74,28 +76,39 @@ class TransferForm(forms.Form):
     def __init__(self, user=None, *args, **kwargs):
         super(TransferForm, self).__init__(*args, **kwargs)
         self.user = user
+
+    def clean_iban(self) :
+        iban = self.cleaned_data.get("iban")
+        if self.cleaned_data['transfer_type'].lower() == "international transfer" :
+            if not iban : raise forms.ValidationError("IBAN / Account Number is required for international transactions")
+        return iban
+    
+    def clean_swift(self) :
+        iban = self.cleaned_data.get("swift")
+        if self.cleaned_data['transfer_type'].lower() == "international transfer" :
+            if not iban : raise forms.ValidationError("Swift number/BIC is required for international transactions")
+        return iban
+      
     
     def clean_transfer_type(self) :
         t_type =  self.cleaned_data.get('transfer_type')
         
         return  t_type   
     
-    def clean_bank_name(self) :
-        bn = self.cleaned_data.get('bank_name')
-        if self.cleaned_data.get('transfer_type').lower() == "international transfer":
-            if not bn :
-                raise forms.ValidationError("Bank name is required for international transfers")
-        
-        return bn
+
     
     def clean_account_number(self):
-      
+        acc_num = self.cleaned_data.get('account_number')
+        if self.cleaned_data['transfer_type'].lower() != "international transfer" :
+            if not acc_num :
+                raise forms.ValidationError("Account Number is required")
+            
         if self.cleaned_data.get('transfer_type') == "Domestic Transfer": 
             raise forms.ValidationError("""
             We're sorry, but it seems this service is temporarily down at the moment, please try again later.
             """)
 
-        acc_num = self.cleaned_data['account_number']
+        
         if self.cleaned_data.get('transfer_type') == "Internal Transfer":
             if not get_user_model().objects.filter(account_number=acc_num).exists():
                 raise forms.ValidationError("""The entered account number does not belong to any {} account,

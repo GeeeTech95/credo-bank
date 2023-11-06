@@ -19,29 +19,29 @@
                         <h4>Enter Your Transaction Pin To Proceed</h4>
                     </div>
                     <p style="padding:30px 30px 0px 30px" style="width: 100%;">
-                        {% if transact.country %}
+                        {% if transact.nature == "International Transfer" %}
                         You are transferring <b>
                             {{user.wallet.currency.code}} {{transact.amount|to_decimal|intcomma}}</b> to <b>{{transact.account_name}}</b>.
                         <br>
                         <br>
                         <b style="font-size: 18px;margin-bottom: 10px;display: block;">Receipient Details </b>
+                        Account Name:  <b>{{transact.account_name}}</b><br>
                         {% if transact.account_number %}
                         
-                        Account Name:  <b>{{transact.account_name}}</b><br>
                         Account Number : <b class="mb-1">{{transact.account_number}}</b><br>
                         {% endif %}
                         Bank : <b>{{transact.bank_name}}</b> <br>
-                        Country : <b>{{transact.country}}</b> <br>
                         {% if transact.swift_number %}
                         Swift/Routing  : <b>{{transact.swift_number}}</b><br>
+                        Account Number/Iban  : <b>{{transact.iban}}</b><br>
                         {% endif %}
-                        {% if transact.swift_number %}
-                        Iban  : <b>{{transact.iban}}</b>
-                        {% endif %}
+                        Country : <b>{{transact.country}}</b> <br>
+                       
+                     
                     
                     
                         {% else %}
-                        You are transferring <b style="font-size: 30px;">{{user.wallet.currency.code}} {{transact.amount|to_decimal|intcomma}}</b> to <b>{{transact.receiver}}</b>.<br>
+                        You are transferring <b >{{user.wallet.currency.code}} {{transact.amount|to_decimal|intcomma}}</b> to <b>{{transact.receiver}}</b>.<br>
                         
                         {% endif %}
                     </p>

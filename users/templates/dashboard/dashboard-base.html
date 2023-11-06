@@ -216,7 +216,7 @@
     <!-- modal -->
     <!-- Modal @s -->
     <div class="modal fade" id="load-modal" data-bs-keyboard="false" data-bs-backdrop="static" style="align-items: center;text-align: center;">
-        <div class="modal-dialog modal-sm" style="padding: 10px;top: calc(50vh - 100px);left: calc(50vw - 100px);position: fixed">
+        <div class="modal-dialog modal-sm" style="padding: 10px;left: calc(50vw - 100px);position: fixed">
             <div class="modal-content" style="width: fit-content;">
                
                 <div class="modal-body p-md-4 p-lg-5" >
@@ -247,14 +247,13 @@
 
       <!-- Modal @s -->
       <div class="modal fade p-0" id="success-modal" style="width: fit-content;height: auto;">
-        <div class="modal-dialog modal-sm p-0" style="text-align: center;">
+        <div class="modal-dialog modal-sm p-0" >
         <center>
             <div class="modal-content p-0">
-              
+            
                 <div class="modal-body p-md-0 p-lg-0 align-items-center"  id="success-modal-content">
                     <center>
-                        <img class="mb-0"  src="{% static 'img/success.gif' %}" style="height: auto;width: 300px;">
-                        <p class="pt-0" id="success-modal-content-text">Completed Successfully </p>
+                        <img class="mb-0"  src="{% static 'img/success.gif' %}" style="height: auto;width: 150px;">                        <p class="pt-0" id="success-modal-content-text">Completed Successfully </p>
                         <a href="{% url 'dashboard' %}">
                         <button type="button" class="btn btn-primary mt-2 mb-2">Check  Dashboard</button>
                         </a>

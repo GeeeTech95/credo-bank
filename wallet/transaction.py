@@ -125,10 +125,12 @@ class Transfer(LoginRequiredMixin, View):
         form = self.form_class(user=self.request.user, data=request.POST)
         if form.is_valid():
             details, error = None, None
-            acc_num = form.cleaned_data['account_number']
+            acc_num = form.cleaned_data.get('account_number')
+            iban = form.cleaned_data.get("iban")
+            swift_number = form.cleaned_data.get("swift_number")
             amount = form.cleaned_data['amount']
-            bank_name = form.cleaned_data['bank_name']
             transact_type = form.cleaned_data['transfer_type']
+
             # if internal
             receipient = None
             if transact_type == 'Internal Transfer':
@@ -145,15 +147,18 @@ class Transfer(LoginRequiredMixin, View):
                         delay_time = 0
                     charge = settings.INTERNATIONAL_TRANSFER_CHARGE
                     charge = (charge/100) * int(amount)
-                    if charge > 100 : charge = 100
+                    if charge > 100 : 
+                        charge = 100
                     # check if details is in our list,else give network error
                     details, error = None, None
                     matching_account = DemoAccountDetails.objects.filter(
-                        Q(account_number=acc_num) | 
-                        Q(iban=acc_num)
-                    )
+                        #since acc_num is not used for international transactions
+                        Q(account_number=iban) | 
+                        Q(iban=iban) 
+                    ).filter(swift_number = swift_number)
+
                     if not matching_account.exists() :
-                        feedback['error'] = "We apologize, but we were unable to locate the account associated with the provided account number. please try again later."
+                        feedback['error'] = "We apologize, but we are temporarily unable to locate the account associated with the provided account details. please try again later, or contact support if the issue persists."
                         #feedback['error'] = "Connection to the receipient server could not be completed at the moment, please try again later."
                         time.sleep(3)
                         return JsonResponse(feedback)
@@ -164,10 +169,7 @@ class Transfer(LoginRequiredMixin, View):
                         time.sleep(delay_time-delayed)
                     
                     if matching_account:
-                        if matching_account.bank_name.lower() != form.cleaned_data.get("bank_name", "!").lower():
-                            error = "The entered account number is not valid  for the entered bank. "
-                            feedback['error'] = error
-                            return JsonResponse(feedback)
+            
                         details = matching_account
 
                     else:
@@ -205,7 +207,7 @@ class Transfer(LoginRequiredMixin, View):
                     receiver=receipient,
                     swift_number=swift_number,
                     iban=iban,
-                    account_number=acc_num,
+                    account_number=acc_num  or iban,
                     account_name=acc_name,
                     country=country,
                     bank_name=bank_name
