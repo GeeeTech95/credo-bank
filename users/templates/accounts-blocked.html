@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<!-- 404 Start -->
+<div class="container-xxl py-5 wow fadeInUp mt-5" data-wow-delay="0.1s">
+    <div class="container text-center mt-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <i class="bi bi-exclamation-triangle display-1 text-primary"></i>
+             
+                <h1 class="mb-4">Your account has been temporarily disabled !</h1>
+                <p><b>Reason: </b>{{block_reason}}</p>
+                <p class="mb-4">We’re sorry, you can't access this account. Please contact support using the live chat or email us: support@credocapitalbank.com</p>
+                <a class="btn btn-primary py-3 px-5" href="{% url 'index' %}">Go Back To Home</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 404 End -->
+
+{% endblock %}

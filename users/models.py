@@ -51,10 +51,6 @@ class User(AbstractUser):
     block_reason = models.TextField(blank=True,null=True)
 
 
-    # admin controls account from here
-    is_blocked = models.BooleanField(default=False)
-    block_reason = models.TextField(blank=True, null=True)
-
     @property
     def account_number_hidden(self) :
         return  "{}***..*{}{}".format(

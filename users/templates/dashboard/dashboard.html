@@ -198,7 +198,9 @@
                           {% ifequal transact.status  "pending" %}
                           <td><div class="badge badge-info">Pending</div></td>
                           {% else %}
+                          {% ifequal transact.status  "successful" %}
                           <td><div class="badge badge-success">successful</div></td>
+                          {% endifequal %}
                           {% endifequal %}
                         {% endifequal %}
                         {% endifequal %}
@@ -305,19 +307,7 @@
                         {% else %}
                         <td>-</td>
                         {% endif %}
-                        {% ifequal transact.status  "failed" %}
-                        <td><div class="badge badge-danger">Failed</div></td>
-                        {% else %}
-                          {% ifequal transact.status  "processing" %}
-                          <td><div class="badge badge-warning">Processing</div></td>
-                          {% else %}
-                          {% ifequal transact.status  "pending" %}
-                          <td><div class="badge badge-info">Pending</div></td>
-                          {% else %}
-                          <td><div class="badge badge-success">successful</div></td>
-                          {% endifequal %}
-                        {% endifequal %}
-                        {% endifequal %}
+                        <td><div class="badge badge-info">Pending</div></td>
                         
                        
                         <td>{{transact.status_message|default:"-"}}</td>

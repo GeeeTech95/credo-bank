@@ -117,7 +117,7 @@ class Transaction(models.Model):
 
     STATUS = (('failed', 'failed'),
               ('pending', 'pending'),
-              ('processing', 'Processing'),
+              ('processing', 'processing'),
               ('successful', "successful"))
 
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE,

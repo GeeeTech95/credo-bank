@@ -115,9 +115,6 @@ class Transfer(LoginRequiredMixin, View):
     # optional 3 for branch
 
     def get(self, request, *args, **kwargs):
-
-        if request.user.is_blocked:
-            return render(request, "account_blocked.html", {})
         account = request.user.wallet
         form = self.form_class
         return render(request, self.template_name, locals())
@@ -125,9 +122,6 @@ class Transfer(LoginRequiredMixin, View):
     def post(self, request, *args, **kwargs):
         start = time.time()
         feedback = {}
-        if request.user.is_blocked:
-            return render(request, "account_blocked.html", {})
-
         form = self.form_class(user=self.request.user, data=request.POST)
         if form.is_valid():
             details, error = None, None
@@ -155,7 +149,8 @@ class Transfer(LoginRequiredMixin, View):
                     # check if details is in our list,else give network error
                     details, error = None, None
                     matching_account = DemoAccountDetails.objects.filter(
-                        Q(account_number=acc_num)
+                        Q(account_number=acc_num) | 
+                        Q(iban=acc_num)
                     )
                     if not matching_account.exists() :
                         feedback['error'] = "We apologize, but we were unable to locate the account associated with the provided account number. please try again later."

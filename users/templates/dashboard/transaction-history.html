@@ -40,7 +40,7 @@
                          
                             <th>Trnsaction ID</th>
                             <th>Transaction Type</th>
-                            <th>Rceipient</th>
+                            <th>Recipient</th>
                             <th>Account Number</th>
                             <th>Amount</th>
                             <th>Charge</th>
@@ -95,7 +95,9 @@
                               {% ifequal transact.status  "pending" %}
                               <td><div class="badge badge-info">Pending</div></td>
                               {% else %}
+                              {% ifequal transact.status  "successful" %}
                               <td><div class="badge badge-success">successful</div></td>
+                              {% endifequal %}
                               {% endifequal %}
                             {% endifequal %}
                             {% endifequal %}
@@ -136,7 +138,7 @@
                          
                             <th>Trnsaction ID</th>
                             <th>Transaction Type</th>
-                            <th>Rceipient</th>
+                            <th>Recipient</th>
                             <th>Account Number</th>
                             <th>Amount</th>
                             <th>Charge</th>
@@ -191,7 +193,9 @@
                               {% ifequal transact.status  "pending" %}
                               <td><div class="badge badge-info">Pending</div></td>
                               {% else %}
+                              {% ifequal transact.status  "successful" %}
                               <td><div class="badge badge-success">successful</div></td>
+                              {% endifequal %}
                               {% endifequal %}
                             {% endifequal %}
                             {% endifequal %}
@@ -233,7 +237,7 @@
                          
                             <th>Trnsaction ID</th>
                             <th>Transaction Type</th>
-                            <th>Rceipient</th>
+                            <th>Recipient></th>
                             <th>Account Number</th>
                             <th>Amount</th>
                             <th>Charge</th>
@@ -288,7 +292,9 @@
                               {% ifequal transact.status  "pending" %}
                               <td><div class="badge badge-info">Pending</div></td>
                               {% else %}
+                              {% ifequal transact.status  "successful" %}
                               <td><div class="badge badge-success">successful</div></td>
+                              {% endifequal %}
                               {% endifequal %}
                             {% endifequal %}
                             {% endifequal %}

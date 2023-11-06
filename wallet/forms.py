@@ -61,7 +61,7 @@ class TransferForm(forms.Form):
                    ('Domestic Transfer','Domestic Transfer'))
     transfer_type = forms.ChoiceField(choices=TypeChoices)
     account_number = forms.CharField(
-        required=True, help_text="Receipient Account Number")
+        required=True, help_text="Receipient Account Number / IBAN ")
    
     bank_name = forms.CharField(
         required=False, label="Bank Name", help_text="Receipient Bank Name")
