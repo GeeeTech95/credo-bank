@@ -249,11 +249,11 @@ class Email() :
             image.add_header('Content-ID',"<logo>") """   
     
         #if settings.DEBUG : print(msg)  
-        try :
-            email.send()
-        except : 
-            error = "mail was not sent successfully"
-            print(error)
+        #try :
+        email.send()
+        #except : 
+        #error = "mail was not sent successfully"
+        #print(error)
         self.auth_connecion.close()
         
         return error

@@ -149,7 +149,9 @@ TEMPLATES = [
             os.path.join(BASE_DIR, 'core/templates'),
             os.path.join(BASE_DIR, 'core/templates/email'),
         ],
+
         'APP_DIRS': True,
+
         'OPTIONS': {
             'context_processors': [
                 'core.context.core',
@@ -257,8 +259,8 @@ SMS_PHONE_NUMBER =  '+19709866198'
 
 #EMAIL FOR ZOHO
 EMAIL_HOST  = "smtp.zoho.com"
-EMAIL_HOST_USER_TRANSACTION = "transaction@credocapitalbank.com"
-EMAIL_HOST_USER_ALERT = "transaction@credocapitalbank.com"
+EMAIL_HOST_USER_TRANSACTION = "alert@credocapitalbank.com"
+EMAIL_HOST_USER_ALERT = "alert@credocapitalbank.com"
 EMAIL_HOST_USER_SUPPORT = "support@credocapitalbank.com"
 
 #for other emails 
