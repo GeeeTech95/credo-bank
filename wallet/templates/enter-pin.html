@@ -10,6 +10,7 @@
 <div class="main-content"  style="width: 100vw;">
     <section class="section">
       <div class="section-body" style="background-color: red;">
+       
      
                <div class="card" id="form-div" style="width: 100v;">
 
@@ -61,7 +62,11 @@
         
       </div>
     </section>
-</div>              
+</div>   
+
+<span hidden id="success-text" style="display: none;" >
+    Your transfer of {{user.wallet.currency.code}}{{transact.amount}} to {{transact.account_name}} was completed successfully."
+</span>
 {% endblock %}
 
 {% block js %}
@@ -74,6 +79,7 @@ $("#form-div").on('submit','#enter-pin-form',function(event){
     event.preventDefault();
     $("#load-modal").modal({backdrop: 'static', keyboard: false},"show");
     var form  = $(this);
+    var successText = $("#success-text").html()
     
     $.ajax({
         type:"POST",
@@ -86,7 +92,7 @@ $("#form-div").on('submit','#enter-pin-form',function(event){
             $("#load-modal").modal("toggle")
             //shwow success modal
             $("#success-modal-content-text").html("")
-            $("#success-modal-content-text").html("Completed successfully.")
+            $("#success-modal-content-text").html(successText)
             $("#success-modal").modal({backdrop: 'static', keyboard: false},"show")
              }
 

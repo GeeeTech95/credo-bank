@@ -5,6 +5,7 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 
 from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
+from .communication import Email
 from .models import *
 from .forms import SendMailForm
 
@@ -12,6 +13,7 @@ from .forms import SendMailForm
 admin.site.register(Notification)
 admin.site.register(NewsLaterSubscriber)
 admin.site.register(AdminControl)
+
 
 
 class AdminControls() :
@@ -51,7 +53,7 @@ class SendCustomMail(UserPassesTestMixin,LoginRequiredMixin,View) :
             ctx['custom_message'] = message
             ctx['user_name'] = receiver_name
             ctx['subject'] = sub
-            mail.send_html_email([email],sub,self.email_template,ctx)
+            mail.send_html_email([email],self.email_template,sub,ctx)
             return HttpResponseRedirect(self.success_url)
 
         else : 
