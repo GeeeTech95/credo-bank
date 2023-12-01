@@ -21,14 +21,14 @@
      
     <style>
         @media  (min-width: 575px){
-            #success-modal {
+            #successx-modal {
                 margin-left: 25vw;
 
             }
         }
 
         @media  (max-width: 575px){
-            #success-modal {
+            #successx-modal {
                 margin-left: 18vw;
             }
         }
@@ -240,12 +240,14 @@
         </div> 
     </div><!-- .modal @e -->
 
-    <div class="modal fade" id="success-modal" data-bs-keyboard="false" data-bs-backdrop="static" style="align-items: center;text-align: center;">
-        <div class="modal-dialog modal-sm" style="background-color: transparent; left: calc(50vw - 140px);position: fixed;height: max-content;width: max-content;">
-            <div class="modal-content" style="width: fit-content;">
-                <div class="modal-body p-md-4 p-lg-5" id="success-modal-content">
+    <div class="modal fade" id="success-modal" data-bs-keyboard="false" data-bs-backdrop="static" style="align-items: center;text-align: center;display: flex;justify-content: center;justify-self: center;">
+        <div class="modal-dialog modal-sm" style="background-color: transparent; left: calc(50vw - 150px);position: fixed;height: max-content;">
+            <div class="modal-content" style="width: 300px;">
+                <div class="modal-body " id="success-modal-content">
                     <img class="mb-0"  src="{% static 'img/success.gif' %}" style="height: auto;width: 140px;">  
-                    <p class="pt-0" id="success-modal-content-text">Completed Successfully </p>                
+                    <div class="pt-0" id="success-modal-content-text"  >
+                         Completed Successfully
+                    </div>                
                    
                         <a href="{% url 'dashboard' %}">
                              <button type="button" class="btn btn-primary mt-2 mb-2">
@@ -321,7 +323,7 @@
     <script src="{% static 'dashboard/js/helper.js' %}"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <script>
-
+       
 function centerModal() {
         $(this).css('display', 'block');
         var $dialog  = $(this).find(".modal-dialog"),
