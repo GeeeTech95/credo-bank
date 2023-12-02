@@ -20,13 +20,17 @@
                     <h2 class="total">{{user.wallet.currency.code}} {{user.wallet.available_balance|to_decimal|intcomma}}</h2>
                     
                 </div>
+                
             
                 <div class="right">
                     <a href="{% url 'transfer' %}" class="button bg-warning" >
-                        <ion-icon style="color:white" name="arrow-forward-outline"></ion-icon>
+                        <ion-icon style="color:white" name="arrow-forward-outline">
+                            
+                        </ion-icon>
                        
-                    </a>
+                    </a> 
                     <strong>Send Money</strong>
+                    
                 </div>
             </div>
             <div class="balance mt-0">
