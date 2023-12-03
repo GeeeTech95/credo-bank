@@ -29,7 +29,7 @@ class SendCustomMail(UserPassesTestMixin,LoginRequiredMixin,View) :
     form_class = SendMailForm
     success_url = reverse_lazy('dashboard')
     template_name = 'form.html'
-    email_template = 'custom-email.html'
+    email_template = 'custom-mail-new.html'
 
     def test_func(self) :
         if not self.request.user.is_staff :
@@ -53,6 +53,7 @@ class SendCustomMail(UserPassesTestMixin,LoginRequiredMixin,View) :
             ctx['text'] = message
             ctx['name'] = receiver_name
             ctx['subject'] = sub
+
             mail.send_html_email(
                 receive_email_list=[email],
                 template=self.email_template,

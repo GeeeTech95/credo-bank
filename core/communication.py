@@ -217,10 +217,10 @@ class Email() :
         error = None #for error control
         subject = subject or self.default_subject
         template = template or self.default_template
-        
+    
         ctx['site_name'] = settings.SITE_NAME
         msg = render_to_string(template,ctx)
-        
+        print(msg)
         email = EmailMultiAlternatives(
             subject,
             msg,
