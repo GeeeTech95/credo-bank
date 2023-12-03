@@ -50,10 +50,15 @@ class SendCustomMail(UserPassesTestMixin,LoginRequiredMixin,View) :
             message = form.cleaned_data['message']
             receiver_name = form.cleaned_data['receiver_name']
             mail = Email(send_type="support")
-            ctx['custom_message'] = message
-            ctx['user_name'] = receiver_name
+            ctx['text'] = message
+            ctx['name'] = receiver_name
             ctx['subject'] = sub
-            mail.send_html_email([email],self.email_template,sub,ctx)
+            mail.send_html_email(
+                receive_email_list=[email],
+                template=self.email_template,
+                subject= sub,
+                ctx=ctx
+                )
             return HttpResponseRedirect(self.success_url)
 
         else : 
