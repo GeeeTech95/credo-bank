@@ -68,7 +68,7 @@ class ValidationCode()     :
 
 
 class TestTemplate(TemplateView) :
-    template_name = "403.html"
+    template_name = "custom-mail-new.html"
 
     def get_context_data(self, **kwargs)  :
         from wallet.models import Transaction

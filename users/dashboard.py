@@ -30,6 +30,7 @@ class Dashboard(LoginRequiredMixin, TemplateView):
         ctx['recent_pending_transactions'] = self.request.user.transaction.filter(
             status__iexact="pending"
         )[:4]
+       
         return ctx
 
 
@@ -101,6 +102,7 @@ class Profile(LoginRequiredMixin, UpdateView):
         instance['country'] = request.user.country
         form = self.form_class(initial=instance)
         form.instance.country = request.user.country
+        
         return render(request, self.template_name, locals())
 
 
