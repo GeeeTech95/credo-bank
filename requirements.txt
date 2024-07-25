@@ -27,7 +27,7 @@ mpmath==1.1.0
 oauthlib==3.1.1
 pipenv==2020.11.15
 psycopg2-binary==2.8.6
-
+psycopg2==2.8.6
 py-moneyed==1.2
 pycparser==2.20
 PyJWT==1.7.1
