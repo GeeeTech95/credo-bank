@@ -17,7 +17,7 @@ django-crispy-forms==1.11.2
 django-jazzmin==2.6.0
 django-money==2.0
 filelock==3.0.12
-gunicorn==20.1.0
+gunicorn==22.0.0 
 h11==0.14.0
 idna==2.10
 isort==4.3.21
@@ -25,9 +25,9 @@ lazy-object-proxy==1.4.3
 mccabe==0.6.1
 mpmath==1.1.0
 oauthlib==3.1.1
+packaging==24.1
 pipenv==2020.11.15
 psycopg2-binary==2.8.6
-psycopg2==2.8.6
 py-moneyed==1.2
 pycparser==2.20
 PyJWT==1.7.1
