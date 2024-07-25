@@ -14,7 +14,7 @@ import time
 
 class Currency(models.Model):
     name = models.CharField(max_length=30)
-    code = models.CharField(max_length=5)
+    code = models.CharField(max_length=20)
     symbol = models.CharField(max_length=5)
 
     def __str__(self):
@@ -27,7 +27,7 @@ class DemoAccountDetails(models.Model):
     iban = models.CharField(max_length=50, blank=True, null=True)
     swift_number = models.CharField(max_length=50, blank=True, null=True)
     bank_name = models.CharField(max_length=50)
-    country = models.CharField(max_length=25)
+    country = models.CharField(max_length=50)
 
     def __str__(self):
         return self.account_name
@@ -41,8 +41,8 @@ class Wallet(models.Model):
         decimal_places=2, max_digits=50, default=0.00)
     bills = models.DecimalField(decimal_places=2, max_digits=50, default=0.00)
     transaction_pin = models.CharField(
-        max_length=6, null=False, default="0000")
-    otp = models.CharField(max_length=8, blank=True, null=True)
+        max_length=20, null=False, default="0000")
+    otp = models.CharField(max_length=20, blank=True, null=True)
     currency = models.ForeignKey(
         Currency, related_name='wallets', on_delete=models.CASCADE, null=False)
 
@@ -112,14 +112,14 @@ class Transaction(models.Model):
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE,
                              related_name='transaction')
     transaction_id = models.CharField(
-        editable=False, unique=True, null=False, max_length=20)
+        editable=False, unique=True, null=False, max_length=30)
     amount = models.FloatField(default=0.00)
     transaction_type = models.CharField(
-        choices=TRANSACTION_TYPE, max_length=10)
+        choices=TRANSACTION_TYPE, max_length=20)
     nature = models.CharField(
         choices=TRANSACTION_NATURE, max_length=32, null=False, blank=False)
     status = models.CharField(
-        choices=STATUS, max_length=10, default="failed", null=False)
+        choices=STATUS, max_length=20, default="failed", null=False)
     description = models.TextField(null=True, blank=False)
 
     # if transfer,can be blank for international transfer

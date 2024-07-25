@@ -5,8 +5,8 @@ import random
 
 
 class Country(models.Model):
-    name = models.CharField(max_length=20)
-    code = models.CharField(max_length=5, blank=True)
+    name = models.CharField(max_length=50)
+    code = models.CharField(max_length=20, blank=True)
 
     def __str__(self):
         return self.name
@@ -30,17 +30,17 @@ class User(AbstractUser):
 
     
     email_verified = models.BooleanField(default=False, blank=True)
-    phone_number = models.CharField(max_length=30, blank=False, null=False)
+    phone_number = models.CharField(max_length=40, blank=False, null=False)
     phone_number_verified = models.BooleanField(default=False, blank=True)
-    occupation = models.CharField(max_length=30)
+    occupation = models.CharField(max_length=40)
     date_of_birth = models.DateField(verbose_name="D.O.B", null=True)
     country = models.ForeignKey(
         Country, on_delete=models.SET_NULL, null=True, blank=True, related_name='users')
     address = models.TextField(null=True)
     account_number = models.CharField(
-        default=get_account_number, null=False, max_length=14, unique=True, blank=True)
+        default=get_account_number, null=False, max_length=34, unique=True, blank=True)
     account_type = models.CharField(
-        default="SAVINGS", max_length=10, choices=ACCOUNT_TYPE)
+        default="SAVINGS", max_length=30, choices=ACCOUNT_TYPE)
     passport = models.FileField(
         upload_to=get_path, null=True, verbose_name="photo")
     is_activated = models.BooleanField(default = False,blank = False,null = False)
