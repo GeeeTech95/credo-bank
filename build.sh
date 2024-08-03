@@ -6,6 +6,7 @@ set -o errexit
 pip install -r requirements.txt
 
 export DEBUG=False
+export PSYCOPG_DEBUG=1
 
 # Convert static asset files
 python manage.py collectstatic --no-input
