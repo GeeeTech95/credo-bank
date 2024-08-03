@@ -253,7 +253,7 @@ STATIC_ROOT = os.path.join(BASE_DIR,"asset")
 
 STATIC_URL = '/static/'
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 #TWILLO
 TWILLO_ACCOUNT_SID =  'AC213bba1c05225bedc1ebccccd8dbd9e0' 
