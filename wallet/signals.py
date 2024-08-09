@@ -10,12 +10,13 @@ from core.notification import Notification
 def send_mail(sender, instance, created, **kwargs):
     if instance.status == "successful" and not instance.mail_is_sent :
         # SEND MAIL
-        mail = TransactionMail(instance)
-        mail.send_transaction_mail()
-        instance.mail_is_sent = True
-        instance.save()
+        #mail = TransactionMail(instance)
+        #mail.send_transaction_mail()
+        #instance.mail_is_sent = True
+        #instance.save()
         # SEND SMS
         #sms = Messages()
         # sms.send_transaction_sms(self.transaction)
         # NOTIFY
         #Notification.transaction_notification(instance)
+        pass

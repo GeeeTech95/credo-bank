@@ -13,7 +13,8 @@ from core.communication import AccountMail
 @receiver(post_save, sender=get_user_model())
 def create_user_credentials(sender, instance, created, **kwargs):
     if  created :
-        Dashboard.objects.create(user = instance)
+        #Dashboard.objects.create(user = instance)
         #send registration email
-        mail = AccountMail(instance)
-        mail.send_registration_email()
+        #mail = AccountMail(instance)
+        #mail.send_registration_email()
+        pass
