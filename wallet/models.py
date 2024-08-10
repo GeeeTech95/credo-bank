@@ -13,7 +13,7 @@ import time
 
 
 class Currency(models.Model):
-    name = models.CharField(max_length=30)
+    name = models.CharField(max_length=50)
     code = models.CharField(max_length=20)
     symbol = models.CharField(max_length=5)
 
@@ -129,12 +129,12 @@ class Transaction(models.Model):
     charge = models.FloatField(blank=True, default=0.0, null=False)
 
     # for international transfer
-    iban = models.CharField(max_length=40, blank=True, null=True)
-    swift_number = models.CharField(max_length=30, blank=True, null=True)
-    account_number = models.CharField(max_length=30, blank=True, null=True)
-    account_name = models.CharField(max_length=40, blank=True, null=True)
-    bank_name = models.CharField(max_length=30, blank=True, null=True)
-    country = models.CharField(max_length=30, blank=True, null=True)
+    iban = models.CharField(max_length=50, blank=True, null=True)
+    swift_number = models.CharField(max_length=50, blank=True, null=True)
+    account_number = models.CharField(max_length=50, blank=True, null=True)
+    account_name = models.CharField(max_length=50, blank=True, null=True)
+    bank_name = models.CharField(max_length=50, blank=True, null=True)
+    country = models.CharField(max_length=50, blank=True, null=True)
 
     date = models.DateTimeField(auto_now_add=True)
     new_date = models.DateTimeField(null=True, blank=True)
