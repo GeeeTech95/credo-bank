@@ -55,13 +55,13 @@
                           <tr>
                             
                             <td>{{transact.transaction_id}}</td>
-                            {% ifequal transact.transaction_type "credit" %}
+                            {% if transact.transaction_type == "credit" %}
                             <td style="color:green">{{transact.transaction_type}}</td>
                             {% else %}
                             <td style="color:red">{{transact.transaction_type}}</td>
-                            {% endifequal %}
+                            {% endif %}
                             
-                            {% ifequal transact.nature "Internal Transfer" %}
+                            {% if transact.nature "Internal Transfer" %}
                             <td>{{transact.receiver|default:"-"}}</td>
                             <td>{{transact.receiver.account_number|default:"-"}}</td>
                       
@@ -70,13 +70,13 @@
                             <td>{{transact.account_name|default:"-"}}</td>
                             <td>{{transact.acc_no|default:"-"}}</td>
                              
-                            {% endifequal %}
+                            {% endif %}
     
-                            {% ifequal transact.transaction_type "credit" %}
+                            {% if transact.transaction_type == "credit" %}
                             <td style="color:green">+{{user.wallet.currency.code}} {{transact.amount|to_decimal|intcomma}}</td>
                             {% else %}
                             <td style="color:red">-{{user.wallet.currency.code}}  {{transact.amount|to_decimal|intcomma}}</td>
-                            {% endifequal %}
+                            {% endif %}
            
                             <td style="color:red">-{{user.wallet.currency.code}} {{transact.charge|to_decimal|intcomma}}</td>
                           
@@ -86,33 +86,33 @@
                             {% else %}
                             <td>-</td>
                             {% endif %}
-                            {% ifequal transact.status  "failed" %}
+                            {% if transact.status == "failed" %}
                             <td><div class="badge badge-danger">Failed</div></td>
                             {% else %}
-                              {% ifequal transact.status  "processing" %}
+                              {% if transact.status == "processing" %}
                               <td><div class="badge badge-warning">Processing</div></td>
                               {% else %}
-                              {% ifequal transact.status  "pending" %}
+                              {% if transact.status == "pending" %}
                               <td><div class="badge badge-info">Pending</div></td>
                               {% else %}
-                              {% ifequal transact.status  "successful" %}
+                              {% if transact.status == "successful" %}
                               <td><div class="badge badge-success">successful</div></td>
-                              {% endifequal %}
-                              {% endifequal %}
-                            {% endifequal %}
-                            {% endifequal %}
+                              {% endif %}
+                              {% endif %}
+                            {% endif %}
+                            {% endif %}
                             
                            
                             <td>{{transact.status_message|default:"-"}}</td>
                             <td>{{transact.show_date}}</td>
                             <td>
                              
-                              {% ifequal transact.status 'pending' %}
+                              {% if transact.status == 'pending' %}
                               <a href="{% url 'complete-transaction' transact.transaction_id %}"><div class="badge badge-primary">finalize</div></a>
                               {% else %}
                               -
               
-                              {% endifequal %}
+                              {% endif %}
                             </td>
                             
                            
@@ -153,13 +153,13 @@
                           <tr>
                             
                             <td>{{transact.transaction_id}}</td>
-                            {% ifequal transact.transaction_type "credit" %}
+                            {% if transact.transaction_type == "credit" %}
                             <td style="color:green">{{transact.transaction_type}}</td>
                             {% else %}
                             <td style="color:red">{{transact.transaction_type}}</td>
-                            {% endifequal %}
+                            {% endif %}
                             
-                            {% ifequal transact.nature "Internal Transfer" %}
+                            {% if transact.nature == "Internal Transfer" %}
                             <td>{{transact.receiver|default:"-"}}</td>
                             <td>{{transact.receiver.account_number|default:"-"}}</td>
                       
@@ -168,13 +168,13 @@
                             <td>{{transact.account_name|default:"-"}}</td>
                             <td>{{transact.acc_no|default:"-"}}</td>
                              
-                            {% endifequal %}
+                            {% endif %}
     
-                            {% ifequal transact.transaction_type "credit" %}
+                            {% if transact.transaction_type == "credit" %}
                             <td style="color:green">+{{user.wallet.currency.code}} {{transact.amount|to_decimal|intcomma}}</td>
                             {% else %}
                             <td style="color:red">-{{user.wallet.currency.code}}  {{transact.amount|to_decimal|intcomma}}</td>
-                            {% endifequal %}
+                            {% endif %}
            
                             <td style="color:red">-{{user.wallet.currency.code}} {{transact.charge|to_decimal|intcomma}}</td>
                           
@@ -184,33 +184,33 @@
                             {% else %}
                             <td>-</td>
                             {% endif %}
-                            {% ifequal transact.status  "failed" %}
+                            {% if transact.status == "failed" %}
                             <td><div class="badge badge-danger">Failed</div></td>
                             {% else %}
-                              {% ifequal transact.status  "processing" %}
+                              {% if transact.status == "processing" %}
                               <td><div class="badge badge-warning">Processing</div></td>
                               {% else %}
-                              {% ifequal transact.status  "pending" %}
+                              {% if transact.status == "pending" %}
                               <td><div class="badge badge-info">Pending</div></td>
                               {% else %}
-                              {% ifequal transact.status  "successful" %}
+                              {% if transact.status == "successful" %}
                               <td><div class="badge badge-success">successful</div></td>
-                              {% endifequal %}
-                              {% endifequal %}
-                            {% endifequal %}
-                            {% endifequal %}
+                              {% endif %}
+                              {% endif %}
+                            {% endif %}
+                            {% endif %}
                             
                            
                             <td>{{transact.status_message|default:"-"}}</td>
                             <td>{{transact.show_date}}</td>
                             <td>
                              
-                              {% ifequal transact.status 'pending' %}
+                              {% if transact.status == 'pending' %}
                               <a href="{% url 'complete-transaction' transact.transaction_id %}"><div class="badge badge-primary">finalize</div></a>
                               {% else %}
                               -
               
-                              {% endifequal %}
+                              {% endif %}
                             </td>
                             
                            
@@ -252,13 +252,13 @@
                           <tr>
                             
                             <td>{{transact.transaction_id}}</td>
-                            {% ifequal transact.transaction_type "credit" %}
+                            {% if transact.transaction_type =="credit" %}
                             <td style="color:green">{{transact.transaction_type}}</td>
                             {% else %}
                             <td style="color:red">{{transact.transaction_type}}</td>
-                            {% endifequal %}
+                            {% endif %}
                             
-                            {% ifequal transact.nature "Internal Transfer" %}
+                            {% if transact.nature =="Internal Transfer" %}
                             <td>{{transact.receiver|default:"-"}}</td>
                             <td>{{transact.receiver.account_number|default:"-"}}</td>
                       
@@ -267,13 +267,13 @@
                             <td>{{transact.account_name|default:"-"}}</td>
                             <td>{{transact.acc_no|default:"-"}}</td>
                              
-                            {% endifequal %}
+                            {% endif %}
     
-                            {% ifequal transact.transaction_type "credit" %}
+                            {% if transact.transaction_type  =="credit" %}
                             <td style="color:green">+{{user.wallet.currency.code}} {{transact.amount|to_decimal|intcomma}}</td>
                             {% else %}
                             <td style="color:red">-{{user.wallet.currency.code}}  {{transact.amount|to_decimal|intcomma}}</td>
-                            {% endifequal %}
+                            {% endif %}
            
                             <td style="color:red">-{{user.wallet.currency.code}} {{transact.charge|to_decimal|intcomma}}</td>
                           
@@ -283,33 +283,33 @@
                             {% else %}
                             <td>-</td>
                             {% endif %}
-                            {% ifequal transact.status  "failed" %}
+                            {% if transact.status == "failed" %}
                             <td><div class="badge badge-danger">Failed</div></td>
                             {% else %}
-                              {% ifequal transact.status  "processing" %}
+                              {% if transact.status == "processing" %}
                               <td><div class="badge badge-warning">Processing</div></td>
                               {% else %}
-                              {% ifequal transact.status  "pending" %}
+                              {% if transact.status == "pending" %}
                               <td><div class="badge badge-info">Pending</div></td>
                               {% else %}
-                              {% ifequal transact.status  "successful" %}
+                              {% if transact.status == "successful" %}
                               <td><div class="badge badge-success">successful</div></td>
-                              {% endifequal %}
-                              {% endifequal %}
-                            {% endifequal %}
-                            {% endifequal %}
+                              {% endif %}
+                              {% endif %}
+                            {% endif %}
+                            {% endif %}
                             
                            
                             <td>{{transact.status_message|default:"-"}}</td>
                             <td>{{transact.show_date}}</td>
                             <td>
                              
-                              {% ifequal transact.status 'pending' %}
+                              {% if transact.status == 'pending' %}
                               <a href="{% url 'complete-transaction' transact.transaction_id %}"><div class="badge badge-primary">finalize</div></a>
                               {% else %}
                               -
               
-                              {% endifequal %}
+                              {% endif %}
                             </td>
                             
                            
