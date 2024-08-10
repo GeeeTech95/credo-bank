@@ -3,7 +3,7 @@ from django.utils.timezone import timedelta
 import os
 
 
-SITE_NAME  = "Credocapital Bank"
+SITE_NAME = "Credocapital Bank"
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -46,7 +46,7 @@ JAZZMIN_SETTINGS = {
     "custom_css": "css/style.css",
 
     # Relative path to a favicon for your site, will default to site_logo if absent (ideally 32x32 px)
-    #"site_icon": "img/favicon.png",
+    # "site_icon": "img/favicon.png",
 
     # Welcome text on the login screen
     "welcome_sign": "Welcome Admin!",
@@ -70,33 +70,33 @@ LOGGING = {
 }
 
 
-
 AUTO_LOGOUT = {
     'IDLE_TIME': timedelta(minutes=5),
     'REDIRECT_TO_LOGIN_IMMEDIATELY': True,
     'SESSION_TIME': timedelta(hours=1),
     'MESSAGE': 'Welcome back, your previous session expired !',
-    }  # logout after 10 minutes of downtime
+}  # logout after 10 minutes of downtime
 # Application definition
 
 INSTALLED_APPS = [
-      'jazzmin',
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
-     'django.contrib.humanize',
+    'django.contrib.humanize',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'users.apps.UsersConfig',
     'wallet.apps.WalletConfig',
     'company.apps.CompanyConfig',
     'core.apps.CoreConfig',
-     #3rdparty
+    # 3rdparty
     'whitenoise.runserver_nostatic',
-    'crispy_forms', 
+    'crispy_forms',
+    'crispy_bootstrap4',
     'djmoney'
-    #'phonenumber_field',
+    # 'phonenumber_field',
 
 ]
 
@@ -104,25 +104,25 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [
 
-    #django
+    # django
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
 
-     #whitenoise
+    # whitenoise
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django_auto_logout.middleware.auto_logout',
 
-    #language translation   
-    #'django.middleware.locale.LocalMiddleware',
+    # language translation
+    # 'django.middleware.locale.LocalMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
-    #custom
+    # custom
     'online_bank.middleware.AccountMiddleware',
-    
+
 ]
 
 ROOT_URLCONF = 'online_bank.urls'
@@ -131,10 +131,10 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(BASE_DIR,'templates'),
-            os.path.join(BASE_DIR,'users/templates/dashboard'),
-            os.path.join(BASE_DIR,'templates/email'),
-            os.path.join(BASE_DIR,'templates/registration'),
+            os.path.join(BASE_DIR, 'templates'),
+            os.path.join(BASE_DIR, 'users/templates/dashboard'),
+            os.path.join(BASE_DIR, 'templates/email'),
+            os.path.join(BASE_DIR, 'templates/registration'),
             os.path.join(BASE_DIR, 'core/templates'),
             os.path.join(BASE_DIR, 'core/templates/email'),
         ],
@@ -148,7 +148,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                 #auto logout
+                # auto logout
                 'django_auto_logout.context_processors.auto_logout_client',
             ],
         },
@@ -162,7 +162,7 @@ WSGI_APPLICATION = 'online_bank.wsgi.application'
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 
-if DEBUG :
+if DEBUG:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
@@ -172,18 +172,18 @@ if DEBUG :
             }
         },
         "OPTIONS": {
-        # ...
-        "timeout": 30,
-        # ...
-    }
+            # ...
+            "timeout": 30,
+            # ...
+        }
     }
 
-else :
+else:
     # Replace the SQLite DATABASES configuration with PostgreSQL:
 
     DATABASES = {
-    'default': dj_database_url.config(default='postgres://localhost:5432/mydatabase')
-}
+        'default': dj_database_url.config(default='postgres://localhost:5432/mydatabase')
+    }
 
 # Password validation
 
@@ -216,10 +216,10 @@ AUTH_USER_MODEL = 'users.User'
 
 LANGUAGE_CODE = 'en-us'
 
-#LANGUAGE_CODE = 'es'
+# LANGUAGE_CODE = 'es'
 
 LOCALE_PATHS = [
-    os.path.join(BASE_DIR,'languages')
+    os.path.join(BASE_DIR, 'languages')
 ]
 
 TIME_ZONE = 'UTC'
@@ -241,56 +241,53 @@ USE_TZ = True
 
 MEDIA_URL = '/media/'
 
- 
-MEDIA_ROOT = os.path.join(BASE_DIR,"media")
+
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 
 STATICFILES_DIRS = [
-os.path.join(BASE_DIR,"static")
+    os.path.join(BASE_DIR, "static")
 ]
 
-STATIC_ROOT = os.path.join(BASE_DIR,"asset")
+STATIC_ROOT = os.path.join(BASE_DIR, "asset")
 
 STATIC_URL = '/static/'
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
-#TWILLO
-TWILLO_ACCOUNT_SID =  'AC213bba1c05225bedc1ebccccd8dbd9e0' 
+# TWILLO
+TWILLO_ACCOUNT_SID = 'AC213bba1c05225bedc1ebccccd8dbd9e0'
 
-TWILLO_AUTH_TOKEN =   '8512ae91f275f2bf0c8bf864e61692f3'
+TWILLO_AUTH_TOKEN = '8512ae91f275f2bf0c8bf864e61692f3'
 
-SMS_PHONE_NUMBER =  '+19709866198'
+SMS_PHONE_NUMBER = '+19709866198'
 
 
-#EMAIL FOR ZOHO
-EMAIL_HOST  = "smtp.zoho.com"
+# EMAIL FOR ZOHO
+EMAIL_HOST = "smtp.zoho.com"
 EMAIL_HOST_USER_TRANSACTION = "alert@credocapitalbank.com"
 EMAIL_HOST_USER_ALERT = "alert@credocapitalbank.com"
 EMAIL_HOST_USER_SUPPORT = "support@credocapitalbank.com"
 
-#for other emails 
+# for other emails
 EMAIL_HOST_USER = "support@credocapitalbank.com"
-DEFAULT_FROM_EMAIL  = "support@credocapitalbank.com"
+DEFAULT_FROM_EMAIL = "support@credocapitalbank.com"
 EMAIL_HOST_PASSWORD = '#@Kyletech99'
 
 EMAIL_PORT = "587"
 EMAIL_USE_TLS = "True"
 
 
-#EMAIL FOR ZOHO
-#EMAIL_HOST  = "smtp.zoho.com"
-#EMAIL_HOST_USER_ALERT = "transactions@credofinancebank.com"
-#EMAIL_HOST_USER_SUPPORT = "support@credofinancebank.com"
+# EMAIL FOR ZOHO
+# EMAIL_HOST  = "smtp.zoho.com"
+# EMAIL_HOST_USER_ALERT = "transactions@credofinancebank.com"
+# EMAIL_HOST_USER_SUPPORT = "support@credofinancebank.com"
 
-#for other emails 
-#EMAIL_HOST_USER = "support@credofinancebank.com"
-#DEFAULT_FROM_EMAIL  = "support@credofinancebank.com"
-#EMAIL_HOST_PASSWORD = '#Shawler200'
+# for other emails
+# EMAIL_HOST_USER = "support@credofinancebank.com"
+# DEFAULT_FROM_EMAIL  = "support@credofinancebank.com"
+# EMAIL_HOST_PASSWORD = '#Shawler200'
 
-#EMAIL_PORT = "587"
-#EMAIL_USE_TLS = "True"
-#EMAIL_USE_SSL = "False"
-
-
-
+# EMAIL_PORT = "587"
+# EMAIL_USE_TLS = "True"
+# EMAIL_USE_SSL = "False"
