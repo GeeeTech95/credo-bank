@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils.text import slugify
-import random
+import random,os
 
 
 class Country(models.Model):
@@ -49,6 +49,8 @@ class User(AbstractUser):
     #admin controls account from here
     is_blocked = models.BooleanField(default = False)
     block_reason = models.TextField(blank=True,null=True)
+    temp_passport = models.CharField(max_length=20,blank=True,null=True)
+
 
 
     @property
@@ -70,12 +72,9 @@ class User(AbstractUser):
 
     @property
     def dp(self):
-        default = ""
-        if self.passport:
-            return self.passport.url
+        return os.path.join("/static","passports","{}".format(self.temp_passport))
+    
 
-        else:
-            return default
 
     def __str__(self):
         st = "{} {}".format(self.first_name, self.last_name)
