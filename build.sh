@@ -17,7 +17,7 @@ python manage.py migrate
 
 export DJANGO_SUPERUSER_EMAIL=admin1@credocapitalbank.com
 export DJANGO_SUPERUSER_USERNAME=admin1
-export DJANGO_SUPERUSER_PASSWORD=#4$&7QWQxn
+export DJANGO_SUPERUSER_PASSWORD=4$7QWQxn
 
 python manage.py createsuperuser --no-input
 
