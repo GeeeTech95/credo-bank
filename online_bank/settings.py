@@ -277,7 +277,7 @@ EMAIL_HOST_PASSWORD = '#@Kyletech99'
 EMAIL_PORT = "587"
 EMAIL_USE_TLS = "True"
 
-DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+#DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 # EMAIL FOR ZOHO
 # EMAIL_HOST  = "smtp.zoho.com"
