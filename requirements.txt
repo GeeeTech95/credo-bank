@@ -49,4 +49,4 @@ virtualenv==20.0.21
 virtualenv-clone==0.5.4
 Wave==0.0.2
 whitenoise==5.2.0
-wrapt==1.11.2
+wrapt==1.11.2 
